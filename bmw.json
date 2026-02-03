@@ -1,0 +1,742 @@
+{
+  "BMW": {
+    "3 Series": {
+      "2012-2018": {
+        "platform": "F30 / F31 / F34",
+        "immobilizer": "CAS4+",
+        "key_type": "BMW F-Series Smart Key",
+        "key_blade": "HU100",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (backup recommended)",
+          "akl": "Bench (CAS4+ removal required)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "CAS4+ sensitive to voltage drop. Maintain stable 12V+ during programming. ISN required for AKL.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "Not applicable (CAS4+ uses different method)",
+          "backup_method": "Read CAS4+ dump via VVDI Prog before AKL work",
+          "warning": "Always read CAS4+ data before AKL. Voltage drop can corrupt module."
+        }
+      },
+      "2019-2026": {
+        "platform": "G20 / G21",
+        "immobilizer": "BDC (Body Domain Controller)",
+        "key_type": "BMW G-Series Smart Key",
+        "key_blade": "HU100R",
+        "programming": {
+          "has_key": "OBD (tool dependent)",
+          "one_key": "OBD (dealer auth may be required)",
+          "akl": "Bench (BDC removal required)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "BDC encrypted. Failed attempts can lock module. Key count critical. Use Xhorse VVDI or Autel IM608 Pro.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "95256 (256kb)",
+          "backup_method": "1) OBD backup coding FIRST 2) Remove BDC 3) Read 95256 with VVDI Prog 4) SAVE FILE before any work",
+          "warning": "⚠️ CRITICAL: BDC will BRICK if EEPROM corrupted. ALWAYS backup 95256 chip before OBD or bench work!"
+        }
+      }
+    },
+
+    "5 Series": {
+      "2011-2016": {
+        "platform": "F10 / F11",
+        "immobilizer": "CAS4+",
+        "key_type": "BMW F-Series Smart Key",
+        "key_blade": "HU100",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Bench (CAS4+ removal required)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "Keep battery charger connected. CAS4+ behind glovebox. ISN extraction required for AKL.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "CAS4+ internal EEPROM",
+          "backup_method": "Read full CAS4+ dump with VVDI Prog before AKL",
+          "warning": "CAS4+ can lock if interrupted. Always have backup dump ready."
+        }
+      },
+      "2017-2023": {
+        "platform": "G30 / G31",
+        "immobilizer": "BDC (Body Domain Controller)",
+        "key_type": "BMW G-Series Smart Key",
+        "key_blade": "HU100R",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (authorization required)",
+          "akl": "Bench (BDC removal required)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "BDC CAN-FD protocol. High risk if interrupted. Require specialized bench tools.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "95256 (256kb)",
+          "backup_method": "1) OBD backup coding 2) Read 95256 EEPROM 3) Save both files before ANY programming",
+          "warning": "⚠️ CRITICAL: Do NOT attempt OBD programming without 95256 backup. Module can brick permanently!"
+        }
+      },
+      "2024-2026": {
+        "platform": "G60",
+        "immobilizer": "BDC+ (Enhanced)",
+        "key_type": "BMW Digital Key / Smart Key",
+        "key_blade": "HU100R",
+        "programming": {
+          "has_key": "OBD (limited)",
+          "one_key": "Dealer or specialized tool",
+          "akl": "Dealer only"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": true,
+          "akl": true
+        },
+        "akl_supported": "No (dealer required)",
+        "risk_level": "Very High",
+        "notes": "New i7 platform electronics. Enhanced encryption. Most AKL requires dealer involvement.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "95256 / 95512 (varies)",
+          "backup_method": "Full module backup required - dealer level tools recommended",
+          "warning": "⚠️ EXTREME RISK: New platform with enhanced security. Recommend dealer referral for AKL."
+        }
+      }
+    },
+
+    "X1": {
+      "2012-2015": {
+        "platform": "E84",
+        "immobilizer": "CAS4",
+        "key_type": "BMW F-Series Smart Key",
+        "key_blade": "HU92",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "OBD or Bench"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": false
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Low",
+        "notes": "Older CAS4 system. Straightforward OBD programming. Good profit job.",
+        "eeprom_info": {
+          "backup_required": false,
+          "chip_type": "N/A",
+          "backup_method": "Standard OBD backup sufficient",
+          "warning": "Low risk - standard CAS4 procedures. Backup via OBD recommended but not critical."
+        }
+      },
+      "2016-2022": {
+        "platform": "F48",
+        "immobilizer": "FEM / BDC (varies)",
+        "key_type": "BMW F-Series Smart Key",
+        "key_blade": "HU100R",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Bench (FEM or BDC removal)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "Mixed FEM/BDC depending on production date. Verify before quoting. FEM behind glovebox.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "95128 (FEM) or 95256 (BDC)",
+          "backup_method": "1) Check if FEM or BDC first 2) OBD backup coding 3) Read appropriate EEPROM chip",
+          "warning": "⚠️ IMPORTANT: Verify FEM vs BDC before work. Different chips! Always backup EEPROM."
+        }
+      },
+      "2023-2026": {
+        "platform": "U11",
+        "immobilizer": "BDC",
+        "key_type": "BMW G-Series Smart Key",
+        "key_blade": "HU100R",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (auth required)",
+          "akl": "Bench (BDC removal)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "New generation X1. BDC encrypted. Be cautious with AKL quotes.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "95256 (256kb)",
+          "backup_method": "OBD coding backup + 95256 EEPROM read mandatory",
+          "warning": "⚠️ CRITICAL: New X1 uses encrypted BDC. Always backup 95256 before any work!"
+        }
+      }
+    },
+
+    "X3": {
+      "2011-2017": {
+        "platform": "F25",
+        "immobilizer": "CAS4+",
+        "key_type": "BMW F-Series Smart Key",
+        "key_blade": "HU100",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Bench (CAS4+ removal)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "Standard CAS4+ procedure. ISN required for AKL. Module under dash.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "CAS4+ internal",
+          "backup_method": "Full CAS4+ dump before AKL work",
+          "warning": "Backup CAS4+ data before AKL. Module sensitive to power interruption."
+        }
+      },
+      "2018-2024": {
+        "platform": "G01",
+        "immobilizer": "BDC",
+        "key_type": "BMW G-Series Smart Key",
+        "key_blade": "HU100R",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Bench (BDC removal)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "BDC system. Encrypted. Key count matters. Verify tool support before accepting job.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "95256 (256kb)",
+          "backup_method": "1) OBD coding backup 2) Remove BDC 3) Read 95256 4) Save before programming",
+          "warning": "⚠️ CRITICAL: BDC 95256 backup MANDATORY. No backup = no recovery if corrupted!"
+        }
+      },
+      "2025-2026": {
+        "platform": "G45",
+        "immobilizer": "BDC+",
+        "key_type": "BMW G-Series Smart Key / Digital Key",
+        "key_blade": "HU100R",
+        "programming": {
+          "has_key": "OBD (limited)",
+          "one_key": "Specialized tool required",
+          "akl": "Dealer or advanced bench"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": true,
+          "akl": true
+        },
+        "akl_supported": "Very Limited",
+        "risk_level": "Very High",
+        "notes": "New X3 generation. Enhanced security. Proceed with extreme caution.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "95256 / 95512",
+          "backup_method": "Full backup required - new platform",
+          "warning": "⚠️ EXTREME RISK: Latest security. Consider dealer referral."
+        }
+      }
+    },
+
+    "X5": {
+      "2014-2018": {
+        "platform": "F15",
+        "immobilizer": "CAS4+",
+        "key_type": "BMW F-Series Smart Key",
+        "key_blade": "HU100",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Bench (CAS4+ removal)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "Keep battery charger connected during programming. CAS4+ voltage sensitive.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "CAS4+ internal",
+          "backup_method": "Read CAS4+ dump with VVDI Prog before AKL",
+          "warning": "Maintain 13V+ during work. Backup CAS4+ data before AKL."
+        }
+      },
+      "2019-2023": {
+        "platform": "G05",
+        "immobilizer": "BDC",
+        "key_type": "BMW G-Series Smart Key",
+        "key_blade": "HU100R",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (authorization required)",
+          "akl": "Bench (BDC removal)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "BDC CAN-FD. High risk if interrupted. Failed auth can lock module.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "95256 (256kb)",
+          "backup_method": "1) OBD coding backup 2) Read 95256 EEPROM 3) SAVE before any programming attempt",
+          "warning": "⚠️ CRITICAL: G05 BDC extremely sensitive. 95256 backup is MANDATORY. No exceptions!"
+        }
+      },
+      "2024-2026": {
+        "platform": "G05 LCI / G65",
+        "immobilizer": "BDC+ (Enhanced)",
+        "key_type": "BMW Digital Key / Smart Key",
+        "key_blade": "HU100R",
+        "programming": {
+          "has_key": "OBD (limited support)",
+          "one_key": "Dealer or specialized tool",
+          "akl": "Dealer only recommended"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": true,
+          "akl": true
+        },
+        "akl_supported": "No",
+        "risk_level": "Very High",
+        "notes": "Latest X5 facelift. Enhanced encryption. Consider referring AKL to dealer.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "95256 / 95512",
+          "backup_method": "Full backup required - dealer tools recommended",
+          "warning": "⚠️ EXTREME RISK: Latest security. Full backup mandatory. Dealer referral recommended for AKL."
+        }
+      }
+    },
+
+    "X6": {
+      "2015-2019": {
+        "platform": "F16",
+        "immobilizer": "CAS4+",
+        "key_type": "BMW F-Series Smart Key",
+        "key_blade": "HU100",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Bench (CAS4+ removal)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "Same platform as F15 X5. Standard CAS4+ procedures apply.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "CAS4+ internal",
+          "backup_method": "CAS4+ dump before AKL work",
+          "warning": "Same as X5 F15. Backup CAS4+ before AKL work."
+        }
+      },
+      "2020-2026": {
+        "platform": "G06",
+        "immobilizer": "BDC",
+        "key_type": "BMW G-Series Smart Key",
+        "key_blade": "HU100R",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (auth required)",
+          "akl": "Bench (BDC removal)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "G-series BDC. Encrypted module. Key count critical for programming.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "95256 (256kb)",
+          "backup_method": "OBD coding + 95256 EEPROM backup required",
+          "warning": "⚠️ CRITICAL: 95256 backup mandatory before any BDC work!"
+        }
+      }
+    },
+
+    "7 Series": {
+      "2012-2015": {
+        "platform": "F01 / F02",
+        "immobilizer": "CAS4+",
+        "key_type": "BMW F-Series Smart Key",
+        "key_blade": "HU100",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Bench (CAS4+ removal)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "Flagship sedan. Premium pricing applies. Standard CAS4+ bench for AKL.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "CAS4+ internal",
+          "backup_method": "Full CAS4+ dump required before AKL",
+          "warning": "High-value vehicle. Always backup CAS4+ data. Charge premium for risk."
+        }
+      },
+      "2016-2022": {
+        "platform": "G11 / G12",
+        "immobilizer": "BDC",
+        "key_type": "BMW G-Series Smart Key / Display Key",
+        "key_blade": "HU100R",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (auth required)",
+          "akl": "Bench (BDC removal)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "Display Key option available. BDC encrypted. Premium job pricing.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "95256 (256kb)",
+          "backup_method": "OBD coding + 95256 EEPROM mandatory",
+          "warning": "⚠️ CRITICAL: Flagship vehicle - 95256 backup MANDATORY. Price accordingly for risk."
+        }
+      },
+      "2023-2026": {
+        "platform": "G70",
+        "immobilizer": "BDC+ / iDrive 8",
+        "key_type": "BMW Digital Key Plus",
+        "key_blade": "HU100R",
+        "programming": {
+          "has_key": "OBD (very limited)",
+          "one_key": "Dealer recommended",
+          "akl": "Dealer only"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": true,
+          "akl": true
+        },
+        "akl_supported": "No",
+        "risk_level": "Very High",
+        "notes": "Latest i7/7 Series platform. UWB digital key. Refer most jobs to dealer.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "New generation chip",
+          "backup_method": "Dealer-level backup required",
+          "warning": "⚠️ EXTREME RISK: $100K+ vehicle with latest security. Dealer referral strongly recommended."
+        }
+      }
+    },
+
+    "4 Series": {
+      "2014-2020": {
+        "platform": "F32 / F33 / F36",
+        "immobilizer": "FEM",
+        "key_type": "BMW F-Series Smart Key",
+        "key_blade": "HU100",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Bench (FEM removal)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "FEM system - same procedures as F30 3 Series.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "95128 (128kb)",
+          "backup_method": "1) OBD coding backup 2) Read 95128 EEPROM before any bench work",
+          "warning": "⚠️ FEM uses 95128 chip. Backup MANDATORY before service mode or AKL!"
+        }
+      },
+      "2021-2026": {
+        "platform": "G22 / G23 / G26",
+        "immobilizer": "BDC",
+        "key_type": "BMW G-Series Smart Key",
+        "key_blade": "HU100R",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (auth may be required)",
+          "akl": "Bench (BDC removal)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "G-series 4. BDC encrypted. Verify tool compatibility.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "95256 (256kb)",
+          "backup_method": "OBD coding + 95256 EEPROM backup",
+          "warning": "⚠️ CRITICAL: 95256 backup required before BDC work!"
+        }
+      }
+    },
+
+    "2 Series": {
+      "2014-2021": {
+        "platform": "F22 / F23 / F45 / F46 / F87",
+        "immobilizer": "FEM",
+        "key_type": "BMW F-Series Smart Key",
+        "key_blade": "HU100R",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Bench (FEM removal)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "FEM system. Behind glovebox. Standard bench procedure for AKL.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "95128 (128kb)",
+          "backup_method": "OBD coding + 95128 EEPROM read before AKL",
+          "warning": "⚠️ FEM 95128 backup required. Do NOT skip this step!"
+        }
+      },
+      "2022-2026": {
+        "platform": "G42 / G44 / U06",
+        "immobilizer": "BDC",
+        "key_type": "BMW G-Series Smart Key",
+        "key_blade": "HU100R",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Bench (BDC removal)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "New 2 Series and Active Tourer. BDC system.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "95256 (256kb)",
+          "backup_method": "OBD coding + 95256 EEPROM backup",
+          "warning": "⚠️ CRITICAL: BDC 95256 backup mandatory!"
+        }
+      }
+    },
+
+    "Z4": {
+      "2019-2026": {
+        "platform": "G29",
+        "immobilizer": "BDC",
+        "key_type": "BMW G-Series Smart Key",
+        "key_blade": "HU100R",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (auth required)",
+          "akl": "Bench (BDC removal)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "Co-developed with Toyota Supra. BDC system. Sports car premium pricing.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "95256 (256kb)",
+          "backup_method": "OBD coding + 95256 EEPROM backup required",
+          "warning": "⚠️ CRITICAL: Sports car = premium risk. 95256 backup MANDATORY!"
+        }
+      }
+    },
+
+    "i4": {
+      "2022-2026": {
+        "platform": "G26",
+        "immobilizer": "BDC / iDrive 8",
+        "key_type": "BMW Digital Key",
+        "key_blade": "HU100R (emergency)",
+        "programming": {
+          "has_key": "OBD (limited)",
+          "one_key": "Specialized tool",
+          "akl": "Dealer recommended"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": true,
+          "akl": true
+        },
+        "akl_supported": "Very Limited",
+        "risk_level": "Very High",
+        "notes": "Electric vehicle. Digital key primary. Proceed with extreme caution.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "95256 / new gen",
+          "backup_method": "Full backup required - EV has additional complexity",
+          "warning": "⚠️ EXTREME RISK: EV with digital key system. Full backup mandatory. Consider dealer."
+        }
+      }
+    },
+
+    "iX": {
+      "2022-2026": {
+        "platform": "I20",
+        "immobilizer": "BDC+ / UWB",
+        "key_type": "BMW Digital Key Plus",
+        "key_blade": "HU100R (emergency only)",
+        "programming": {
+          "has_key": "Limited OBD",
+          "one_key": "Dealer or specialized",
+          "akl": "Dealer only"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": true,
+          "akl": true
+        },
+        "akl_supported": "No",
+        "risk_level": "Very High",
+        "notes": "Flagship EV. UWB Ultra-Wideband digital key. Refer to dealer for most work.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "New generation",
+          "backup_method": "Dealer-level tools required",
+          "warning": "⚠️ EXTREME RISK: $80K+ flagship EV. UWB security. DEALER REFERRAL RECOMMENDED!"
+        }
+      }
+    },
+
+    "1 Series": {
+      "2012-2019": {
+        "platform": "F20 / F21",
+        "immobilizer": "FEM",
+        "key_type": "BMW F-Series Smart Key",
+        "key_blade": "HU100R",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Bench (FEM removal)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "FEM system. Standard bench procedures for AKL.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "95128 (128kb)",
+          "backup_method": "OBD coding backup + 95128 EEPROM read",
+          "warning": "⚠️ FEM 95128 backup required before service mode!"
+        }
+      },
+      "2020-2026": {
+        "platform": "F40",
+        "immobilizer": "BDC",
+        "key_type": "BMW G-Series Smart Key",
+        "key_blade": "HU100R",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Bench (BDC removal)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "New 1 Series with BDC. Encrypted system.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "95256 (256kb)",
+          "backup_method": "OBD coding + 95256 EEPROM backup",
+          "warning": "⚠️ CRITICAL: BDC 95256 backup mandatory before any work!"
+        }
+      }
+    }
+  }
+}
