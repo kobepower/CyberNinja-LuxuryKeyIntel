@@ -1,4 +1,664 @@
 {
   "Audi": {
+    "A3": {
+      "2008-2014": {
+        "platform": "8P (PQ35)",
+        "immobilizer": "IMMO4 / IMMO5",
+        "key_type": "Audi Flip Key",
+        "key_blade": "HU66",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "OBD or Cluster removal"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": false
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Low",
+        "notes": "Old platform. Straightforward OBD programming. Good profit job.",
+        "eeprom_info": {
+          "backup_required": false,
+          "chip_type": "N/A",
+          "backup_method": "Standard OBD backup",
+          "warning": "Low risk - older IMMO system. Standard procedures."
+        }
+      },
+      "2015-2020": {
+        "platform": "8V (MQB)",
+        "immobilizer": "MQB IMMO (BCM2)",
+        "key_type": "Audi MQB Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (IMMO data required)",
+          "akl": "Cluster removal + BCM2 read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "MQB platform. BCM2 system. Cluster EEPROM read may be required for AKL.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "BCM2 / Cluster EEPROM",
+          "backup_method": "Read cluster IMMO data with VVDI Prog or Multi-Prog",
+          "warning": "⚠️ BCM2 system - backup cluster data before AKL work!"
+        }
+      },
+      "2021-2026": {
+        "platform": "8Y (MQB-Evo)",
+        "immobilizer": "MQB-Evo / IMMO6",
+        "key_type": "Audi MQB Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (online may be required)",
+          "akl": "Specialized tool required"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "New A3 with enhanced security. Verify tool support before accepting.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "MQB-Evo cluster",
+          "backup_method": "Full backup required - new platform",
+          "warning": "⚠️ CRITICAL: New MQB-Evo - verify tool compatibility first!"
+        }
+      }
+    },
+
+    "A4": {
+      "2008-2016": {
+        "platform": "B8 (MLB)",
+        "immobilizer": "BCM1 / KESSY",
+        "key_type": "Audi Slot Key / Smart Key",
+        "key_blade": "HU66",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "OBD or BCM read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": false
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Low",
+        "notes": "Older MLB platform. KESSY system. Straightforward programming.",
+        "eeprom_info": {
+          "backup_required": false,
+          "chip_type": "N/A for most",
+          "backup_method": "OBD backup sufficient",
+          "warning": "Low risk - older system. Standard OBD procedures work."
+        }
+      },
+      "2017-2024": {
+        "platform": "B9 (MLB-Evo)",
+        "immobilizer": "BCM2",
+        "key_type": "Audi BCM2 Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (BCM2 data required)",
+          "akl": "BCM2 removal + dump read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "BCM2 platform. Component protection may apply. VVDI2 or Autel supported.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "BCM2 EEPROM",
+          "backup_method": "Read BCM2 with VVDI Prog BCM2 adapter",
+          "warning": "⚠️ BCM2 system - backup BCM2 data before AKL or component work!"
+        }
+      },
+      "2025-2026": {
+        "platform": "B10 (PPC)",
+        "immobilizer": "BCM2+ / New Gen",
+        "key_type": "Audi Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD (limited)",
+          "one_key": "Specialized tool",
+          "akl": "Dealer recommended"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": true,
+          "akl": true
+        },
+        "akl_supported": "Very Limited",
+        "risk_level": "Very High",
+        "notes": "Brand new A4. Limited aftermarket support initially.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "New generation",
+          "backup_method": "Dealer-level tools",
+          "warning": "⚠️ EXTREME RISK: New platform - dealer referral recommended."
+        }
+      }
+    },
+
+    "A5": {
+      "2008-2016": {
+        "platform": "8T (MLB)",
+        "immobilizer": "BCM1 / KESSY",
+        "key_type": "Audi Slot Key / Smart Key",
+        "key_blade": "HU66",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "OBD or BCM read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": false
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Low",
+        "notes": "Same as B8 A4. Straightforward procedures.",
+        "eeprom_info": {
+          "backup_required": false,
+          "chip_type": "N/A for most",
+          "backup_method": "OBD backup sufficient",
+          "warning": "Low risk - older platform."
+        }
+      },
+      "2017-2026": {
+        "platform": "F5 (MLB-Evo)",
+        "immobilizer": "BCM2",
+        "key_type": "Audi BCM2 Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "BCM2 removal + dump read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "BCM2 platform. Same procedures as B9 A4.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "BCM2 EEPROM",
+          "backup_method": "Read BCM2 with VVDI Prog BCM2 adapter",
+          "warning": "⚠️ BCM2 - backup before AKL work!"
+        }
+      }
+    },
+
+    "A6": {
+      "2005-2011": {
+        "platform": "C6",
+        "immobilizer": "IMMO3 / IMMO4",
+        "key_type": "Audi Flip Key",
+        "key_blade": "HU66",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "OBD"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": false
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Low",
+        "notes": "Old school. Easy OBD programming. Great profit margin.",
+        "eeprom_info": {
+          "backup_required": false,
+          "chip_type": "N/A",
+          "backup_method": "Standard OBD",
+          "warning": "Low risk - old system."
+        }
+      },
+      "2012-2018": {
+        "platform": "C7 (MLB)",
+        "immobilizer": "BCM1 / KESSY",
+        "key_type": "Audi Smart Key",
+        "key_blade": "HU66",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "BCM read may be required"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "MLB platform. BCM1/KESSY. Relatively straightforward.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "BCM EEPROM",
+          "backup_method": "Read BCM for AKL work",
+          "warning": "Backup BCM data before AKL."
+        }
+      },
+      "2019-2026": {
+        "platform": "C8 (MLB-Evo)",
+        "immobilizer": "BCM2",
+        "key_type": "Audi BCM2 Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (BCM2 data may be required)",
+          "akl": "BCM2 removal + specialized tools"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "BCM2 with enhanced security. Component protection active.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "BCM2 EEPROM",
+          "backup_method": "Full BCM2 dump required for AKL",
+          "warning": "⚠️ CRITICAL: BCM2 with component protection - full backup mandatory!"
+        }
+      }
+    },
+
+    "A7": {
+      "2011-2018": {
+        "platform": "4G (MLB)",
+        "immobilizer": "BCM1 / KESSY",
+        "key_type": "Audi Smart Key",
+        "key_blade": "HU66",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "BCM read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "Sportback. Same as C7 A6 platform.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "BCM EEPROM",
+          "backup_method": "Read BCM for AKL",
+          "warning": "Backup BCM data before AKL work."
+        }
+      },
+      "2019-2026": {
+        "platform": "4K (MLB-Evo)",
+        "immobilizer": "BCM2",
+        "key_type": "Audi BCM2 Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "BCM2 removal + dump read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "BCM2 platform. Component protection. Premium vehicle pricing.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "BCM2 EEPROM",
+          "backup_method": "Full BCM2 dump",
+          "warning": "⚠️ CRITICAL: BCM2 - backup mandatory before any work!"
+        }
+      }
+    },
+
+    "A8": {
+      "2010-2017": {
+        "platform": "D4 (MLB)",
+        "immobilizer": "BCM1 / KESSY",
+        "key_type": "Audi Smart Key",
+        "key_blade": "HU66",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "BCM read + specialized"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "Flagship sedan. Premium pricing. BCM1 system.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "BCM EEPROM",
+          "backup_method": "Full BCM read for AKL",
+          "warning": "High-value vehicle. Full backup before any work."
+        }
+      },
+      "2018-2026": {
+        "platform": "D5 (MLB-Evo)",
+        "immobilizer": "BCM2",
+        "key_type": "Audi BCM2 Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (dealer auth may be required)",
+          "akl": "BCM2 removal + specialized tools"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "Flagship with BCM2. Component protection. Very high value vehicle.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "BCM2 EEPROM",
+          "backup_method": "Full BCM2 dump mandatory",
+          "warning": "⚠️ CRITICAL: $100K+ flagship - full BCM2 backup mandatory. Price accordingly."
+        }
+      }
+    },
+
+    "Q3": {
+      "2012-2018": {
+        "platform": "8U (PQ35)",
+        "immobilizer": "IMMO5 / UDS",
+        "key_type": "Audi Flip Key / Smart Key",
+        "key_blade": "HU66",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "OBD or cluster read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": false
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Low",
+        "notes": "Older platform. Straightforward OBD work.",
+        "eeprom_info": {
+          "backup_required": false,
+          "chip_type": "N/A",
+          "backup_method": "Standard OBD",
+          "warning": "Low risk - older system."
+        }
+      },
+      "2019-2026": {
+        "platform": "F3 (MQB)",
+        "immobilizer": "MQB IMMO / BCM2",
+        "key_type": "Audi MQB Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Cluster removal + IMMO data read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "MQB platform. Cluster EEPROM may need reading for AKL.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "Cluster EEPROM / BCM2",
+          "backup_method": "Read cluster with VVDI Prog or Multi-Prog",
+          "warning": "⚠️ MQB system - backup cluster data for AKL!"
+        }
+      }
+    },
+
+    "Q5": {
+      "2009-2017": {
+        "platform": "8R (MLB)",
+        "immobilizer": "BCM1 / KESSY",
+        "key_type": "Audi Smart Key",
+        "key_blade": "HU66",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "BCM read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "Popular SUV. MLB platform. Standard BCM procedures.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "BCM EEPROM",
+          "backup_method": "Read BCM for AKL work",
+          "warning": "Backup BCM before AKL."
+        }
+      },
+      "2018-2026": {
+        "platform": "FY (MLB-Evo)",
+        "immobilizer": "BCM2",
+        "key_type": "Audi BCM2 Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "BCM2 removal + dump read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "BCM2 platform. Component protection may apply.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "BCM2 EEPROM",
+          "backup_method": "Full BCM2 dump for AKL",
+          "warning": "⚠️ BCM2 - backup before AKL work!"
+        }
+      }
+    },
+
+    "Q7": {
+      "2007-2015": {
+        "platform": "4L",
+        "immobilizer": "KESSY / BCM1",
+        "key_type": "Audi Smart Key",
+        "key_blade": "HU66",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "BCM read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "Large SUV. KESSY system. Standard procedures.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "BCM EEPROM",
+          "backup_method": "Read BCM for AKL",
+          "warning": "Backup BCM before AKL work."
+        }
+      },
+      "2016-2026": {
+        "platform": "4M (MLB-Evo)",
+        "immobilizer": "BCM2",
+        "key_type": "Audi BCM2 Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "BCM2 removal + specialized tools"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "BCM2 with component protection. Large SUV = premium pricing.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "BCM2 EEPROM",
+          "backup_method": "Full BCM2 dump mandatory",
+          "warning": "⚠️ CRITICAL: BCM2 with component protection - full backup required!"
+        }
+      }
+    },
+
+    "Q8": {
+      "2019-2026": {
+        "platform": "4M (MLB-Evo)",
+        "immobilizer": "BCM2",
+        "key_type": "Audi BCM2 Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "BCM2 removal + specialized tools"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "Flagship SUV coupe. BCM2 with full component protection. Premium pricing.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "BCM2 EEPROM",
+          "backup_method": "Full BCM2 dump mandatory",
+          "warning": "⚠️ CRITICAL: Flagship SUV - full BCM2 backup mandatory. Price high."
+        }
+      }
+    },
+
+    "e-tron": {
+      "2019-2026": {
+        "platform": "GE (MLB-Evo)",
+        "immobilizer": "BCM2 / EV System",
+        "key_type": "Audi BCM2 Smart Key",
+        "key_blade": "HU162T (emergency)",
+        "programming": {
+          "has_key": "OBD (limited)",
+          "one_key": "Specialized tool",
+          "akl": "Dealer recommended"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": true,
+          "akl": true
+        },
+        "akl_supported": "Very Limited",
+        "risk_level": "Very High",
+        "notes": "Electric vehicle. Additional EV complexity. Limited aftermarket support.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "BCM2 + EV modules",
+          "backup_method": "Full backup - EV adds complexity",
+          "warning": "⚠️ EXTREME RISK: EV with BCM2. Very limited support. Consider dealer referral."
+        }
+      }
+    },
+
+    "TT": {
+      "2007-2014": {
+        "platform": "8J (PQ35)",
+        "immobilizer": "IMMO4 / IMMO5",
+        "key_type": "Audi Flip Key",
+        "key_blade": "HU66",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "OBD"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": false
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Low",
+        "notes": "Sports car. Older platform. Easy OBD work.",
+        "eeprom_info": {
+          "backup_required": false,
+          "chip_type": "N/A",
+          "backup_method": "Standard OBD",
+          "warning": "Low risk - older system."
+        }
+      },
+      "2015-2026": {
+        "platform": "8S (MQB)",
+        "immobilizer": "MQB IMMO",
+        "key_type": "Audi MQB Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Cluster removal + IMMO data read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "MQB platform. Sports car premium pricing.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "Cluster EEPROM",
+          "backup_method": "Read cluster for AKL",
+          "warning": "⚠️ MQB - backup cluster data for AKL!"
+        }
+      }
+    }
   }
 }
