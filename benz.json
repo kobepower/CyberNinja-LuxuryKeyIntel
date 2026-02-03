@@ -1,4 +1,477 @@
 {
   "Mercedes-Benz": {
+    "C-Class": {
+      "2008-2014": {
+        "platform": "W204",
+        "immobilizer": "EIS (Electronic Ignition Switch)",
+        "key_type": "Mercedes Chrome Key / FBS3",
+        "key_blade": "HU64",
+        "programming": {
+          "has_key": "OBD (IR key read)",
+          "one_key": "OBD",
+          "akl": "EIS removal + key renewal"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "FBS3 system. EIS behind steering column. NEC chip keys. VVDI MB Tool or Autel supported.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "EIS EEPROM (varies by year)",
+          "backup_method": "Read EIS with VVDI MB Tool before AKL work",
+          "warning": "Backup EIS data before key renewal. NEC keys can be renewed."
+        }
+      },
+      "2015-2021": {
+        "platform": "W205",
+        "immobilizer": "EIS + FBS4",
+        "key_type": "Mercedes FBS4 Key",
+        "key_blade": "HU64",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (password required)",
+          "akl": "Dealer or specialized tool"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "FBS4 introduced. Online password calculation needed. VVDI MB or Autel IM608 Pro required.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "EIS EEPROM",
+          "backup_method": "Read EIS via OBD before any work. Save password data.",
+          "warning": "⚠️ CRITICAL: FBS4 requires online calculation. Backup EIS data before starting!"
+        }
+      },
+      "2022-2026": {
+        "platform": "W206",
+        "immobilizer": "FBS5 / MBUX",
+        "key_type": "Mercedes FBS5 Key",
+        "key_blade": "HU64 / Emergency",
+        "programming": {
+          "has_key": "OBD (limited)",
+          "one_key": "Dealer recommended",
+          "akl": "Dealer only"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": true,
+          "akl": true
+        },
+        "akl_supported": "No",
+        "risk_level": "Very High",
+        "notes": "Latest C-Class with FBS5. Very limited aftermarket support. Dealer referral recommended.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "New generation",
+          "backup_method": "Dealer-level tools required",
+          "warning": "⚠️ EXTREME RISK: FBS5 system. Most work requires dealer. Proceed with caution."
+        }
+      }
+    },
+
+    "E-Class": {
+      "2010-2016": {
+        "platform": "W212",
+        "immobilizer": "EIS / FBS3",
+        "key_type": "Mercedes Chrome Key FBS3",
+        "key_blade": "HU64",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "EIS removal + key renewal"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "FBS3 system. Standard EIS procedures. NEC chip renewal available.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "EIS EEPROM",
+          "backup_method": "Read EIS data with VVDI MB before AKL",
+          "warning": "Backup EIS before any key work. Standard FBS3 procedures."
+        }
+      },
+      "2017-2023": {
+        "platform": "W213",
+        "immobilizer": "EIS / FBS4",
+        "key_type": "Mercedes FBS4 Key",
+        "key_blade": "HU64",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (online calc required)",
+          "akl": "EIS removal + online calculation"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "FBS4 requires online password. VVDI MB Tool tokens or Autel subscription needed.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "EIS EEPROM",
+          "backup_method": "OBD backup + EIS read before AKL",
+          "warning": "⚠️ CRITICAL: FBS4 online calculation required. Backup EIS data first!"
+        }
+      },
+      "2024-2026": {
+        "platform": "W214",
+        "immobilizer": "FBS5",
+        "key_type": "Mercedes FBS5 Key",
+        "key_blade": "HU64 / Emergency",
+        "programming": {
+          "has_key": "OBD (very limited)",
+          "one_key": "Dealer recommended",
+          "akl": "Dealer only"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": true,
+          "akl": true
+        },
+        "akl_supported": "No",
+        "risk_level": "Very High",
+        "notes": "New E-Class with FBS5. Limited aftermarket support currently.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "New generation",
+          "backup_method": "Dealer tools",
+          "warning": "⚠️ EXTREME RISK: FBS5 - dealer referral recommended for most work."
+        }
+      }
+    },
+
+    "S-Class": {
+      "2007-2013": {
+        "platform": "W221",
+        "immobilizer": "EIS / FBS3",
+        "key_type": "Mercedes Chrome Key FBS3",
+        "key_blade": "HU64",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "EIS removal + key renewal"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "Flagship but FBS3 era. Standard procedures apply. Premium pricing.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "EIS EEPROM",
+          "backup_method": "Read EIS before AKL work",
+          "warning": "High-value vehicle. Backup EIS data. Charge premium."
+        }
+      },
+      "2014-2020": {
+        "platform": "W222",
+        "immobilizer": "EIS / FBS4",
+        "key_type": "Mercedes FBS4 Key",
+        "key_blade": "HU64",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (online calc)",
+          "akl": "EIS removal + online calculation"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "FBS4 flagship. Online password required. High-value vehicle = premium pricing.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "EIS EEPROM",
+          "backup_method": "Full EIS backup before any work",
+          "warning": "⚠️ CRITICAL: $100K+ vehicle. Full EIS backup mandatory. Price accordingly."
+        }
+      },
+      "2021-2026": {
+        "platform": "W223",
+        "immobilizer": "FBS4+ / FBS5",
+        "key_type": "Mercedes FBS5 Key / Digital Key",
+        "key_blade": "HU64 / Emergency",
+        "programming": {
+          "has_key": "OBD (limited)",
+          "one_key": "Dealer recommended",
+          "akl": "Dealer only"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": true,
+          "akl": true
+        },
+        "akl_supported": "No",
+        "risk_level": "Very High",
+        "notes": "Latest S-Class. Digital key option. Very limited aftermarket support.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "New generation",
+          "backup_method": "Dealer-level backup required",
+          "warning": "⚠️ EXTREME RISK: $150K+ flagship. Dealer referral strongly recommended."
+        }
+      }
+    },
+
+    "GLC": {
+      "2016-2022": {
+        "platform": "X253",
+        "immobilizer": "EIS / FBS4",
+        "key_type": "Mercedes FBS4 Key",
+        "key_blade": "HU64",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (online calc)",
+          "akl": "EIS removal + online calculation"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "Popular SUV. FBS4 system. Online password required for most work.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "EIS EEPROM",
+          "backup_method": "OBD backup + EIS read before AKL",
+          "warning": "⚠️ CRITICAL: FBS4 - backup EIS before programming!"
+        }
+      },
+      "2023-2026": {
+        "platform": "X254",
+        "immobilizer": "FBS4+ / FBS5",
+        "key_type": "Mercedes FBS5 Key",
+        "key_blade": "HU64",
+        "programming": {
+          "has_key": "OBD (limited)",
+          "one_key": "Online calc required",
+          "akl": "Dealer recommended"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Very Limited",
+        "risk_level": "Very High",
+        "notes": "New GLC generation. Enhanced security. Limited tool support.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "New generation EIS",
+          "backup_method": "Full backup before any work",
+          "warning": "⚠️ CRITICAL: New platform - verify tool support before accepting job!"
+        }
+      }
+    },
+
+    "GLE": {
+      "2012-2019": {
+        "platform": "W166",
+        "immobilizer": "EIS / FBS3 / FBS4",
+        "key_type": "Mercedes FBS3/FBS4 Key",
+        "key_blade": "HU64",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "EIS removal (method varies by year)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes (early) / Limited (late)",
+        "risk_level": "Medium-High",
+        "notes": "Mixed FBS3/FBS4 depending on year. Verify system before quoting.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "EIS EEPROM",
+          "backup_method": "Read EIS - check FBS3 vs FBS4 first",
+          "warning": "⚠️ IMPORTANT: Early models FBS3, late models FBS4. Verify before work!"
+        }
+      },
+      "2020-2026": {
+        "platform": "W167",
+        "immobilizer": "EIS / FBS4",
+        "key_type": "Mercedes FBS4 Key",
+        "key_blade": "HU64",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (online calc)",
+          "akl": "EIS removal + online calculation"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "FBS4 system. Online password calculation required.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "EIS EEPROM",
+          "backup_method": "Full EIS backup before AKL",
+          "warning": "⚠️ CRITICAL: FBS4 - backup EIS data before any programming!"
+        }
+      }
+    },
+
+    "GLA": {
+      "2014-2020": {
+        "platform": "X156",
+        "immobilizer": "EIS / FBS3 / FBS4",
+        "key_type": "Mercedes FBS3/FBS4 Key",
+        "key_blade": "HU64",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "EIS removal"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "Entry-level SUV. Mixed FBS3/FBS4 by year. Good profit margin job.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "EIS EEPROM",
+          "backup_method": "Read EIS before AKL",
+          "warning": "Check FBS3 vs FBS4 before starting work."
+        }
+      },
+      "2021-2026": {
+        "platform": "H247",
+        "immobilizer": "EIS / FBS4",
+        "key_type": "Mercedes FBS4 Key",
+        "key_blade": "HU64",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (online calc)",
+          "akl": "EIS removal + online calculation"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "New GLA platform. FBS4 with online calculation required.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "EIS EEPROM",
+          "backup_method": "OBD + EIS backup before work",
+          "warning": "⚠️ CRITICAL: FBS4 system - backup EIS first!"
+        }
+      }
+    },
+
+    "A-Class": {
+      "2019-2026": {
+        "platform": "W177",
+        "immobilizer": "EIS / FBS4",
+        "key_type": "Mercedes FBS4 Key",
+        "key_blade": "HU64",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (online calc)",
+          "akl": "EIS removal + online calculation"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "Entry sedan. FBS4 system. Online password required.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "EIS EEPROM",
+          "backup_method": "Backup EIS before any key work",
+          "warning": "⚠️ CRITICAL: FBS4 - always backup EIS data first!"
+        }
+      }
+    },
+
+    "Sprinter": {
+      "2007-2018": {
+        "platform": "W906",
+        "immobilizer": "EIS / EZS",
+        "key_type": "Mercedes Sprinter Key",
+        "key_blade": "HU64 / HU39",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "EZS removal"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "Commercial van. EZS system. Different from car Mercedes. Good bread-and-butter job.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "EZS EEPROM",
+          "backup_method": "Read EZS with VVDI MB or VVDI Prog",
+          "warning": "Sprinter uses EZS not EIS. Backup before AKL work."
+        }
+      },
+      "2019-2026": {
+        "platform": "W907 / W910",
+        "immobilizer": "EZS / FBS4",
+        "key_type": "Mercedes Sprinter FBS4 Key",
+        "key_blade": "HU64",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (may need online calc)",
+          "akl": "EZS removal + online calculation"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "New Sprinter with FBS4 elements. Online calculation may be needed.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "EZS EEPROM",
+          "backup_method": "Full EZS backup before work",
+          "warning": "⚠️ CRITICAL: New Sprinter - verify tool support and backup EZS first!"
+        }
+      }
+    }
   }
 }
