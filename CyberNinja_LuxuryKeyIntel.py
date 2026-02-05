@@ -1,6 +1,6 @@
 """
 CyberNinja Luxury Key Intelligence
-Professional BMW / Mercedes / Audi Key Programming Reference
+Professional BMW / Mercedes / Audi / VW Key Programming Reference
 Matching CyberNinja Cluster ID aesthetic
 """
 
@@ -65,6 +65,7 @@ class LuxuryKeyIntel(ctk.CTk):
         self.bmw_data = self.load_json("bmw.json")
         self.benz_data = self.load_json("benz.json")
         self.audi_data = self.load_json("audi.json")
+        self.vw_data = self.load_json("vw.json")  # Added VW
 
     def load_json(self, filename):
         """Load a JSON file, return empty dict if not found"""
@@ -85,6 +86,8 @@ class LuxuryKeyIntel(ctk.CTk):
             return sorted(self.benz_data.get("Mercedes-Benz", {}).keys())
         elif make == "Audi":
             return sorted(self.audi_data.get("Audi", {}).keys())
+        elif make == "Volkswagen":
+            return sorted(self.vw_data.get("Volkswagen", {}).keys())
         return []
 
     def resolve_vehicle(self, make, model, year, key_status):
@@ -95,6 +98,8 @@ class LuxuryKeyIntel(ctk.CTk):
             brand_data = self.benz_data.get("Mercedes-Benz", {})
         elif make == "Audi":
             brand_data = self.audi_data.get("Audi", {})
+        elif make == "Volkswagen":
+            brand_data = self.vw_data.get("Volkswagen", {})
         else:
             return None
 
@@ -107,6 +112,7 @@ class LuxuryKeyIntel(ctk.CTk):
                 start, end = map(int, year_range.split("-"))
                 if start <= year <= end:
                     eeprom_info = info.get("eeprom_info", {})
+                    xhorse_info = info.get("xhorse_tool_support", {})
                     return {
                         "platform": info.get("platform", "Unknown"),
                         "immobilizer": info.get("immobilizer", "Unknown"),
@@ -121,7 +127,13 @@ class LuxuryKeyIntel(ctk.CTk):
                         "backup_required": eeprom_info.get("backup_required", False),
                         "backup_warning": eeprom_info.get("warning", ""),
                         "notes": info.get("notes", "No additional notes"),
-                        "year_range": year_range
+                        "year_range": year_range,
+                        # Xhorse tool support
+                        "mlb_tool": xhorse_info.get("mlb_tool", False),
+                        "mqb_adapter": xhorse_info.get("mqb_adapter", False),
+                        "xhorse_notes": xhorse_info.get("mlb_notes", xhorse_info.get("adapter_notes", xhorse_info.get("notes", ""))),
+                        "xhorse_workflow": xhorse_info.get("workflow", ""),
+                        "recommended_tool": xhorse_info.get("recommended_tool", "")
                     }
             except:
                 continue
@@ -147,14 +159,18 @@ class LuxuryKeyIntel(ctk.CTk):
         if not vin.isalnum():
             return {"valid": False, "message": "Must be alphanumeric"}
         
-        # WMI decode
+        # WMI decode - added VW
         wmi = vin[:3]
         wmi_map = {
             "WBA": "BMW (Germany)", "WBS": "BMW M", "WBY": "BMW i",
             "4US": "BMW (USA)", "5UX": "BMW X (USA)", "5YM": "BMW M (USA)",
             "WDB": "Mercedes-Benz", "WDC": "Mercedes SUV", "WDD": "Mercedes",
             "4JG": "Mercedes (USA)", "55S": "AMG",
-            "WAU": "Audi", "WUA": "Audi Quattro", "TRU": "Audi (Hungary)"
+            "WAU": "Audi", "WUA": "Audi Quattro", "TRU": "Audi (Hungary)",
+            # VW WMI codes
+            "WVW": "Volkswagen (Germany)", "WVG": "VW SUV (Germany)",
+            "3VW": "VW (Mexico)", "1VW": "VW (USA)",
+            "9BW": "VW (Brazil)", "AAV": "VW (Argentina)"
         }
         manufacturer = wmi_map.get(wmi, "Unknown")
         
@@ -175,6 +191,8 @@ class LuxuryKeyIntel(ctk.CTk):
             make = "Mercedes-Benz"
         elif wmi in ["WAU", "WUA", "TRU"]:
             make = "Audi"
+        elif wmi in ["WVW", "WVG", "3VW", "1VW", "9BW", "AAV"]:
+            make = "Volkswagen"
         
         return {
             "valid": True,
@@ -205,7 +223,7 @@ class LuxuryKeyIntel(ctk.CTk):
 
         ctk.CTkLabel(
             title_frame,
-            text="BMW • MERCEDES • AUDI",
+            text="BMW • MERCEDES • AUDI • VW",
             font=("Consolas", 14),
             text_color=CYBER_MAGENTA
         ).pack(side="left", padx=20)
@@ -231,14 +249,14 @@ class LuxuryKeyIntel(ctk.CTk):
         sep1 = ctk.CTkFrame(left_panel, fg_color=CYBER_CYAN, height=2)
         sep1.pack(fill="x", padx=20, pady=10)
 
-        # Make
+        # Make - Added Volkswagen
         ctk.CTkLabel(left_panel, text="Make:", font=("Consolas", 12, "bold"),
                      text_color=CYBER_ACCENT).pack(anchor="w", padx=25, pady=(15, 5))
         self.make_var = ctk.StringVar(value="Select Make")
         self.make_menu = ctk.CTkOptionMenu(
             left_panel,
             variable=self.make_var,
-            values=["Select Make", "BMW", "Mercedes-Benz", "Audi"],
+            values=["Select Make", "BMW", "Mercedes-Benz", "Audi", "Volkswagen"],
             width=260,
             height=40,
             font=("Consolas", 12),
@@ -273,7 +291,7 @@ class LuxuryKeyIntel(ctk.CTk):
         ctk.CTkLabel(left_panel, text="Year:", font=("Consolas", 12, "bold"),
                      text_color=CYBER_ACCENT).pack(anchor="w", padx=25, pady=(15, 5))
         self.year_var = ctk.StringVar(value="Select Year")
-        years = ["Select Year"] + [str(y) for y in range(2026, 2009, -1)]
+        years = ["Select Year"] + [str(y) for y in range(2026, 2004, -1)]
         self.year_menu = ctk.CTkOptionMenu(
             left_panel,
             variable=self.year_var,
@@ -344,9 +362,13 @@ class LuxuryKeyIntel(ctk.CTk):
                      font=("Consolas", 11, "bold"), text_color=CYBER_CYAN).pack(pady=10)
 
         bmw_count = len(self.bmw_data.get("BMW", {}))
+        audi_count = len(self.audi_data.get("Audi", {}))
+        vw_count = len(self.vw_data.get("Volkswagen", {}))
+        benz_count = len(self.benz_data.get("Mercedes-Benz", {}))
+        
         self.stat_label = ctk.CTkLabel(
             self.stats_frame,
-            text=f"BMW Models: {bmw_count}\nMercedes: Coming Soon\nAudi: Coming Soon",
+            text=f"BMW Models: {bmw_count}\nAudi Models: {audi_count}\nVW Models: {vw_count}\nMercedes: {benz_count if benz_count > 0 else 'Coming Soon'}",
             font=("Consolas", 10),
             text_color=CYBER_ACCENT,
             justify="left"
@@ -385,7 +407,7 @@ class LuxuryKeyIntel(ctk.CTk):
         )
         self.results_scroll.pack(fill="both", expand=True, padx=15, pady=10)
 
-        # Result fields
+        # Result fields - Added Xhorse tool fields
         self.result_labels = {}
         fields = [
             ("Platform / Chassis", "platform", CYBER_CYAN),
@@ -399,6 +421,8 @@ class LuxuryKeyIntel(ctk.CTk):
             ("EEPROM Chip", "eeprom_chip", CYBER_YELLOW),
             ("Backup Method", "backup_method", CYBER_ORANGE),
             ("⚠️ BACKUP WARNING", "backup_warning", CYBER_RED),
+            ("🔧 XHORSE TOOL SUPPORT", "xhorse_tools", CYBER_BLUE),
+            ("📋 XHORSE WORKFLOW", "xhorse_workflow", CYBER_BLUE),
             ("Notes", "notes", CYBER_ACCENT)
         ]
 
@@ -635,6 +659,39 @@ class LuxuryKeyIntel(ctk.CTk):
             )
             return
 
+        # Build Xhorse tool support text
+        xhorse_tools_text = ""
+        mlb = result.get("mlb_tool", False)
+        mqb = result.get("mqb_adapter", False)
+        
+        if mlb == True:
+            xhorse_tools_text += "✅ MLB Tool (XDMLB0): SUPPORTED\n"
+        elif mlb == "Limited" or mlb == "Verify":
+            xhorse_tools_text += f"⚠️ MLB Tool: {mlb}\n"
+        else:
+            xhorse_tools_text += "❌ MLB Tool: Not applicable\n"
+            
+        if mqb == True:
+            xhorse_tools_text += "✅ MQB Adapter (XDMQBAGL): SUPPORTED"
+        elif mqb == "Limited":
+            xhorse_tools_text += "⚠️ MQB Adapter: Limited support"
+        else:
+            xhorse_tools_text += "❌ MQB Adapter: Not applicable"
+        
+        if result.get("recommended_tool"):
+            xhorse_tools_text += f"\n🎯 Recommended: {result.get('recommended_tool')}"
+
+        # Build workflow text
+        workflow_text = ""
+        if result.get("xhorse_notes"):
+            workflow_text = result.get("xhorse_notes", "")
+        if result.get("xhorse_workflow"):
+            if workflow_text:
+                workflow_text += "\n"
+            workflow_text += result.get("xhorse_workflow", "")
+        if not workflow_text:
+            workflow_text = "Standard procedures apply"
+
         # Update result labels
         field_map = {
             "Platform / Chassis": "platform",
@@ -698,6 +755,10 @@ class LuxuryKeyIntel(ctk.CTk):
                         label.configure(text_color=CYBER_YELLOW)
                     else:
                         label.configure(text_color=CYBER_GREEN)
+
+        # Update Xhorse tool fields
+        self.result_labels["🔧 XHORSE TOOL SUPPORT"].configure(text=xhorse_tools_text, text_color=CYBER_BLUE)
+        self.result_labels["📋 XHORSE WORKFLOW"].configure(text=workflow_text, text_color=CYBER_ACCENT)
 
         # Update quick info
         blade = result.get("key_blade", "—")
