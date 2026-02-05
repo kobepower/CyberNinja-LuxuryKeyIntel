@@ -1,0 +1,824 @@
+{
+  "tool_reference": {
+    "xhorse_mlb_tool": {
+      "model": "XDMLB0",
+      "name": "Xhorse VVDI MLB Tool Key Programmer",
+      "description": "Specialized programmer for MLB platform vehicles (Audi, Porsche, VW, Lamborghini, Bentley)",
+      "supported_brands": ["Audi", "Porsche", "Volkswagen", "Lamborghini", "Bentley"],
+      "supported_platforms": ["MLB", "MLB-Evo"],
+      "features": [
+        "Read/write/calculate key data without removing chip",
+        "Integrated 22k reader for wireless key reading/writing",
+        "No shell removal required for key generation",
+        "Built-in IMMO detection module",
+        "Supports original keys (uninitialized & initialized)",
+        "Supports VVDI MLB specialized keys (unlimited reuse)",
+        "Can rewrite uninitialized original key IDs",
+        "No on-vehicle data collection needed"
+      ],
+      "requirements": {
+        "vvdi2": "Requires VV-05 MQB + VV-02 VAG IMMO5 license activated",
+        "key_tool_plus": "Works directly with tablet"
+      },
+      "workflow": {
+        "standalone": "Collect key data → Upload for calculation → Get IMMO data (no vehicle access needed)",
+        "with_vvdi2": "MLB Tool reads key → VVDI2 generates & learns key",
+        "with_key_tool_plus": "Tablet connects to MLB Tool → Read/generate/learn key directly"
+      },
+      "key_types_supported": [
+        "Brand new original keys (uninitialized)",
+        "Original keys (initialized) - can verify status",
+        "VVDI MLB specialized keys (reusable)"
+      ],
+      "no_points_required": true,
+      "notes": "Excel at adding keys without vehicle access. Game changer for MLB platform."
+    },
+    "xhorse_mqb_adapter": {
+      "model": "XDMQBAGL",
+      "name": "Xhorse MQB Adapter for MLB Tool",
+      "description": "Adapter that works WITH MLB Tool to add MQB48 keys without cluster disassembly",
+      "supported_platforms": ["MQB", "MQB48"],
+      "features": [
+        "No instrument cluster disassembly required",
+        "Only key shell disassembly needed",
+        "Only 2 wires to solder",
+        "Low risk, simple operation",
+        "Supports most MQB48 keys"
+      ],
+      "requirements": {
+        "hardware": "Must have MLB Tool (XDMLB0)",
+        "vvdi2": "Needs MQB function enabled (NOT MQB48 NEC35XX locking function)",
+        "key_tool_plus": "Needs 4th generation authorization (NOT MQB48 NEC35XX locking function)"
+      },
+      "workflow": {
+        "vvdi2": [
+          "1. Use MLB Tool + MQB Adapter to read IMMO data from MQB48 key",
+          "2. Use VVDI2 to load IMMO data from step 1",
+          "3. Generate key, learn key"
+        ],
+        "key_tool_plus": [
+          "1. Connect tablet to MLB Tool + MQB Adapter",
+          "2. Read IMMO data from MQB48 key",
+          "3. Load IMMO data → generate key → learn key"
+        ]
+      },
+      "wiring": {
+        "instruction": "Remove one capacitor (near IC position) on original key. Solder socket cables to key per wiring diagram colors.",
+        "warning": "⚠️ STRONGLY RECOMMENDED: Use computer instead of tablet for data collection"
+      },
+      "notes": "Works with MLB Tool to bypass cluster removal on MQB48 vehicles."
+    }
+  },
+  "Volkswagen": {
+    "Golf": {
+      "2006-2014": {
+        "platform": "MK6 / MK5 (PQ35)",
+        "immobilizer": "IMMO3 / IMMO4",
+        "key_type": "VW Flip Key",
+        "key_blade": "HU66",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "OBD (PIN required)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": false
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Low",
+        "notes": "Old school VW. Easy OBD programming. PIN/CS from cluster or dealer. Great profit job.",
+        "eeprom_info": {
+          "backup_required": false,
+          "chip_type": "N/A",
+          "backup_method": "Standard OBD backup",
+          "warning": "Low risk - older IMMO system. Straightforward work."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": false,
+          "recommended_tool": "VVDI2 VAG / Key Tool Plus standard"
+        }
+      },
+      "2015-2021": {
+        "platform": "MK7 / MK7.5 (MQB)",
+        "immobilizer": "MQB IMMO (UDS)",
+        "key_type": "VW MQB Smart Key / Flip Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (IMMO data backup recommended)",
+          "akl": "Cluster removal + IMMO data read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "MQB platform. Cluster contains IMMO data. VVDI2 or Key Tool Plus supported.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "Cluster EEPROM (NEC/Renesas)",
+          "backup_method": "Read cluster with VVDI Prog or Multi-Prog for AKL",
+          "warning": "⚠️ MQB system - backup cluster IMMO data for AKL work!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": true,
+          "adapter_notes": "MQB48 keys - use MLB Tool + MQB Adapter to AVOID cluster disassembly!",
+          "workflow": "MLB Tool + MQB Adapter → Read IMMO from key → VVDI2/Key Tool Plus → Generate & learn",
+          "wiring_required": "Remove capacitor near IC, solder 2 wires per diagram",
+          "recommended_tool": "MLB Tool + MQB Adapter (saves cluster pull)"
+        }
+      },
+      "2022-2026": {
+        "platform": "MK8 (MQB-Evo)",
+        "immobilizer": "MQB-Evo / IMMO6",
+        "key_type": "VW MQB Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD (online may be required)",
+          "akl": "Cluster removal + specialized tools"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "New MK8 with enhanced MQB-Evo. Digital cockpit. Verify tool support before accepting.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "MQB-Evo cluster",
+          "backup_method": "Full cluster backup - new platform",
+          "warning": "⚠️ CRITICAL: MQB-Evo - verify tool compatibility before starting!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": "Limited",
+          "adapter_notes": "MQB-Evo may have limited MQB Adapter support - verify before job",
+          "recommended_tool": "Check Xhorse updates for MQB-Evo support"
+        }
+      }
+    },
+
+    "Jetta": {
+      "2006-2010": {
+        "platform": "MK5 (PQ35)",
+        "immobilizer": "IMMO3 / IMMO4",
+        "key_type": "VW Flip Key",
+        "key_blade": "HU66",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "OBD (PIN required)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": false
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Low",
+        "notes": "Easy OBD work. PIN from cluster or dealer. Bread and butter job.",
+        "eeprom_info": {
+          "backup_required": false,
+          "chip_type": "N/A",
+          "backup_method": "Standard OBD",
+          "warning": "Low risk - older system."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": false,
+          "recommended_tool": "VVDI2 VAG standard"
+        }
+      },
+      "2011-2018": {
+        "platform": "MK6 (PQ25/PQ35)",
+        "immobilizer": "IMMO4 / IMMO5",
+        "key_type": "VW Flip Key",
+        "key_blade": "HU66",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "OBD or cluster read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": false
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Low",
+        "notes": "Straightforward programming. Some late models may need cluster data.",
+        "eeprom_info": {
+          "backup_required": false,
+          "chip_type": "N/A for most",
+          "backup_method": "OBD backup sufficient",
+          "warning": "Low risk - standard procedures."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": false,
+          "recommended_tool": "VVDI2 VAG standard"
+        }
+      },
+      "2019-2026": {
+        "platform": "MK7 (MQB)",
+        "immobilizer": "MQB IMMO",
+        "key_type": "VW MQB Smart Key / Flip Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Cluster removal + IMMO data read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "MQB platform Jetta. Cluster IMMO data needed for AKL.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "Cluster EEPROM",
+          "backup_method": "Read cluster for AKL work",
+          "warning": "⚠️ MQB - backup cluster data for AKL!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": true,
+          "adapter_notes": "MQB48 keys - MLB Tool + MQB Adapter avoids cluster removal",
+          "workflow": "MLB Tool + MQB Adapter → Read IMMO → Generate & learn",
+          "recommended_tool": "MLB Tool + MQB Adapter"
+        }
+      }
+    },
+
+    "Passat": {
+      "2006-2015": {
+        "platform": "B6 / B7 (PQ46)",
+        "immobilizer": "IMMO4 / IMMO5",
+        "key_type": "VW Flip Key / Smart Key",
+        "key_blade": "HU66",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "OBD or cluster read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": false
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Low",
+        "notes": "Older Passat. Some with KESSY smart entry. Easy OBD work.",
+        "eeprom_info": {
+          "backup_required": false,
+          "chip_type": "N/A",
+          "backup_method": "Standard OBD",
+          "warning": "Low risk - older platform."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": false,
+          "recommended_tool": "VVDI2 VAG standard"
+        }
+      },
+      "2016-2022": {
+        "platform": "B8 (MQB)",
+        "immobilizer": "MQB IMMO",
+        "key_type": "VW MQB Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Cluster removal + IMMO data read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "MQB Passat. KESSY smart key standard. Cluster read for AKL.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "Cluster EEPROM",
+          "backup_method": "Read cluster with VVDI Prog for AKL",
+          "warning": "⚠️ MQB - backup cluster IMMO data before AKL!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": true,
+          "adapter_notes": "MQB48 keys - use MLB Tool + MQB Adapter to avoid cluster pull",
+          "workflow": "MLB Tool + MQB Adapter → Read IMMO → Generate & learn",
+          "recommended_tool": "MLB Tool + MQB Adapter"
+        }
+      },
+      "2023-2026": {
+        "platform": "B9 (MQB-Evo)",
+        "immobilizer": "MQB-Evo",
+        "key_type": "VW MQB Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Cluster removal + specialized tools"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "New Passat. MQB-Evo with enhanced security. Verify tool support.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "MQB-Evo cluster",
+          "backup_method": "Full backup required",
+          "warning": "⚠️ CRITICAL: New platform - verify compatibility!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": "Limited",
+          "adapter_notes": "MQB-Evo - verify adapter support before accepting",
+          "recommended_tool": "Check Xhorse updates"
+        }
+      }
+    },
+
+    "Tiguan": {
+      "2009-2017": {
+        "platform": "5N (PQ35)",
+        "immobilizer": "IMMO4 / IMMO5",
+        "key_type": "VW Flip Key",
+        "key_blade": "HU66",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "OBD (PIN required)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": false
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Low",
+        "notes": "Popular compact SUV. Older platform. Easy OBD work.",
+        "eeprom_info": {
+          "backup_required": false,
+          "chip_type": "N/A",
+          "backup_method": "Standard OBD",
+          "warning": "Low risk - older system."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": false,
+          "recommended_tool": "VVDI2 VAG standard"
+        }
+      },
+      "2018-2026": {
+        "platform": "AD1 (MQB)",
+        "immobilizer": "MQB IMMO",
+        "key_type": "VW MQB Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Cluster removal + IMMO data read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "MQB Tiguan. Very common vehicle. Good bread and butter work.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "Cluster EEPROM",
+          "backup_method": "Read cluster for AKL",
+          "warning": "⚠️ MQB - backup cluster data for AKL!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": true,
+          "adapter_notes": "MQB48 keys - MLB Tool + MQB Adapter saves cluster removal",
+          "workflow": "MLB Tool + MQB Adapter → Read IMMO → Generate & learn",
+          "recommended_tool": "MLB Tool + MQB Adapter"
+        }
+      }
+    },
+
+    "Atlas": {
+      "2018-2026": {
+        "platform": "CA1 (MQB)",
+        "immobilizer": "MQB IMMO",
+        "key_type": "VW MQB Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Cluster removal + IMMO data read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "Large 3-row SUV. MQB platform. Popular family vehicle.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "Cluster EEPROM",
+          "backup_method": "Read cluster for AKL work",
+          "warning": "⚠️ MQB - backup cluster IMMO data before AKL!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": true,
+          "adapter_notes": "MQB48 keys - use MLB Tool + MQB Adapter",
+          "workflow": "MLB Tool + MQB Adapter → Read IMMO → Generate & learn",
+          "recommended_tool": "MLB Tool + MQB Adapter"
+        }
+      }
+    },
+
+    "Arteon": {
+      "2019-2026": {
+        "platform": "3H (MQB)",
+        "immobilizer": "MQB IMMO",
+        "key_type": "VW MQB Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Cluster removal + IMMO data read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "Luxury VW sedan. MQB platform. Premium pricing for premium car.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "Cluster EEPROM",
+          "backup_method": "Read cluster for AKL",
+          "warning": "⚠️ MQB - backup cluster data for AKL. Luxury car = careful work."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": true,
+          "adapter_notes": "MQB48 - MLB Tool + MQB Adapter avoids cluster pull",
+          "recommended_tool": "MLB Tool + MQB Adapter"
+        }
+      }
+    },
+
+    "Touareg": {
+      "2011-2018": {
+        "platform": "7P (MLB)",
+        "immobilizer": "KESSY / BCM1",
+        "key_type": "VW Smart Key",
+        "key_blade": "HU66",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "BCM read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "Luxury SUV. KESSY system. Different from standard VW platform.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "KESSY module EEPROM",
+          "backup_method": "Read KESSY for AKL work",
+          "warning": "KESSY system - backup module data for AKL."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": true,
+          "mqb_adapter": false,
+          "mlb_notes": "MLB platform - MLB Tool SUPPORTED for wireless key operations",
+          "workflow": "MLB Tool reads key → Calculate → Generate via VVDI2/Key Tool Plus",
+          "no_vehicle_needed": true,
+          "recommended_tool": "MLB Tool (XDMLB0)"
+        }
+      },
+      "2019-2026": {
+        "platform": "CR (MLB-Evo)",
+        "immobilizer": "BCM2 (Audi shared)",
+        "key_type": "VW Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "BCM2 removal + dump read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "Shares MLB-Evo with Audi Q7/Q8. BCM2 system. Component protection.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "BCM2 EEPROM",
+          "backup_method": "Full BCM2 dump required",
+          "warning": "⚠️ CRITICAL: BCM2 system (Audi shared) - full backup mandatory!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": true,
+          "mqb_adapter": false,
+          "mlb_notes": "MLB-Evo SUPPORTED - wireless key generation, no vehicle access needed",
+          "workflow": "MLB Tool → Read key (no chip removal) → Calculate → Generate",
+          "no_vehicle_needed": true,
+          "recommended_tool": "MLB Tool (XDMLB0)"
+        }
+      }
+    },
+
+    "Taos": {
+      "2022-2026": {
+        "platform": "BW (MQB)",
+        "immobilizer": "MQB IMMO",
+        "key_type": "VW MQB Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Cluster removal + IMMO data read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "Compact SUV. Standard MQB platform. Common procedures apply.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "Cluster EEPROM",
+          "backup_method": "Read cluster for AKL",
+          "warning": "⚠️ MQB - backup cluster data for AKL!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": true,
+          "adapter_notes": "MQB48 - use MLB Tool + MQB Adapter",
+          "recommended_tool": "MLB Tool + MQB Adapter"
+        }
+      }
+    },
+
+    "ID.4": {
+      "2021-2026": {
+        "platform": "MEB (Electric)",
+        "immobilizer": "MEB IMMO / Digital Key",
+        "key_type": "VW ID Smart Key",
+        "key_blade": "HU162T (emergency)",
+        "programming": {
+          "has_key": "OBD (limited)",
+          "one_key": "Specialized tool required",
+          "akl": "Dealer recommended"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": true,
+          "akl": true
+        },
+        "akl_supported": "Very Limited",
+        "risk_level": "Very High",
+        "notes": "Electric vehicle. MEB platform. Digital key option. Very limited aftermarket support.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "MEB modules",
+          "backup_method": "Dealer-level tools recommended",
+          "warning": "⚠️ EXTREME RISK: EV platform. Very limited support. Consider dealer referral."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": false,
+          "notes": "MEB platform - not MLB or MQB. Limited aftermarket support."
+        }
+      }
+    },
+
+    "ID.Buzz": {
+      "2024-2026": {
+        "platform": "MEB (Electric)",
+        "immobilizer": "MEB IMMO / Digital Key",
+        "key_type": "VW ID Smart Key",
+        "key_blade": "HU162T (emergency)",
+        "programming": {
+          "has_key": "OBD (very limited)",
+          "one_key": "Dealer recommended",
+          "akl": "Dealer only"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": true,
+          "akl": true
+        },
+        "akl_supported": "No",
+        "risk_level": "Very High",
+        "notes": "Electric van. Brand new model. Extremely limited aftermarket support.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "MEB modules",
+          "backup_method": "Dealer tools only",
+          "warning": "⚠️ EXTREME RISK: New EV. Dealer referral recommended for most work."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": false,
+          "notes": "MEB platform - no MLB/MQB tool support"
+        }
+      }
+    },
+
+    "GTI": {
+      "2006-2014": {
+        "platform": "MK5 / MK6 (PQ35)",
+        "immobilizer": "IMMO3 / IMMO4",
+        "key_type": "VW Flip Key",
+        "key_blade": "HU66",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "OBD (PIN required)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": false
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Low",
+        "notes": "Performance Golf. Same as regular Golf platform. Easy work.",
+        "eeprom_info": {
+          "backup_required": false,
+          "chip_type": "N/A",
+          "backup_method": "Standard OBD",
+          "warning": "Low risk - older system. Same as Golf."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": false,
+          "recommended_tool": "VVDI2 VAG standard"
+        }
+      },
+      "2015-2021": {
+        "platform": "MK7 / MK7.5 (MQB)",
+        "immobilizer": "MQB IMMO",
+        "key_type": "VW MQB Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Cluster removal + IMMO data read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "MQB GTI. Same as MK7 Golf. Enthusiast car = careful customers.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "Cluster EEPROM",
+          "backup_method": "Read cluster for AKL",
+          "warning": "⚠️ MQB - backup cluster data for AKL work!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": true,
+          "adapter_notes": "MQB48 - MLB Tool + MQB Adapter avoids cluster pull",
+          "recommended_tool": "MLB Tool + MQB Adapter"
+        }
+      },
+      "2022-2026": {
+        "platform": "MK8 (MQB-Evo)",
+        "immobilizer": "MQB-Evo",
+        "key_type": "VW MQB Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Cluster removal + specialized tools"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "MK8 GTI. MQB-Evo platform. Verify tool support.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "MQB-Evo cluster",
+          "backup_method": "Full backup required",
+          "warning": "⚠️ CRITICAL: MQB-Evo - verify tool compatibility!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": "Limited",
+          "adapter_notes": "MQB-Evo - verify adapter support",
+          "recommended_tool": "Check Xhorse updates for MQB-Evo"
+        }
+      }
+    },
+
+    "Golf R": {
+      "2015-2021": {
+        "platform": "MK7 / MK7.5 (MQB)",
+        "immobilizer": "MQB IMMO",
+        "key_type": "VW MQB Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Cluster removal + IMMO data read"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "Top performance Golf. MQB platform. Premium pricing for premium car.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "Cluster EEPROM",
+          "backup_method": "Read cluster for AKL",
+          "warning": "⚠️ MQB - backup cluster data. Performance car = careful work."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": true,
+          "adapter_notes": "MQB48 - use MLB Tool + MQB Adapter",
+          "recommended_tool": "MLB Tool + MQB Adapter"
+        }
+      },
+      "2022-2026": {
+        "platform": "MK8 (MQB-Evo)",
+        "immobilizer": "MQB-Evo",
+        "key_type": "VW MQB Smart Key",
+        "key_blade": "HU162T",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Cluster removal + specialized tools"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "MK8 Golf R. MQB-Evo with enhanced security. High-value vehicle.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "MQB-Evo cluster",
+          "backup_method": "Full backup required",
+          "warning": "⚠️ CRITICAL: MQB-Evo. $45K+ car - verify tools and charge premium!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": "Limited",
+          "adapter_notes": "MQB-Evo - verify support before accepting",
+          "recommended_tool": "Check Xhorse updates"
+        }
+      }
+    }
+  }
+}
