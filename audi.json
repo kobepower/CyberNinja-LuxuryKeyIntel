@@ -1,4 +1,74 @@
 {
+  "tool_reference": {
+    "xhorse_mlb_tool": {
+      "model": "XDMLB0",
+      "name": "Xhorse VVDI MLB Tool Key Programmer",
+      "description": "Specialized programmer for MLB platform vehicles (Audi, Porsche, VW, Lamborghini, Bentley)",
+      "supported_brands": ["Audi", "Porsche", "Volkswagen", "Lamborghini", "Bentley"],
+      "supported_platforms": ["MLB", "MLB-Evo"],
+      "features": [
+        "Read/write/calculate key data without removing chip",
+        "Integrated 22k reader for wireless key reading/writing",
+        "No shell removal required for key generation",
+        "Built-in IMMO detection module",
+        "Supports original keys (uninitialized & initialized)",
+        "Supports VVDI MLB specialized keys (unlimited reuse)",
+        "Can rewrite uninitialized original key IDs",
+        "No on-vehicle data collection needed"
+      ],
+      "requirements": {
+        "vvdi2": "Requires VV-05 MQB + VV-02 VAG IMMO5 license activated",
+        "key_tool_plus": "Works directly with tablet"
+      },
+      "workflow": {
+        "standalone": "Collect key data → Upload for calculation → Get IMMO data (no vehicle access needed)",
+        "with_vvdi2": "MLB Tool reads key → VVDI2 generates & learns key",
+        "with_key_tool_plus": "Tablet connects to MLB Tool → Read/generate/learn key directly"
+      },
+      "key_types_supported": [
+        "Brand new original keys (uninitialized)",
+        "Original keys (initialized) - can verify status",
+        "VVDI MLB specialized keys (reusable)"
+      ],
+      "no_points_required": true,
+      "notes": "Excel at adding keys without vehicle access. Game changer for MLB platform."
+    },
+    "xhorse_mqb_adapter": {
+      "model": "XDMQBAGL",
+      "name": "Xhorse MQB Adapter for MLB Tool",
+      "description": "Adapter that works WITH MLB Tool to add MQB48 keys without cluster disassembly",
+      "supported_platforms": ["MQB", "MQB48"],
+      "features": [
+        "No instrument cluster disassembly required",
+        "Only key shell disassembly needed",
+        "Only 2 wires to solder",
+        "Low risk, simple operation",
+        "Supports most MQB48 keys"
+      ],
+      "requirements": {
+        "hardware": "Must have MLB Tool (XDMLB0)",
+        "vvdi2": "Needs MQB function enabled (NOT MQB48 NEC35XX locking function)",
+        "key_tool_plus": "Needs 4th generation authorization (NOT MQB48 NEC35XX locking function)"
+      },
+      "workflow": {
+        "vvdi2": [
+          "1. Use MLB Tool + MQB Adapter to read IMMO data from MQB48 key",
+          "2. Use VVDI2 to load IMMO data from step 1",
+          "3. Generate key, learn key"
+        ],
+        "key_tool_plus": [
+          "1. Connect tablet to MLB Tool + MQB Adapter",
+          "2. Read IMMO data from MQB48 key",
+          "3. Load IMMO data → generate key → learn key"
+        ]
+      },
+      "wiring": {
+        "instruction": "Remove one capacitor (near IC position) on original key. Solder socket cables to key per wiring diagram colors.",
+        "warning": "⚠️ STRONGLY RECOMMENDED: Use computer instead of tablet for data collection"
+      },
+      "notes": "Works with MLB Tool to bypass cluster removal on MQB48 vehicles."
+    }
+  },
   "Audi": {
     "A3": {
       "2008-2014": {
@@ -24,6 +94,12 @@
           "chip_type": "N/A",
           "backup_method": "Standard OBD backup",
           "warning": "Low risk - older IMMO system. Standard procedures."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": false,
+          "recommended_tool": "VVDI2 VAG / Key Tool Plus",
+          "notes": "PQ35 platform - use standard VAG IMMO procedures"
         }
       },
       "2015-2020": {
@@ -49,6 +125,13 @@
           "chip_type": "BCM2 / Cluster EEPROM",
           "backup_method": "Read cluster IMMO data with VVDI Prog or Multi-Prog",
           "warning": "⚠️ BCM2 system - backup cluster data before AKL work!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": true,
+          "adapter_notes": "MQB48 keys can use MLB Tool + MQB Adapter to avoid cluster disassembly",
+          "workflow": "MLB Tool + MQB Adapter → Read key IMMO → VVDI2/Key Tool Plus → Generate & learn",
+          "recommended_tool": "MLB Tool + MQB Adapter OR standard cluster read method"
         }
       },
       "2021-2026": {
@@ -74,6 +157,12 @@
           "chip_type": "MQB-Evo cluster",
           "backup_method": "Full backup required - new platform",
           "warning": "⚠️ CRITICAL: New MQB-Evo - verify tool compatibility first!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": "Limited",
+          "adapter_notes": "MQB-Evo may have limited support - verify before accepting job",
+          "recommended_tool": "Check latest Xhorse updates for MQB-Evo support"
         }
       }
     },
@@ -102,6 +191,14 @@
           "chip_type": "N/A for most",
           "backup_method": "OBD backup sufficient",
           "warning": "Low risk - older system. Standard OBD procedures work."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": true,
+          "mqb_adapter": false,
+          "mlb_notes": "MLB Tool FULLY SUPPORTED - read/write keys without vehicle access",
+          "workflow": "MLB Tool reads key data → Calculate IMMO → Generate key without going to car",
+          "key_types": ["Original keys", "VVDI MLB specialized keys"],
+          "recommended_tool": "MLB Tool (XDMLB0) for maximum efficiency"
         }
       },
       "2017-2024": {
@@ -127,6 +224,15 @@
           "chip_type": "BCM2 EEPROM",
           "backup_method": "Read BCM2 with VVDI Prog BCM2 adapter",
           "warning": "⚠️ BCM2 system - backup BCM2 data before AKL or component work!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": true,
+          "mqb_adapter": false,
+          "mlb_notes": "MLB-Evo SUPPORTED with MLB Tool - wireless key generation available",
+          "workflow": "MLB Tool → Read key (no chip removal) → Calculate → Generate via VVDI2 or Key Tool Plus",
+          "key_types": ["Original keys (new/used)", "VVDI MLB specialized keys"],
+          "no_vehicle_needed": true,
+          "recommended_tool": "MLB Tool (XDMLB0) - no on-vehicle data collection needed"
         }
       },
       "2025-2026": {
@@ -152,6 +258,11 @@
           "chip_type": "New generation",
           "backup_method": "Dealer-level tools",
           "warning": "⚠️ EXTREME RISK: New platform - dealer referral recommended."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": "Verify",
+          "mqb_adapter": false,
+          "notes": "Brand new platform - check Xhorse updates for B10 support before accepting"
         }
       }
     },
@@ -180,6 +291,12 @@
           "chip_type": "N/A for most",
           "backup_method": "OBD backup sufficient",
           "warning": "Low risk - older platform."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": true,
+          "mqb_adapter": false,
+          "mlb_notes": "MLB Tool FULLY SUPPORTED - same as B8 A4",
+          "recommended_tool": "MLB Tool (XDMLB0)"
         }
       },
       "2017-2026": {
@@ -205,6 +322,13 @@
           "chip_type": "BCM2 EEPROM",
           "backup_method": "Read BCM2 with VVDI Prog BCM2 adapter",
           "warning": "⚠️ BCM2 - backup before AKL work!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": true,
+          "mqb_adapter": false,
+          "mlb_notes": "MLB-Evo SUPPORTED - wireless key read/write",
+          "no_vehicle_needed": true,
+          "recommended_tool": "MLB Tool (XDMLB0)"
         }
       }
     },
@@ -233,6 +357,11 @@
           "chip_type": "N/A",
           "backup_method": "Standard OBD",
           "warning": "Low risk - old system."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": false,
+          "recommended_tool": "VVDI2 VAG standard"
         }
       },
       "2012-2018": {
@@ -258,6 +387,12 @@
           "chip_type": "BCM EEPROM",
           "backup_method": "Read BCM for AKL work",
           "warning": "Backup BCM data before AKL."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": true,
+          "mqb_adapter": false,
+          "mlb_notes": "MLB Tool SUPPORTED - wireless key operations",
+          "recommended_tool": "MLB Tool (XDMLB0)"
         }
       },
       "2019-2026": {
@@ -267,28 +402,35 @@
         "key_blade": "HU162T",
         "programming": {
           "has_key": "OBD",
-          "one_key": "OBD (BCM2 data may be required)",
-          "akl": "BCM2 removal + specialized tools"
+          "one_key": "OBD",
+          "akl": "BCM2 removal + dump read"
         },
         "module_removal": {
           "has_key": false,
           "one_key": false,
           "akl": true
         },
-        "akl_supported": "Limited",
-        "risk_level": "High",
-        "notes": "BCM2 with enhanced security. Component protection active.",
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "BCM2 platform. Component protection applies.",
         "eeprom_info": {
           "backup_required": true,
           "chip_type": "BCM2 EEPROM",
-          "backup_method": "Full BCM2 dump required for AKL",
-          "warning": "⚠️ CRITICAL: BCM2 with component protection - full backup mandatory!"
+          "backup_method": "Full BCM2 dump",
+          "warning": "⚠️ BCM2 with component protection - full backup mandatory!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": true,
+          "mqb_adapter": false,
+          "mlb_notes": "MLB-Evo SUPPORTED - no on-vehicle data collection needed",
+          "no_vehicle_needed": true,
+          "recommended_tool": "MLB Tool (XDMLB0)"
         }
       }
     },
 
     "A7": {
-      "2011-2018": {
+      "2012-2018": {
         "platform": "4G (MLB)",
         "immobilizer": "BCM1 / KESSY",
         "key_type": "Audi Smart Key",
@@ -305,12 +447,18 @@
         },
         "akl_supported": "Yes",
         "risk_level": "Medium",
-        "notes": "Sportback. Same as C7 A6 platform.",
+        "notes": "Sportback. MLB platform. Same as C7 A6.",
         "eeprom_info": {
           "backup_required": true,
           "chip_type": "BCM EEPROM",
           "backup_method": "Read BCM for AKL",
-          "warning": "Backup BCM data before AKL work."
+          "warning": "Backup BCM before AKL."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": true,
+          "mqb_adapter": false,
+          "mlb_notes": "MLB Tool SUPPORTED",
+          "recommended_tool": "MLB Tool (XDMLB0)"
         }
       },
       "2019-2026": {
@@ -328,14 +476,21 @@
           "one_key": false,
           "akl": true
         },
-        "akl_supported": "Limited",
-        "risk_level": "High",
-        "notes": "BCM2 platform. Component protection. Premium vehicle pricing.",
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "BCM2 Sportback. Component protection.",
         "eeprom_info": {
           "backup_required": true,
           "chip_type": "BCM2 EEPROM",
           "backup_method": "Full BCM2 dump",
-          "warning": "⚠️ CRITICAL: BCM2 - backup mandatory before any work!"
+          "warning": "⚠️ BCM2 - backup before AKL work!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": true,
+          "mqb_adapter": false,
+          "mlb_notes": "MLB-Evo SUPPORTED",
+          "no_vehicle_needed": true,
+          "recommended_tool": "MLB Tool (XDMLB0)"
         }
       }
     },
@@ -343,27 +498,33 @@
     "A8": {
       "2010-2017": {
         "platform": "D4 (MLB)",
-        "immobilizer": "BCM1 / KESSY",
+        "immobilizer": "KESSY / BCM1",
         "key_type": "Audi Smart Key",
         "key_blade": "HU66",
         "programming": {
           "has_key": "OBD",
           "one_key": "OBD",
-          "akl": "BCM read + specialized"
+          "akl": "BCM read + dealer may be required"
         },
         "module_removal": {
           "has_key": false,
           "one_key": false,
           "akl": true
         },
-        "akl_supported": "Yes",
-        "risk_level": "Medium",
-        "notes": "Flagship sedan. Premium pricing. BCM1 system.",
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "Flagship sedan. KESSY system. Some dealer requirements.",
         "eeprom_info": {
           "backup_required": true,
-          "chip_type": "BCM EEPROM",
-          "backup_method": "Full BCM read for AKL",
-          "warning": "High-value vehicle. Full backup before any work."
+          "chip_type": "BCM / KESSY EEPROM",
+          "backup_method": "Full backup required",
+          "warning": "⚠️ Flagship car - backup everything. Price premium."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": true,
+          "mqb_adapter": false,
+          "mlb_notes": "MLB Tool SUPPORTED for key operations",
+          "recommended_tool": "MLB Tool (XDMLB0)"
         }
       },
       "2018-2026": {
@@ -373,30 +534,37 @@
         "key_blade": "HU162T",
         "programming": {
           "has_key": "OBD",
-          "one_key": "OBD (dealer auth may be required)",
+          "one_key": "OBD (limited)",
           "akl": "BCM2 removal + specialized tools"
         },
         "module_removal": {
           "has_key": false,
-          "one_key": false,
+          "one_key": true,
           "akl": true
         },
-        "akl_supported": "Limited",
-        "risk_level": "High",
-        "notes": "Flagship with BCM2. Component protection. Very high value vehicle.",
+        "akl_supported": "Very Limited",
+        "risk_level": "Very High",
+        "notes": "Flagship sedan. BCM2 with full component protection. Price very high.",
         "eeprom_info": {
           "backup_required": true,
           "chip_type": "BCM2 EEPROM",
           "backup_method": "Full BCM2 dump mandatory",
-          "warning": "⚠️ CRITICAL: $100K+ flagship - full BCM2 backup mandatory. Price accordingly."
+          "warning": "⚠️ CRITICAL: $100K+ car. Full backup. Premium pricing."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": true,
+          "mqb_adapter": false,
+          "mlb_notes": "MLB-Evo SUPPORTED - no vehicle access needed for key data",
+          "no_vehicle_needed": true,
+          "recommended_tool": "MLB Tool (XDMLB0)"
         }
       }
     },
 
     "Q3": {
-      "2012-2018": {
+      "2013-2018": {
         "platform": "8U (PQ35)",
-        "immobilizer": "IMMO5 / UDS",
+        "immobilizer": "IMMO5",
         "key_type": "Audi Flip Key / Smart Key",
         "key_blade": "HU66",
         "programming": {
@@ -417,6 +585,11 @@
           "chip_type": "N/A",
           "backup_method": "Standard OBD",
           "warning": "Low risk - older system."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": false,
+          "recommended_tool": "VVDI2 VAG standard"
         }
       },
       "2019-2026": {
@@ -442,6 +615,13 @@
           "chip_type": "Cluster EEPROM / BCM2",
           "backup_method": "Read cluster with VVDI Prog or Multi-Prog",
           "warning": "⚠️ MQB system - backup cluster data for AKL!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": true,
+          "adapter_notes": "MQB48 keys - use MLB Tool + MQB Adapter to avoid cluster disassembly",
+          "workflow": "MLB Tool + MQB Adapter → Read IMMO from key → Generate & learn",
+          "recommended_tool": "MLB Tool + MQB Adapter"
         }
       }
     },
@@ -470,6 +650,12 @@
           "chip_type": "BCM EEPROM",
           "backup_method": "Read BCM for AKL work",
           "warning": "Backup BCM before AKL."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": true,
+          "mqb_adapter": false,
+          "mlb_notes": "MLB Tool SUPPORTED - wireless key operations",
+          "recommended_tool": "MLB Tool (XDMLB0)"
         }
       },
       "2018-2026": {
@@ -495,6 +681,13 @@
           "chip_type": "BCM2 EEPROM",
           "backup_method": "Full BCM2 dump for AKL",
           "warning": "⚠️ BCM2 - backup before AKL work!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": true,
+          "mqb_adapter": false,
+          "mlb_notes": "MLB-Evo SUPPORTED - no on-vehicle data collection needed",
+          "no_vehicle_needed": true,
+          "recommended_tool": "MLB Tool (XDMLB0)"
         }
       }
     },
@@ -523,6 +716,12 @@
           "chip_type": "BCM EEPROM",
           "backup_method": "Read BCM for AKL",
           "warning": "Backup BCM before AKL work."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": true,
+          "mqb_adapter": false,
+          "mlb_notes": "MLB Tool SUPPORTED",
+          "recommended_tool": "MLB Tool (XDMLB0)"
         }
       },
       "2016-2026": {
@@ -548,6 +747,13 @@
           "chip_type": "BCM2 EEPROM",
           "backup_method": "Full BCM2 dump mandatory",
           "warning": "⚠️ CRITICAL: BCM2 with component protection - full backup required!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": true,
+          "mqb_adapter": false,
+          "mlb_notes": "MLB-Evo SUPPORTED - wireless key generation",
+          "no_vehicle_needed": true,
+          "recommended_tool": "MLB Tool (XDMLB0)"
         }
       }
     },
@@ -576,6 +782,13 @@
           "chip_type": "BCM2 EEPROM",
           "backup_method": "Full BCM2 dump mandatory",
           "warning": "⚠️ CRITICAL: Flagship SUV - full BCM2 backup mandatory. Price high."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": true,
+          "mqb_adapter": false,
+          "mlb_notes": "MLB-Evo SUPPORTED - no vehicle access needed",
+          "no_vehicle_needed": true,
+          "recommended_tool": "MLB Tool (XDMLB0)"
         }
       }
     },
@@ -604,6 +817,11 @@
           "chip_type": "BCM2 + EV modules",
           "backup_method": "Full backup - EV adds complexity",
           "warning": "⚠️ EXTREME RISK: EV with BCM2. Very limited support. Consider dealer referral."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": "Limited",
+          "mqb_adapter": false,
+          "notes": "EV adds complexity - verify MLB Tool support for e-tron before accepting"
         }
       }
     },
@@ -632,6 +850,11 @@
           "chip_type": "N/A",
           "backup_method": "Standard OBD",
           "warning": "Low risk - older system."
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": false,
+          "recommended_tool": "VVDI2 VAG standard"
         }
       },
       "2015-2026": {
@@ -657,6 +880,12 @@
           "chip_type": "Cluster EEPROM",
           "backup_method": "Read cluster for AKL",
           "warning": "⚠️ MQB - backup cluster data for AKL!"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": true,
+          "adapter_notes": "MQB48 - use MLB Tool + MQB Adapter to avoid cluster pull",
+          "recommended_tool": "MLB Tool + MQB Adapter"
         }
       }
     }
