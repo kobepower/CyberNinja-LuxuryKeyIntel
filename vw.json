@@ -1,85 +1,192 @@
 {
   "tool_reference": {
-    "xhorse_mlb_tool": {
-      "model": "XDMLB0",
-      "name": "Xhorse VVDI MLB Tool Key Programmer",
-      "description": "Specialized programmer for MLB platform vehicles (Audi, Porsche, VW, Lamborghini, Bentley)",
-      "supported_brands": ["Audi", "Porsche", "Volkswagen", "Lamborghini", "Bentley"],
-      "supported_platforms": ["MLB", "MLB-Evo"],
-      "features": [
-        "Read/write/calculate key data without removing chip",
-        "Integrated 22k reader for wireless key reading/writing",
-        "No shell removal required for key generation",
-        "Built-in IMMO detection module",
-        "Supports original keys (uninitialized & initialized)",
-        "Supports VVDI MLB specialized keys (unlimited reuse)",
-        "Can rewrite uninitialized original key IDs",
-        "No on-vehicle data collection needed"
+    "km100": {
+      "model": "KM100",
+      "name": "Autel MaxiIM KM100",
+      "description": "Universal key programmer with strong VW/Audi pre-2015 support",
+      "supported_systems": [
+        "Generation 2",
+        "CDC32XX+24C32",
+        "KWP2000",
+        "Motorola 9S12",
+        "BCM",
+        "MM5",
+        "NEC+24C64 (limited)"
       ],
-      "requirements": {
-        "vvdi2": "Requires VV-05 MQB + VV-02 VAG IMMO5 license activated",
-        "key_tool_plus": "Works directly with tablet"
-      },
-      "workflow": {
-        "standalone": "Collect key data → Upload for calculation → Get IMMO data (no vehicle access needed)",
-        "with_vvdi2": "MLB Tool reads key → VVDI2 generates & learns key",
-        "with_key_tool_plus": "Tablet connects to MLB Tool → Read/generate/learn key directly"
-      },
-      "key_types_supported": [
-        "Brand new original keys (uninitialized)",
-        "Original keys (initialized) - can verify status",
-        "VVDI MLB specialized keys (reusable)"
-      ],
-      "no_points_required": true,
-      "notes": "Excel at adding keys without vehicle access. Game changer for MLB platform."
+      "best_for": "Pre-2015 VW/Audi with ignition key",
+      "not_supported": [
+        "MQB (2015+)",
+        "MQB-Evo",
+        "5th Gen IMMO",
+        "KESSY",
+        "INMOBOX"
+      ]
     },
-    "xhorse_mqb_adapter": {
-      "model": "XDMQBAGL",
-      "name": "Xhorse MQB Adapter for MLB Tool",
-      "description": "Adapter that works WITH MLB Tool to add MQB48 keys without cluster disassembly",
-      "supported_platforms": ["MQB", "MQB48"],
-      "features": [
-        "No instrument cluster disassembly required",
-        "Only key shell disassembly needed",
-        "Only 2 wires to solder",
-        "Low risk, simple operation",
-        "Supports most MQB48 keys"
-      ],
-      "requirements": {
-        "hardware": "Must have MLB Tool (XDMLB0)",
-        "vvdi2": "Needs MQB function enabled (NOT MQB48 NEC35XX locking function)",
-        "key_tool_plus": "Needs 4th generation authorization (NOT MQB48 NEC35XX locking function)"
-      },
-      "workflow": {
-        "vvdi2": [
-          "1. Use MLB Tool + MQB Adapter to read IMMO data from MQB48 key",
-          "2. Use VVDI2 to load IMMO data from step 1",
-          "3. Generate key, learn key"
+    "remotes": {
+      "VW_5C_Fold1": {
+        "name": "VW 5C Fold-1",
+        "type": "Flip key (blade folds out)",
+        "platform": "MQB",
+        "buttons": 3,
+        "frequency": {
+          "NA": "315MHz",
+          "EU": "434MHz"
+        },
+        "chip": "MQB48",
+        "blade": "HU162T",
+        "vehicles": [
+          "Golf MK7 2015-2021",
+          "Jetta 2019+",
+          "Tiguan 2018+",
+          "Atlas"
         ],
-        "key_tool_plus": [
-          "1. Connect tablet to MLB Tool + MQB Adapter",
-          "2. Read IMMO data from MQB48 key",
-          "3. Load IMMO data → generate key → learn key"
-        ]
+        "mlb_adapter_supported": true,
+        "notes": "Most common MQB flip key"
       },
-      "wiring": {
-        "instruction": "Remove one capacitor (near IC position) on original key. Solder socket cables to key per wiring diagram colors.",
-        "warning": "⚠️ STRONGLY RECOMMENDED: Use computer instead of tablet for data collection"
+      "VW_5C_Fold2": {
+        "name": "VW 5C Fold-2",
+        "type": "Flip key (blade folds out)",
+        "platform": "MQB",
+        "buttons": 4,
+        "frequency": {
+          "NA": "315MHz",
+          "EU": "434MHz"
+        },
+        "chip": "MQB48",
+        "blade": "HU162T",
+        "vehicles": [
+          "Golf MK7 2015-2021",
+          "Passat 2016+",
+          "Arteon"
+        ],
+        "mlb_adapter_supported": true,
+        "notes": "4 button variant with remote start"
       },
-      "notes": "Works with MLB Tool to bypass cluster removal on MQB48 vehicles."
+      "VW_5C_Magotan": {
+        "name": "VW 5C Magotan",
+        "type": "Flip key (blade folds out)",
+        "platform": "MQB",
+        "buttons": 3,
+        "frequency": {
+          "CN": "434MHz"
+        },
+        "chip": "MQB48",
+        "blade": "HU162T",
+        "vehicles": [
+          "Magotan (China)",
+          "Passat (China)"
+        ],
+        "mlb_adapter_supported": true,
+        "notes": "China market variant"
+      },
+      "VW_5D_Golf8_1": {
+        "name": "VW 5D Golf8-1",
+        "type": "Smart key (proximity/push start)",
+        "platform": "MQB-Evo",
+        "buttons": 3,
+        "frequency": {
+          "NA": "315MHz",
+          "EU": "434MHz"
+        },
+        "chip": "MQB-Evo",
+        "blade": "HU162T (emergency)",
+        "vehicles": [
+          "Golf MK8 2020+",
+          "GTI MK8 2022+",
+          "Golf R MK8 2022+"
+        ],
+        "mlb_adapter_supported": "Check - MQB-Evo limited",
+        "notes": "New platform - verify Xhorse support before job"
+      },
+      "VW_5D_Golf8_2": {
+        "name": "VW 5D Golf8-2",
+        "type": "Smart key (proximity/push start)",
+        "platform": "MQB-Evo",
+        "buttons": 4,
+        "frequency": {
+          "NA": "315MHz",
+          "EU": "434MHz"
+        },
+        "chip": "MQB-Evo",
+        "blade": "HU162T (emergency)",
+        "vehicles": [
+          "Golf MK8 2020+",
+          "ID.4",
+          "ID.5"
+        ],
+        "mlb_adapter_supported": "Check - MQB-Evo limited",
+        "notes": "4 button variant - check support"
+      },
+      "Audi_5D_1": {
+        "name": "Audi 5D-1",
+        "type": "Smart key (proximity/push start)",
+        "platform": "MQB",
+        "buttons": 3,
+        "frequency": {
+          "NA": "315MHz",
+          "EU": "434MHz"
+        },
+        "chip": "MQB48",
+        "blade": "HU162T (emergency)",
+        "vehicles": [
+          "A3 8V 2015-2020",
+          "Q2 2017+",
+          "TT 8S 2015+"
+        ],
+        "mlb_adapter_supported": true,
+        "notes": "Standard Audi MQB smart key"
+      },
+      "Audi_5D_2": {
+        "name": "Audi 5D-2",
+        "type": "Smart key (proximity/push start)",
+        "platform": "MQB",
+        "buttons": 4,
+        "frequency": {
+          "NA": "315MHz",
+          "EU": "434MHz"
+        },
+        "chip": "MQB48",
+        "blade": "HU162T (emergency)",
+        "vehicles": [
+          "A3 8V 2015-2020",
+          "Q2 2017+"
+        ],
+        "mlb_adapter_supported": true,
+        "notes": "4 button variant"
+      },
+      "Porsche_MLB": {
+        "name": "Porsche MLB",
+        "type": "Smart key (proximity/push start)",
+        "platform": "MLB",
+        "buttons": 3,
+        "frequency": {
+          "NA": "315MHz",
+          "EU": "434MHz"
+        },
+        "chip": "MLB Key",
+        "blade": "HU162T (emergency)",
+        "vehicles": [
+          "Cayenne 2011+",
+          "Macan 2014+",
+          "Panamera 2010+"
+        ],
+        "mlb_adapter_supported": true,
+        "notes": "MLB Tool direct - no adapter needed"
+      }
     }
   },
   "Volkswagen": {
-    "Golf": {
-      "2006-2014": {
-        "platform": "MK6 / MK5 (PQ35)",
-        "immobilizer": "IMMO3 / IMMO4",
+    "Jetta": {
+      "1999-2010": {
+        "platform": "MK4/MK5 (Generation 2)",
+        "immobilizer": "IMMO3/IMMO4 (Generation 2)",
         "key_type": "VW Flip Key",
         "key_blade": "HU66",
+        "chip": "ID48",
         "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "OBD (PIN required)"
+          "has_key": "OBD (KM100)",
+          "one_key": "OBD (KM100)",
+          "akl": "OBD - Copy MEGAMOS 48"
         },
         "module_removal": {
           "has_key": false,
@@ -88,28 +195,303 @@
         },
         "akl_supported": "Yes",
         "risk_level": "Low",
-        "notes": "Old school VW. Easy OBD programming. PIN/CS from cluster or dealer. Great profit job.",
+        "notes": "EASY OBD JOB! Pre-2015 = No cluster pull. KM100 via OBD. Charge $180-250.",
         "eeprom_info": {
           "backup_required": false,
           "chip_type": "N/A",
           "backup_method": "Standard OBD backup",
-          "warning": "Low risk - older IMMO system. Straightforward work."
+          "warning": "Low risk - Copy MEGAMOS 48 is safest method"
+        },
+        "km100_support": {
+          "supported": true,
+          "method": "Copy MEGAMOS 48 (SAFEST)",
+          "steps": [
+            "1. KM100 > Immobilizer > Volkswagen",
+            "2. Manual Selection > Your Region",
+            "3. Select Jetta > 1999-2015",
+            "4. Control Unit > Immobilizer",
+            "5. Read IMMO Data (get PIN, CS, Key IDs)",
+            "6. Select 'Copy Key MEGAMOS-48'",
+            "7. Insert ID48 chip in KM100",
+            "8. Select any key ID from list",
+            "9. Cut HU66 blade",
+            "10. Test key - DONE!"
+          ],
+          "chip_needed": "ID48 or Super Chip",
+          "time_estimate": "15-20 min",
+          "profit_estimate": "$165-235"
         },
         "xhorse_tool_support": {
           "mlb_tool": false,
           "mqb_adapter": false,
-          "recommended_tool": "VVDI2 VAG / Key Tool Plus standard"
+          "recommended_tool": "KM100"
+        }
+      },
+      "2011-2018": {
+        "platform": "MK6 (NEC+24C64)",
+        "immobilizer": "NEC+24C64",
+        "key_type": "VW Flip Key",
+        "key_blade": "HU66",
+        "chip": "ID48-TP23",
+        "programming": {
+          "has_key": "OBD (KM100)",
+          "one_key": "OBD (KM100)",
+          "akl": "OBD or BOOT mode"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": "Maybe"
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "NEC+24C64. Try OBD first, some need BOOT mode (cluster pull).",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "NEC+24C64",
+          "backup_method": "EEPROM backup before AKL",
+          "warning": "\u26a0\ufe0f Backup EEPROM before AKL work!"
+        },
+        "km100_support": {
+          "supported": "Partial",
+          "method": "Try Copy MEGAMOS 48 first",
+          "steps": [
+            "1. KM100 > Immobilizer > Volkswagen",
+            "2. Select Jetta > 2005-2018",
+            "3. Control Unit > Immobilizer",
+            "4. Try AUTO DETECTION first",
+            "5. If CDC32XX \u2192 Use Copy MEGAMOS 48",
+            "6. If NEC+24C64 \u2192 May need BOOT",
+            "7. Read IMMO Data > Get PIN",
+            "8. Copy Key or Add Key",
+            "9. Cut HU66 blade"
+          ],
+          "chip_needed": "ID48-TP23 or Super Chip",
+          "time_estimate": "20-30 min",
+          "profit_estimate": "$150-220"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": false,
+          "recommended_tool": "KM100 (try OBD first)"
+        }
+      },
+      "2019-2026": {
+        "platform": "MK7 (MQB)",
+        "immobilizer": "MQB IMMO (UDS)",
+        "key_type": "VW MQB Smart Key",
+        "key_blade": "HU162T",
+        "chip": "MQB48",
+        "remote_type": "VW_5C_Fold1",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Cluster removal"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Limited",
+        "risk_level": "High",
+        "notes": "MQB platform - KM100 NOT supported. Need Xhorse MQB tools.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "MQB cluster",
+          "backup_method": "Cluster EEPROM backup",
+          "warning": "\u26a0\ufe0f CRITICAL: MQB - KM100 NOT supported!"
+        },
+        "km100_support": {
+          "supported": false,
+          "method": "NOT SUPPORTED",
+          "steps": [
+            "KM100 does NOT support MQB!",
+            "Use Key Tool Plus + MQB48 adapter",
+            "Or MLB Tool + MQB Adapter",
+            "Or refer to partner"
+          ],
+          "chip_needed": "MQB48",
+          "time_estimate": "N/A",
+          "profit_estimate": "Refer out"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": true,
+          "recommended_tool": "Key Tool Plus + MQB48"
+        },
+        "key_hardware": {
+          "key_style": "MQB 5C Flip Key (Keyless Go)",
+          "oem_key_info": {
+            "part_numbers": [
+              "5G6959752AB",
+              "5GD959752B",
+              "57A959752B",
+              "2G6959752D",
+              "5GD959752E"
+            ],
+            "fcc_id": "NBGFS12P01",
+            "frequency": "315MHz (NA) / 434MHz (EU)",
+            "chip": "MQB49 5C",
+            "blade": "HU162T",
+            "keyless_go": true,
+            "battery": "CR2032",
+            "buttons": 3,
+            "key_check": "Blade has chrome tip sensor \u2014 proximity sensor at blade end (see Alger Keys image)"
+          },
+          "solder_free_adapters": {
+            "xhorse": {
+              "model": "XDNP115 or XDNP116",
+              "set": "XDNPVDGL (8pc MQB 5C/5D set)",
+              "fits": "5C Flip Blade Key"
+            },
+            "keydiy": {
+              "model": "DZ5C03 (old style) / DZ5C02 (new style)",
+              "set": "KD Clamp 12pc Kit",
+              "probe_required": true
+            },
+            "alger_keys": {
+              "bundle": "MQB 5C Old Adapter + OEM MQB 5C Keyless Go Key"
+            }
+          },
+          "aftermarket_key_options": {
+            "xhorse": "XSMQB1EN (MQB Smart Proximity Key 315MHz)",
+            "keydiy": "KD MQB 5C Non-OEM (K507 40-pin) or OEM Solution (K508 44-pin)",
+            "oem_refurb": "Best option for ODIS \u2014 must be genuine OEM board"
+          },
+          "sfd_info": {
+            "sfd_required": "2020+ models may require SFD1 unlock",
+            "sfd2_required": "2024+ models require SFD2",
+            "unlock_methods": [
+              "VagLogins credits (~$5-7/job)",
+              "OBDeleven Pro (auto)",
+              "KD-X4 built-in ($5/unlock)",
+              "Xhorse KTP manual + 3rd party token"
+            ]
+          },
+          "tools_for_key_read": [
+            "Xhorse Key Tool Plus (KTP)",
+            "Xhorse Multi Prog",
+            "Xhorse VVDI2 + VVDI Prog",
+            "KeyDIY KD-X4 + KD-MP",
+            "Autel IM508/IM608"
+          ]
+        }
+      }
+    },
+    "Golf": {
+      "2000-2009": {
+        "platform": "MK4/MK5 (Generation 2)",
+        "immobilizer": "IMMO3/IMMO4 (Generation 2)",
+        "key_type": "VW Flip Key",
+        "key_blade": "HU66",
+        "chip": "ID48",
+        "programming": {
+          "has_key": "OBD (KM100)",
+          "one_key": "OBD (KM100)",
+          "akl": "OBD - Copy MEGAMOS 48"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": false
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Low",
+        "notes": "EASY OBD JOB! Generation 2 = KM100 Copy MEGAMOS 48 works perfectly!",
+        "eeprom_info": {
+          "backup_required": false,
+          "chip_type": "N/A",
+          "backup_method": "Standard OBD backup",
+          "warning": "Low risk - Copy fails = nothing changes"
+        },
+        "km100_support": {
+          "supported": true,
+          "method": "Copy MEGAMOS 48 (SAFEST)",
+          "steps": [
+            "1. KM100 > Immobilizer > Volkswagen",
+            "2. Manual Selection > Region > Golf",
+            "3. Select 2000-2009 year range",
+            "4. Control Unit > Immobilizer",
+            "5. Select CDC32XX+24C32 or Auto",
+            "6. Read IMMO Data (PIN, CS, Key IDs)",
+            "7. Select 'Copy Key MEGAMOS-48'",
+            "8. Insert ID48 chip (or Super Chip)",
+            "9. Select key ID > Write to chip",
+            "10. Cut HU66 blade",
+            "11. Test key - DONE!"
+          ],
+          "chip_needed": "ID48 or Super Chip",
+          "time_estimate": "15-20 min",
+          "profit_estimate": "$165-235"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": false,
+          "recommended_tool": "KM100"
+        }
+      },
+      "2010-2014": {
+        "platform": "MK6 (CDC32XX)",
+        "immobilizer": "IMMO4 / CDC32XX+24C32",
+        "key_type": "VW Flip Key",
+        "key_blade": "HU66",
+        "chip": "ID48-TP23",
+        "programming": {
+          "has_key": "OBD (KM100)",
+          "one_key": "OBD (KM100)",
+          "akl": "OBD - Copy MEGAMOS 48"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": false
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Low",
+        "notes": "CDC32XX system - still pre-MQB = KM100 works great!",
+        "eeprom_info": {
+          "backup_required": false,
+          "chip_type": "CDC32XX+24C32",
+          "backup_method": "OBD backup optional",
+          "warning": "Low risk - standard procedures"
+        },
+        "km100_support": {
+          "supported": true,
+          "method": "Copy MEGAMOS 48 (SAFEST)",
+          "steps": [
+            "1. KM100 > Immobilizer > Volkswagen",
+            "2. Select Golf > 2006-2014",
+            "3. Control Unit > Immobilizer",
+            "4. Auto Detection (finds CDC32XX)",
+            "5. Read IMMO Data",
+            "6. Copy Key MEGAMOS-48",
+            "7. Insert ID48-TP23 chip",
+            "8. Write key data",
+            "9. Cut HU66 blade",
+            "10. Test and deliver"
+          ],
+          "chip_needed": "ID48-TP23 or Super Chip",
+          "time_estimate": "15-25 min",
+          "profit_estimate": "$165-235"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": false,
+          "recommended_tool": "KM100"
         }
       },
       "2015-2021": {
-        "platform": "MK7 / MK7.5 (MQB)",
+        "platform": "MK7/MK7.5 (MQB)",
         "immobilizer": "MQB IMMO (UDS)",
-        "key_type": "VW MQB Smart Key / Flip Key",
+        "key_type": "VW MQB Smart Key / Flip",
         "key_blade": "HU162T",
+        "chip": "MQB48",
+        "remote_type": "VW_5C_Fold1",
         "programming": {
           "has_key": "OBD",
-          "one_key": "OBD (IMMO data backup recommended)",
-          "akl": "Cluster removal + IMMO data read"
+          "one_key": "OBD",
+          "akl": "Cluster removal"
         },
         "module_removal": {
           "has_key": false,
@@ -118,20 +500,87 @@
         },
         "akl_supported": "Yes",
         "risk_level": "Medium",
-        "notes": "MQB platform. Cluster contains IMMO data. VVDI2 or Key Tool Plus supported.",
+        "notes": "MQB platform - KM100 NOT supported. Use Xhorse tools.",
         "eeprom_info": {
           "backup_required": true,
-          "chip_type": "Cluster EEPROM (NEC/Renesas)",
-          "backup_method": "Read cluster with VVDI Prog or Multi-Prog for AKL",
-          "warning": "⚠️ MQB system - backup cluster IMMO data for AKL work!"
+          "chip_type": "Cluster EEPROM",
+          "backup_method": "Read cluster for AKL",
+          "warning": "\u26a0\ufe0f MQB - backup cluster data!"
+        },
+        "km100_support": {
+          "supported": false,
+          "method": "NOT SUPPORTED",
+          "steps": [
+            "KM100 does NOT support MQB!",
+            "Use MLB Tool + MQB Adapter",
+            "Saves cluster pull for AKL",
+            "Or Key Tool Plus with MQB48"
+          ],
+          "chip_needed": "MQB48",
+          "time_estimate": "N/A",
+          "profit_estimate": "Refer out"
         },
         "xhorse_tool_support": {
           "mlb_tool": false,
           "mqb_adapter": true,
-          "adapter_notes": "MQB48 keys - use MLB Tool + MQB Adapter to AVOID cluster disassembly!",
-          "workflow": "MLB Tool + MQB Adapter → Read IMMO from key → VVDI2/Key Tool Plus → Generate & learn",
-          "wiring_required": "Remove capacitor near IC, solder 2 wires per diagram",
-          "recommended_tool": "MLB Tool + MQB Adapter (saves cluster pull)"
+          "recommended_tool": "MLB Tool + MQB Adapter"
+        },
+        "key_hardware": {
+          "key_style": "MQB 5C Flip Key (Keyless Go)",
+          "oem_key_info": {
+            "part_numbers": [
+              "5G6959752AB",
+              "5GD959752B",
+              "57A959752B",
+              "2G6959752D",
+              "5GD959752E"
+            ],
+            "fcc_id": "NBGFS12P01",
+            "frequency": "315MHz (NA) / 434MHz (EU)",
+            "chip": "MQB49 5C",
+            "blade": "HU162T",
+            "keyless_go": true,
+            "battery": "CR2032",
+            "buttons": 3,
+            "key_check": "Blade has chrome tip sensor \u2014 proximity sensor at blade end (see Alger Keys image)"
+          },
+          "solder_free_adapters": {
+            "xhorse": {
+              "model": "XDNP115 or XDNP116",
+              "set": "XDNPVDGL (8pc MQB 5C/5D set)",
+              "fits": "5C Flip Blade Key"
+            },
+            "keydiy": {
+              "model": "DZ5C03 (old style) / DZ5C02 (new style)",
+              "set": "KD Clamp 12pc Kit",
+              "probe_required": true
+            },
+            "alger_keys": {
+              "bundle": "MQB 5C Old Adapter + OEM MQB 5C Keyless Go Key"
+            }
+          },
+          "aftermarket_key_options": {
+            "xhorse": "XSMQB1EN (MQB Smart Proximity Key 315MHz)",
+            "keydiy": "KD MQB 5C Non-OEM (K507 40-pin) or OEM Solution (K508 44-pin)",
+            "oem_refurb": "Best option for ODIS \u2014 must be genuine OEM board"
+          },
+          "sfd_info": {
+            "sfd_required": "2020+ models may require SFD1 unlock",
+            "sfd2_required": "2024+ models require SFD2",
+            "unlock_methods": [
+              "VagLogins credits (~$5-7/job)",
+              "OBDeleven Pro (auto)",
+              "KD-X4 built-in ($5/unlock)",
+              "Xhorse KTP manual + 3rd party token"
+            ]
+          },
+          "tools_for_key_read": [
+            "Xhorse Key Tool Plus (KTP)",
+            "Xhorse Multi Prog",
+            "Xhorse VVDI2 + VVDI Prog",
+            "KeyDIY KD-X4 + KD-MP",
+            "Autel IM508/IM608"
+          ]
         }
       },
       "2022-2026": {
@@ -139,6 +588,8 @@
         "immobilizer": "MQB-Evo / IMMO6",
         "key_type": "VW MQB Smart Key",
         "key_blade": "HU162T",
+        "chip": "MQB-Evo",
+        "remote_type": "VW_5D_Golf8_1",
         "programming": {
           "has_key": "OBD",
           "one_key": "OBD (online may be required)",
@@ -151,157 +602,125 @@
         },
         "akl_supported": "Limited",
         "risk_level": "High",
-        "notes": "New MK8 with enhanced MQB-Evo. Digital cockpit. Verify tool support before accepting.",
+        "notes": "MQB-Evo - verify Xhorse support before accepting job!",
         "eeprom_info": {
           "backup_required": true,
           "chip_type": "MQB-Evo cluster",
-          "backup_method": "Full cluster backup - new platform",
-          "warning": "⚠️ CRITICAL: MQB-Evo - verify tool compatibility before starting!"
+          "backup_method": "Full backup required",
+          "warning": "\u26a0\ufe0f CRITICAL: MQB-Evo - check tool support first!"
+        },
+        "km100_support": {
+          "supported": false,
+          "method": "NOT SUPPORTED",
+          "steps": [
+            "KM100 does NOT support MQB-Evo!",
+            "Check Xhorse updates",
+            "May need dealer referral"
+          ],
+          "chip_needed": "MQB-Evo",
+          "time_estimate": "N/A",
+          "profit_estimate": "Refer out"
         },
         "xhorse_tool_support": {
           "mlb_tool": false,
           "mqb_adapter": "Limited",
-          "adapter_notes": "MQB-Evo may have limited MQB Adapter support - verify before job",
-          "recommended_tool": "Check Xhorse updates for MQB-Evo support"
+          "recommended_tool": "Check Xhorse updates"
+        },
+        "key_hardware": {
+          "key_style": "MQB-Evo Golf 8 5D Smart Key (Proximity)",
+          "oem_key_info": {
+            "part_numbers": [
+              "5HG959753D",
+              "5HG959753",
+              "5HG959753B",
+              "5DD959753 (Skoda)",
+              "5DD959753B (Skoda)",
+              "5H0959733"
+            ],
+            "fcc_id": "NBGFS19025",
+            "manufacturer": "HELLA Shanghai (Model: FS191S)",
+            "frequency": "434MHz",
+            "chip": "MQB-Evo 5D",
+            "blade": "HU162T (emergency)",
+            "keyless_go": true,
+            "battery": "CR2032",
+            "buttons": 3,
+            "inductor_variants": {
+              "white_inductor": "White square component on PCB \u2014 use Golf 8 White Adapter",
+              "black_inductor": "Black square component on PCB \u2014 use Golf 8 Black Adapter",
+              "how_to_identify": "Open key shell, look at PCB \u2014 inductor is the small square near the antenna coil"
+            }
+          },
+          "solder_free_adapters": {
+            "xhorse_white": {
+              "model": "XDNP119",
+              "set": "XDNPVDGL",
+              "fits": "Golf 8 5D White Inductor"
+            },
+            "xhorse_black": {
+              "model": "XDNP120",
+              "set": "XDNPVDGL",
+              "fits": "Golf 8 5D Black Inductor"
+            },
+            "keydiy_white": {
+              "model": "DZ5D01",
+              "set": "KD Clamp 12pc Kit",
+              "fits": "Golf 8 White Inductor"
+            },
+            "keydiy_black": {
+              "model": "DZ5D02",
+              "set": "KD Clamp 12pc Kit",
+              "fits": "Golf 8 Black Inductor"
+            },
+            "alger_keys_white": {
+              "bundle": "Golf 8 White Adapter + OEM Golf 8 Key"
+            },
+            "alger_keys_black": {
+              "bundle": "Golf 8 Black Adapter + OEM Golf 8 Key"
+            },
+            "warning": "\u26a0\ufe0f MUST match inductor color! White adapter on black inductor key = WILL NOT READ"
+          },
+          "aftermarket_key_options": {
+            "xhorse": "Check Xhorse 5D support \u2014 MQB-Evo limited",
+            "keydiy": "KD MQB-Evo 5D \u2014 check latest KD-X4 support",
+            "oem_refurb": "BEST option \u2014 genuine HELLA board recommended"
+          },
+          "sfd_info": {
+            "sfd_required": "YES \u2014 SFD1 unlock required",
+            "sfd2_required": "2024+ models require SFD2",
+            "unlock_methods": [
+              "VagLogins credits",
+              "OBDeleven Pro",
+              "KD-X4 built-in",
+              "Xhorse KTP manual"
+            ]
+          },
+          "tools_for_key_read": [
+            "Xhorse Key Tool Plus (KTP)",
+            "Xhorse Multi Prog",
+            "KeyDIY KD-X4",
+            "Autel IM508/IM608"
+          ],
+          "key_id_change": {
+            "required_from": "2023+ MQB-Evo",
+            "reason": "Car only accepts known Key IDs \u2014 new random IDs rejected",
+            "how": "Use KD-X4 or KTP to change new key ID to match lost key ID from car's IMMO table"
+          }
         }
       }
     },
-
-    "Jetta": {
-      "2006-2010": {
-        "platform": "MK5 (PQ35)",
-        "immobilizer": "IMMO3 / IMMO4",
-        "key_type": "VW Flip Key",
-        "key_blade": "HU66",
-        "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "OBD (PIN required)"
-        },
-        "module_removal": {
-          "has_key": false,
-          "one_key": false,
-          "akl": false
-        },
-        "akl_supported": "Yes",
-        "risk_level": "Low",
-        "notes": "Easy OBD work. PIN from cluster or dealer. Bread and butter job.",
-        "eeprom_info": {
-          "backup_required": false,
-          "chip_type": "N/A",
-          "backup_method": "Standard OBD",
-          "warning": "Low risk - older system."
-        },
-        "xhorse_tool_support": {
-          "mlb_tool": false,
-          "mqb_adapter": false,
-          "recommended_tool": "VVDI2 VAG standard"
-        }
-      },
-      "2011-2018": {
-        "platform": "MK6 (PQ25/PQ35)",
-        "immobilizer": "IMMO4 / IMMO5",
-        "key_type": "VW Flip Key",
-        "key_blade": "HU66",
-        "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "OBD or cluster read"
-        },
-        "module_removal": {
-          "has_key": false,
-          "one_key": false,
-          "akl": false
-        },
-        "akl_supported": "Yes",
-        "risk_level": "Low",
-        "notes": "Straightforward programming. Some late models may need cluster data.",
-        "eeprom_info": {
-          "backup_required": false,
-          "chip_type": "N/A for most",
-          "backup_method": "OBD backup sufficient",
-          "warning": "Low risk - standard procedures."
-        },
-        "xhorse_tool_support": {
-          "mlb_tool": false,
-          "mqb_adapter": false,
-          "recommended_tool": "VVDI2 VAG standard"
-        }
-      },
-      "2019-2026": {
-        "platform": "MK7 (MQB)",
-        "immobilizer": "MQB IMMO",
-        "key_type": "VW MQB Smart Key / Flip Key",
-        "key_blade": "HU162T",
-        "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "Cluster removal + IMMO data read"
-        },
-        "module_removal": {
-          "has_key": false,
-          "one_key": false,
-          "akl": true
-        },
-        "akl_supported": "Yes",
-        "risk_level": "Medium",
-        "notes": "MQB platform Jetta. Cluster IMMO data needed for AKL.",
-        "eeprom_info": {
-          "backup_required": true,
-          "chip_type": "Cluster EEPROM",
-          "backup_method": "Read cluster for AKL work",
-          "warning": "⚠️ MQB - backup cluster data for AKL!"
-        },
-        "xhorse_tool_support": {
-          "mlb_tool": false,
-          "mqb_adapter": true,
-          "adapter_notes": "MQB48 keys - MLB Tool + MQB Adapter avoids cluster removal",
-          "workflow": "MLB Tool + MQB Adapter → Read IMMO → Generate & learn",
-          "recommended_tool": "MLB Tool + MQB Adapter"
-        }
-      }
-    },
-
-    "Passat": {
-      "2006-2015": {
-        "platform": "B6 / B7 (PQ46)",
-        "immobilizer": "IMMO4 / IMMO5",
-        "key_type": "VW Flip Key / Smart Key",
-        "key_blade": "HU66",
-        "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "OBD or cluster read"
-        },
-        "module_removal": {
-          "has_key": false,
-          "one_key": false,
-          "akl": false
-        },
-        "akl_supported": "Yes",
-        "risk_level": "Low",
-        "notes": "Older Passat. Some with KESSY smart entry. Easy OBD work.",
-        "eeprom_info": {
-          "backup_required": false,
-          "chip_type": "N/A",
-          "backup_method": "Standard OBD",
-          "warning": "Low risk - older platform."
-        },
-        "xhorse_tool_support": {
-          "mlb_tool": false,
-          "mqb_adapter": false,
-          "recommended_tool": "VVDI2 VAG standard"
-        }
-      },
-      "2016-2022": {
-        "platform": "B8 (MQB)",
+    "GTI": {
+      "2015-2021": {
+        "platform": "MK7/MK7.5 (MQB)",
         "immobilizer": "MQB IMMO",
         "key_type": "VW MQB Smart Key",
         "key_blade": "HU162T",
+        "chip": "MQB48",
+        "remote_type": "VW_5C_Fold1",
         "programming": {
           "has_key": "OBD",
           "one_key": "OBD",
-          "akl": "Cluster removal + IMMO data read"
+          "akl": "Cluster removal"
         },
         "module_removal": {
           "has_key": false,
@@ -310,26 +729,94 @@
         },
         "akl_supported": "Yes",
         "risk_level": "Medium",
-        "notes": "MQB Passat. KESSY smart key standard. Cluster read for AKL.",
+        "notes": "MQB GTI. MQB platform with 5C chip. Enthusiast car = careful customers. KM100 NOT supported — use Xhorse tools.",
         "eeprom_info": {
           "backup_required": true,
           "chip_type": "Cluster EEPROM",
-          "backup_method": "Read cluster with VVDI Prog for AKL",
-          "warning": "⚠️ MQB - backup cluster IMMO data before AKL!"
+          "backup_method": "Read cluster for AKL",
+          "warning": "\u26a0\ufe0f MQB - backup cluster data!"
+        },
+        "km100_support": {
+          "supported": false,
+          "method": "NOT SUPPORTED",
+          "steps": [
+            "KM100 does NOT support MQB!",
+            "Use MLB Tool + MQB Adapter"
+          ],
+          "chip_needed": "MQB48",
+          "time_estimate": "N/A",
+          "profit_estimate": "Charge premium"
         },
         "xhorse_tool_support": {
           "mlb_tool": false,
           "mqb_adapter": true,
-          "adapter_notes": "MQB48 keys - use MLB Tool + MQB Adapter to avoid cluster pull",
-          "workflow": "MLB Tool + MQB Adapter → Read IMMO → Generate & learn",
           "recommended_tool": "MLB Tool + MQB Adapter"
+        },
+        "key_hardware": {
+          "key_style": "MQB 5C Flip Key (Keyless Go)",
+          "oem_key_info": {
+            "part_numbers": [
+              "5G6959752AB",
+              "5GD959752B",
+              "57A959752B",
+              "2G6959752D",
+              "5GD959752E"
+            ],
+            "fcc_id": "NBGFS12P01",
+            "frequency": "315MHz (NA) / 434MHz (EU)",
+            "chip": "MQB49 5C",
+            "blade": "HU162T",
+            "keyless_go": true,
+            "battery": "CR2032",
+            "buttons": 3,
+            "key_check": "Blade has chrome tip sensor \u2014 proximity sensor at blade end (see Alger Keys image)"
+          },
+          "solder_free_adapters": {
+            "xhorse": {
+              "model": "XDNP115 or XDNP116",
+              "set": "XDNPVDGL (8pc MQB 5C/5D set)",
+              "fits": "5C Flip Blade Key"
+            },
+            "keydiy": {
+              "model": "DZ5C03 (old style) / DZ5C02 (new style)",
+              "set": "KD Clamp 12pc Kit",
+              "probe_required": true
+            },
+            "alger_keys": {
+              "bundle": "MQB 5C Old Adapter + OEM MQB 5C Keyless Go Key"
+            }
+          },
+          "aftermarket_key_options": {
+            "xhorse": "XSMQB1EN (MQB Smart Proximity Key 315MHz)",
+            "keydiy": "KD MQB 5C Non-OEM (K507 40-pin) or OEM Solution (K508 44-pin)",
+            "oem_refurb": "Best option for ODIS \u2014 must be genuine OEM board"
+          },
+          "sfd_info": {
+            "sfd_required": "2020+ models may require SFD1 unlock",
+            "sfd2_required": "2024+ models require SFD2",
+            "unlock_methods": [
+              "VagLogins credits (~$5-7/job)",
+              "OBDeleven Pro (auto)",
+              "KD-X4 built-in ($5/unlock)",
+              "Xhorse KTP manual + 3rd party token"
+            ]
+          },
+          "tools_for_key_read": [
+            "Xhorse Key Tool Plus (KTP)",
+            "Xhorse Multi Prog",
+            "Xhorse VVDI2 + VVDI Prog",
+            "KeyDIY KD-X4 + KD-MP",
+            "Autel IM508/IM608"
+          ]
         }
       },
-      "2023-2026": {
-        "platform": "B9 (MQB-Evo)",
+      "2022-2026": {
+        "platform": "MK8 (MQB-Evo)",
         "immobilizer": "MQB-Evo",
         "key_type": "VW MQB Smart Key",
         "key_blade": "HU162T",
+        "chip": "MQB-Evo",
+        "remote_type": "VW_5D_Golf8_1",
         "programming": {
           "has_key": "OBD",
           "one_key": "OBD",
@@ -342,32 +829,122 @@
         },
         "akl_supported": "Limited",
         "risk_level": "High",
-        "notes": "New Passat. MQB-Evo with enhanced security. Verify tool support.",
+        "notes": "MK8 GTI. MQB-Evo - verify tool support!",
         "eeprom_info": {
           "backup_required": true,
           "chip_type": "MQB-Evo cluster",
           "backup_method": "Full backup required",
-          "warning": "⚠️ CRITICAL: New platform - verify compatibility!"
+          "warning": "\u26a0\ufe0f CRITICAL: MQB-Evo - verify tools first!"
+        },
+        "km100_support": {
+          "supported": false,
+          "method": "NOT SUPPORTED",
+          "steps": [
+            "MQB-Evo - check Xhorse updates"
+          ],
+          "chip_needed": "MQB-Evo",
+          "time_estimate": "N/A",
+          "profit_estimate": "Refer out"
         },
         "xhorse_tool_support": {
           "mlb_tool": false,
           "mqb_adapter": "Limited",
-          "adapter_notes": "MQB-Evo - verify adapter support before accepting",
           "recommended_tool": "Check Xhorse updates"
+        },
+        "key_hardware": {
+          "key_style": "MQB-Evo Golf 8 5D Smart Key (Proximity)",
+          "oem_key_info": {
+            "part_numbers": [
+              "5HG959753D",
+              "5HG959753",
+              "5HG959753B",
+              "5DD959753 (Skoda)",
+              "5DD959753B (Skoda)",
+              "5H0959733"
+            ],
+            "fcc_id": "NBGFS19025",
+            "manufacturer": "HELLA Shanghai (Model: FS191S)",
+            "frequency": "434MHz",
+            "chip": "MQB-Evo 5D",
+            "blade": "HU162T (emergency)",
+            "keyless_go": true,
+            "battery": "CR2032",
+            "buttons": 3,
+            "inductor_variants": {
+              "white_inductor": "White square component on PCB \u2014 use Golf 8 White Adapter",
+              "black_inductor": "Black square component on PCB \u2014 use Golf 8 Black Adapter",
+              "how_to_identify": "Open key shell, look at PCB \u2014 inductor is the small square near the antenna coil"
+            }
+          },
+          "solder_free_adapters": {
+            "xhorse_white": {
+              "model": "XDNP119",
+              "set": "XDNPVDGL",
+              "fits": "Golf 8 5D White Inductor"
+            },
+            "xhorse_black": {
+              "model": "XDNP120",
+              "set": "XDNPVDGL",
+              "fits": "Golf 8 5D Black Inductor"
+            },
+            "keydiy_white": {
+              "model": "DZ5D01",
+              "set": "KD Clamp 12pc Kit",
+              "fits": "Golf 8 White Inductor"
+            },
+            "keydiy_black": {
+              "model": "DZ5D02",
+              "set": "KD Clamp 12pc Kit",
+              "fits": "Golf 8 Black Inductor"
+            },
+            "alger_keys_white": {
+              "bundle": "Golf 8 White Adapter + OEM Golf 8 Key"
+            },
+            "alger_keys_black": {
+              "bundle": "Golf 8 Black Adapter + OEM Golf 8 Key"
+            },
+            "warning": "\u26a0\ufe0f MUST match inductor color! White adapter on black inductor key = WILL NOT READ"
+          },
+          "aftermarket_key_options": {
+            "xhorse": "Check Xhorse 5D support \u2014 MQB-Evo limited",
+            "keydiy": "KD MQB-Evo 5D \u2014 check latest KD-X4 support",
+            "oem_refurb": "BEST option \u2014 genuine HELLA board recommended"
+          },
+          "sfd_info": {
+            "sfd_required": "YES \u2014 SFD1 unlock required",
+            "sfd2_required": "2024+ models require SFD2",
+            "unlock_methods": [
+              "VagLogins credits",
+              "OBDeleven Pro",
+              "KD-X4 built-in",
+              "Xhorse KTP manual"
+            ]
+          },
+          "tools_for_key_read": [
+            "Xhorse Key Tool Plus (KTP)",
+            "Xhorse Multi Prog",
+            "KeyDIY KD-X4",
+            "Autel IM508/IM608"
+          ],
+          "key_id_change": {
+            "required_from": "2023+ MQB-Evo",
+            "reason": "Car only accepts known Key IDs \u2014 new random IDs rejected",
+            "how": "Use KD-X4 or KTP to change new key ID to match lost key ID from car's IMMO table"
+          }
         }
       }
     },
-
-    "Tiguan": {
-      "2009-2017": {
-        "platform": "5N (PQ35)",
-        "immobilizer": "IMMO4 / IMMO5",
+    "Passat": {
+      "2000-2005": {
+        "platform": "B5.5 (Generation 2)",
+        "immobilizer": "IMMO3 (Generation 2)",
         "key_type": "VW Flip Key",
         "key_blade": "HU66",
+        "chip": "ID48",
         "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "OBD (PIN required)"
+          "has_key": "OBD (KM100)",
+          "one_key": "OBD (KM100)",
+          "akl": "OBD - Copy MEGAMOS 48"
         },
         "module_removal": {
           "has_key": false,
@@ -376,17 +953,277 @@
         },
         "akl_supported": "Yes",
         "risk_level": "Low",
-        "notes": "Popular compact SUV. Older platform. Easy OBD work.",
+        "notes": "EASY OBD JOB! Generation 2 = perfect for KM100.",
         "eeprom_info": {
           "backup_required": false,
           "chip_type": "N/A",
           "backup_method": "Standard OBD",
-          "warning": "Low risk - older system."
+          "warning": "Low risk - safest VW generation"
+        },
+        "km100_support": {
+          "supported": true,
+          "method": "Copy MEGAMOS 48 (SAFEST)",
+          "steps": [
+            "1. KM100 > Immobilizer > Volkswagen",
+            "2. Select Passat > 2000-2005",
+            "3. Control Unit > Immobilizer",
+            "4. Read IMMO Data",
+            "5. Copy Key MEGAMOS-48",
+            "6. Insert ID48 chip",
+            "7. Select key ID and write",
+            "8. Cut HU66 blade",
+            "9. Test key"
+          ],
+          "chip_needed": "ID48 or Super Chip",
+          "time_estimate": "15-20 min",
+          "profit_estimate": "$165-235"
         },
         "xhorse_tool_support": {
           "mlb_tool": false,
           "mqb_adapter": false,
-          "recommended_tool": "VVDI2 VAG standard"
+          "recommended_tool": "KM100"
+        }
+      },
+      "2006-2010": {
+        "platform": "B6 (BCM)",
+        "immobilizer": "IMMO4 / BCM",
+        "key_type": "VW Flip Key",
+        "key_blade": "HU66",
+        "chip": "ID48",
+        "programming": {
+          "has_key": "OBD (KM100)",
+          "one_key": "OBD (KM100)",
+          "akl": "OBD - Copy MEGAMOS 48"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": false
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Low",
+        "notes": "BCM system - still pre-MQB = KM100 works via OBD.",
+        "eeprom_info": {
+          "backup_required": false,
+          "chip_type": "BCM",
+          "backup_method": "OBD backup",
+          "warning": "Low risk - straightforward"
+        },
+        "km100_support": {
+          "supported": true,
+          "method": "Copy MEGAMOS 48",
+          "steps": [
+            "1. KM100 > Immobilizer > Volkswagen",
+            "2. Select Passat > 2006-2010",
+            "3. Control Unit > Immobilizer",
+            "4. Read IMMO Data (get PIN)",
+            "5. Copy Key MEGAMOS-48",
+            "6. Insert ID48 chip",
+            "7. Write key data",
+            "8. Cut HU66 blade"
+          ],
+          "chip_needed": "ID48",
+          "time_estimate": "15-25 min",
+          "profit_estimate": "$165-235"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": false,
+          "recommended_tool": "KM100"
+        }
+      },
+      "2011-2019": {
+        "platform": "B7/B8 (NEC+24C64)",
+        "immobilizer": "NEC+24C64",
+        "key_type": "VW Flip Key / Smart Key",
+        "key_blade": "HU66",
+        "chip": "ID48",
+        "programming": {
+          "has_key": "OBD (limited)",
+          "one_key": "OBD (limited)",
+          "akl": "BOOT mode (cluster pull)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes (BOOT)",
+        "risk_level": "Medium",
+        "notes": "NEC+24C64. AKL requires BOOT mode = cluster pull.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "NEC+24C64",
+          "backup_method": "EEPROM backup before BOOT",
+          "warning": "\u26a0\ufe0f BOOT mode = cluster pull. Backup first!"
+        },
+        "km100_support": {
+          "supported": "Partial",
+          "method": "OBD for Add Key, BOOT for AKL",
+          "steps": [
+            "FOR ADD KEY (has key):",
+            "1. Try OBD Add Key with KM100",
+            "",
+            "FOR AKL (no keys):",
+            "1. Need BOOT mode",
+            "2. Remove cluster",
+            "3. Read NEC+24C64 EEPROM",
+            "4. Program via BOOT"
+          ],
+          "chip_needed": "ID48",
+          "time_estimate": "30-60 min",
+          "profit_estimate": "$200-300"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": false,
+          "recommended_tool": "KM100 (OBD) + VVDI Prog (BOOT)"
+        }
+      },
+      "2016-2026": {
+        "platform": "B8 (MQB)",
+        "immobilizer": "MQB IMMO",
+        "key_type": "VW MQB Smart Key",
+        "key_blade": "HU162T",
+        "chip": "MQB48",
+        "remote_type": "VW_5C_Fold2",
+        "programming": {
+          "has_key": "OBD",
+          "one_key": "OBD",
+          "akl": "Cluster removal"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "MQB Passat - use MLB Tool + MQB Adapter.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "MQB cluster",
+          "backup_method": "Cluster backup",
+          "warning": "\u26a0\ufe0f MQB - backup cluster!"
+        },
+        "km100_support": {
+          "supported": false,
+          "method": "NOT SUPPORTED",
+          "steps": [
+            "Use MLB Tool + MQB Adapter"
+          ],
+          "chip_needed": "MQB48",
+          "time_estimate": "N/A",
+          "profit_estimate": "Use Xhorse tools"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": true,
+          "recommended_tool": "MLB Tool + MQB Adapter"
+        },
+        "key_hardware": {
+          "key_style": "MQB B8 5C Smart Key (Proximity)",
+          "oem_key_info": {
+            "part_numbers": [
+              "3V0959752H",
+              "3V0959752"
+            ],
+            "manufacturer": "Continental",
+            "board_number": "A2C16971108",
+            "fcc_id": "Check vehicle specific",
+            "frequency": "434MHz",
+            "chip": "MQB49 5C",
+            "blade": "HU162T (emergency)",
+            "keyless_go": true,
+            "battery": "CR2032",
+            "buttons": 3
+          },
+          "solder_free_adapters": {
+            "xhorse": {
+              "model": "XDNP122",
+              "set": "XDNPVDGL (8pc MQB 5C/5D set)",
+              "fits": "5C&5D B8"
+            },
+            "keydiy": {
+              "model": "AD5D01 / AD5D02",
+              "set": "KD Clamp 12pc Kit",
+              "probe_required": true
+            },
+            "alger_keys": {
+              "bundle": "B8 5C Adapter + OEM B8 5C Key"
+            }
+          },
+          "aftermarket_key_options": {
+            "xhorse": "XSMQB1EN or Xhorse MQB smart key",
+            "keydiy": "KD MQB 5C OEM Solution (K508 44-pin)",
+            "oem_refurb": "Continental board 3V0959752H \u2014 best for reliability"
+          },
+          "sfd_info": {
+            "sfd_required": "2020+ models require SFD1 unlock",
+            "sfd2_required": "2024+ models require SFD2",
+            "unlock_methods": [
+              "VagLogins credits",
+              "OBDeleven Pro",
+              "KD-X4 built-in",
+              "Xhorse KTP manual"
+            ]
+          },
+          "tools_for_key_read": [
+            "Xhorse Key Tool Plus (KTP)",
+            "Xhorse Multi Prog",
+            "KeyDIY KD-X4 + KD-MP",
+            "Autel IM508/IM608"
+          ]
+        }
+      }
+    },
+    "Tiguan": {
+      "2010-2017": {
+        "platform": "5N (NEC+24C64)",
+        "immobilizer": "NEC+24C64",
+        "key_type": "VW Flip Key / Smart Key",
+        "key_blade": "HU66",
+        "chip": "ID48",
+        "programming": {
+          "has_key": "OBD (limited)",
+          "one_key": "OBD (limited)",
+          "akl": "BOOT mode (cluster pull)"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes (BOOT)",
+        "risk_level": "Medium",
+        "notes": "NEC+24C64. AKL requires BOOT mode = cluster pull.",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "NEC+24C64",
+          "backup_method": "EEPROM backup before BOOT",
+          "warning": "\u26a0\ufe0f BOOT mode = cluster pull!"
+        },
+        "km100_support": {
+          "supported": "Partial",
+          "method": "OBD for Add Key, BOOT for AKL",
+          "steps": [
+            "FOR ADD KEY (has key):",
+            "1. Try OBD Add Key with KM100",
+            "",
+            "FOR AKL (no keys):",
+            "1. Need BOOT mode",
+            "2. Remove cluster",
+            "3. Read NEC+24C64 EEPROM",
+            "4. Program via BOOT"
+          ],
+          "chip_needed": "ID48",
+          "time_estimate": "30-60 min",
+          "profit_estimate": "$200-300"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": false,
+          "recommended_tool": "KM100 (OBD) + VVDI Prog (BOOT)"
         }
       },
       "2018-2026": {
@@ -394,147 +1231,12 @@
         "immobilizer": "MQB IMMO",
         "key_type": "VW MQB Smart Key",
         "key_blade": "HU162T",
+        "chip": "MQB48",
+        "remote_type": "VW_5C_Fold1",
         "programming": {
           "has_key": "OBD",
           "one_key": "OBD",
-          "akl": "Cluster removal + IMMO data read"
-        },
-        "module_removal": {
-          "has_key": false,
-          "one_key": false,
-          "akl": true
-        },
-        "akl_supported": "Yes",
-        "risk_level": "Medium",
-        "notes": "MQB Tiguan. Very common vehicle. Good bread and butter work.",
-        "eeprom_info": {
-          "backup_required": true,
-          "chip_type": "Cluster EEPROM",
-          "backup_method": "Read cluster for AKL",
-          "warning": "⚠️ MQB - backup cluster data for AKL!"
-        },
-        "xhorse_tool_support": {
-          "mlb_tool": false,
-          "mqb_adapter": true,
-          "adapter_notes": "MQB48 keys - MLB Tool + MQB Adapter saves cluster removal",
-          "workflow": "MLB Tool + MQB Adapter → Read IMMO → Generate & learn",
-          "recommended_tool": "MLB Tool + MQB Adapter"
-        }
-      }
-    },
-
-    "Atlas": {
-      "2018-2026": {
-        "platform": "CA1 (MQB)",
-        "immobilizer": "MQB IMMO",
-        "key_type": "VW MQB Smart Key",
-        "key_blade": "HU162T",
-        "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "Cluster removal + IMMO data read"
-        },
-        "module_removal": {
-          "has_key": false,
-          "one_key": false,
-          "akl": true
-        },
-        "akl_supported": "Yes",
-        "risk_level": "Medium",
-        "notes": "Large 3-row SUV. MQB platform. Popular family vehicle.",
-        "eeprom_info": {
-          "backup_required": true,
-          "chip_type": "Cluster EEPROM",
-          "backup_method": "Read cluster for AKL work",
-          "warning": "⚠️ MQB - backup cluster IMMO data before AKL!"
-        },
-        "xhorse_tool_support": {
-          "mlb_tool": false,
-          "mqb_adapter": true,
-          "adapter_notes": "MQB48 keys - use MLB Tool + MQB Adapter",
-          "workflow": "MLB Tool + MQB Adapter → Read IMMO → Generate & learn",
-          "recommended_tool": "MLB Tool + MQB Adapter"
-        }
-      }
-    },
-
-    "Arteon": {
-      "2019-2026": {
-        "platform": "3H (MQB)",
-        "immobilizer": "MQB IMMO",
-        "key_type": "VW MQB Smart Key",
-        "key_blade": "HU162T",
-        "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "Cluster removal + IMMO data read"
-        },
-        "module_removal": {
-          "has_key": false,
-          "one_key": false,
-          "akl": true
-        },
-        "akl_supported": "Yes",
-        "risk_level": "Medium",
-        "notes": "Luxury VW sedan. MQB platform. Premium pricing for premium car.",
-        "eeprom_info": {
-          "backup_required": true,
-          "chip_type": "Cluster EEPROM",
-          "backup_method": "Read cluster for AKL",
-          "warning": "⚠️ MQB - backup cluster data for AKL. Luxury car = careful work."
-        },
-        "xhorse_tool_support": {
-          "mlb_tool": false,
-          "mqb_adapter": true,
-          "adapter_notes": "MQB48 - MLB Tool + MQB Adapter avoids cluster pull",
-          "recommended_tool": "MLB Tool + MQB Adapter"
-        }
-      }
-    },
-
-    "Touareg": {
-      "2011-2018": {
-        "platform": "7P (MLB)",
-        "immobilizer": "KESSY / BCM1",
-        "key_type": "VW Smart Key",
-        "key_blade": "HU66",
-        "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "BCM read"
-        },
-        "module_removal": {
-          "has_key": false,
-          "one_key": false,
-          "akl": true
-        },
-        "akl_supported": "Yes",
-        "risk_level": "Medium",
-        "notes": "Luxury SUV. KESSY system. Different from standard VW platform.",
-        "eeprom_info": {
-          "backup_required": true,
-          "chip_type": "KESSY module EEPROM",
-          "backup_method": "Read KESSY for AKL work",
-          "warning": "KESSY system - backup module data for AKL."
-        },
-        "xhorse_tool_support": {
-          "mlb_tool": true,
-          "mqb_adapter": false,
-          "mlb_notes": "MLB platform - MLB Tool SUPPORTED for wireless key operations",
-          "workflow": "MLB Tool reads key → Calculate → Generate via VVDI2/Key Tool Plus",
-          "no_vehicle_needed": true,
-          "recommended_tool": "MLB Tool (XDMLB0)"
-        }
-      },
-      "2019-2026": {
-        "platform": "CR (MLB-Evo)",
-        "immobilizer": "BCM2 (Audi shared)",
-        "key_type": "VW Smart Key",
-        "key_blade": "HU162T",
-        "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "BCM2 removal + dump read"
+          "akl": "Cluster removal"
         },
         "module_removal": {
           "has_key": false,
@@ -543,34 +1245,100 @@
         },
         "akl_supported": "Limited",
         "risk_level": "High",
-        "notes": "Shares MLB-Evo with Audi Q7/Q8. BCM2 system. Component protection.",
+        "notes": "MQB platform - KM100 NOT supported.",
         "eeprom_info": {
           "backup_required": true,
-          "chip_type": "BCM2 EEPROM",
-          "backup_method": "Full BCM2 dump required",
-          "warning": "⚠️ CRITICAL: BCM2 system (Audi shared) - full backup mandatory!"
+          "chip_type": "MQB",
+          "backup_method": "Cluster backup",
+          "warning": "\u26a0\ufe0f CRITICAL: MQB - KM100 NOT supported"
+        },
+        "km100_support": {
+          "supported": false,
+          "method": "NOT SUPPORTED",
+          "steps": [
+            "Use Key Tool Plus + MQB48",
+            "Or refer out"
+          ],
+          "chip_needed": "MQB48",
+          "time_estimate": "N/A",
+          "profit_estimate": "Refer out"
         },
         "xhorse_tool_support": {
-          "mlb_tool": true,
-          "mqb_adapter": false,
-          "mlb_notes": "MLB-Evo SUPPORTED - wireless key generation, no vehicle access needed",
-          "workflow": "MLB Tool → Read key (no chip removal) → Calculate → Generate",
-          "no_vehicle_needed": true,
-          "recommended_tool": "MLB Tool (XDMLB0)"
+          "mlb_tool": false,
+          "mqb_adapter": true,
+          "recommended_tool": "MLB Tool + MQB Adapter"
+        },
+        "key_hardware": {
+          "key_style": "MQB 5C Flip Key (Keyless Go)",
+          "oem_key_info": {
+            "part_numbers": [
+              "5G6959752AB",
+              "5GD959752B",
+              "57A959752B",
+              "2G6959752D",
+              "5GD959752E"
+            ],
+            "fcc_id": "NBGFS12P01",
+            "frequency": "315MHz (NA) / 434MHz (EU)",
+            "chip": "MQB49 5C",
+            "blade": "HU162T",
+            "keyless_go": true,
+            "battery": "CR2032",
+            "buttons": 3,
+            "key_check": "Blade has chrome tip sensor \u2014 proximity sensor at blade end (see Alger Keys image)"
+          },
+          "solder_free_adapters": {
+            "xhorse": {
+              "model": "XDNP115 or XDNP116",
+              "set": "XDNPVDGL (8pc MQB 5C/5D set)",
+              "fits": "5C Flip Blade Key"
+            },
+            "keydiy": {
+              "model": "DZ5C03 (old style) / DZ5C02 (new style)",
+              "set": "KD Clamp 12pc Kit",
+              "probe_required": true
+            },
+            "alger_keys": {
+              "bundle": "MQB 5C Old Adapter + OEM MQB 5C Keyless Go Key"
+            }
+          },
+          "aftermarket_key_options": {
+            "xhorse": "XSMQB1EN (MQB Smart Proximity Key 315MHz)",
+            "keydiy": "KD MQB 5C Non-OEM (K507 40-pin) or OEM Solution (K508 44-pin)",
+            "oem_refurb": "Best option for ODIS \u2014 must be genuine OEM board"
+          },
+          "sfd_info": {
+            "sfd_required": "2020+ models may require SFD1 unlock",
+            "sfd2_required": "2024+ models require SFD2",
+            "unlock_methods": [
+              "VagLogins credits (~$5-7/job)",
+              "OBDeleven Pro (auto)",
+              "KD-X4 built-in ($5/unlock)",
+              "Xhorse KTP manual + 3rd party token"
+            ]
+          },
+          "tools_for_key_read": [
+            "Xhorse Key Tool Plus (KTP)",
+            "Xhorse Multi Prog",
+            "Xhorse VVDI2 + VVDI Prog",
+            "KeyDIY KD-X4 + KD-MP",
+            "Autel IM508/IM608"
+          ]
         }
       }
     },
-
-    "Taos": {
-      "2022-2026": {
-        "platform": "BW (MQB)",
+    "Atlas": {
+      "2018-2026": {
+        "platform": "CA1 (MQB)",
         "immobilizer": "MQB IMMO",
         "key_type": "VW MQB Smart Key",
         "key_blade": "HU162T",
+        "chip": "MQB48",
+        "remote_type": "VW_5C_Fold1",
         "programming": {
           "has_key": "OBD",
           "one_key": "OBD",
-          "akl": "Cluster removal + IMMO data read"
+          "akl": "Cluster removal"
         },
         "module_removal": {
           "has_key": false,
@@ -579,98 +1347,196 @@
         },
         "akl_supported": "Yes",
         "risk_level": "Medium",
-        "notes": "Compact SUV. Standard MQB platform. Common procedures apply.",
+        "notes": "MQB Atlas - 3 row SUV. MLB Tool + MQB Adapter works.",
         "eeprom_info": {
           "backup_required": true,
-          "chip_type": "Cluster EEPROM",
-          "backup_method": "Read cluster for AKL",
-          "warning": "⚠️ MQB - backup cluster data for AKL!"
+          "chip_type": "MQB cluster",
+          "backup_method": "Cluster backup",
+          "warning": "\u26a0\ufe0f MQB - backup cluster!"
+        },
+        "km100_support": {
+          "supported": false,
+          "method": "NOT SUPPORTED",
+          "steps": [
+            "Use MLB Tool + MQB Adapter"
+          ],
+          "chip_needed": "MQB48",
+          "time_estimate": "N/A",
+          "profit_estimate": "Charge $250-350"
         },
         "xhorse_tool_support": {
           "mlb_tool": false,
           "mqb_adapter": true,
-          "adapter_notes": "MQB48 - use MLB Tool + MQB Adapter",
           "recommended_tool": "MLB Tool + MQB Adapter"
+        },
+        "key_hardware": {
+          "key_style": "MQB 5C Flip Key (Keyless Go)",
+          "oem_key_info": {
+            "part_numbers": [
+              "5G6959752AB",
+              "5GD959752B",
+              "57A959752B",
+              "2G6959752D",
+              "5GD959752E"
+            ],
+            "fcc_id": "NBGFS12P01",
+            "frequency": "315MHz (NA) / 434MHz (EU)",
+            "chip": "MQB49 5C",
+            "blade": "HU162T",
+            "keyless_go": true,
+            "battery": "CR2032",
+            "buttons": 3,
+            "key_check": "Blade has chrome tip sensor \u2014 proximity sensor at blade end (see Alger Keys image)"
+          },
+          "solder_free_adapters": {
+            "xhorse": {
+              "model": "XDNP115 or XDNP116",
+              "set": "XDNPVDGL (8pc MQB 5C/5D set)",
+              "fits": "5C Flip Blade Key"
+            },
+            "keydiy": {
+              "model": "DZ5C03 (old style) / DZ5C02 (new style)",
+              "set": "KD Clamp 12pc Kit",
+              "probe_required": true
+            },
+            "alger_keys": {
+              "bundle": "MQB 5C Old Adapter + OEM MQB 5C Keyless Go Key"
+            }
+          },
+          "aftermarket_key_options": {
+            "xhorse": "XSMQB1EN (MQB Smart Proximity Key 315MHz)",
+            "keydiy": "KD MQB 5C Non-OEM (K507 40-pin) or OEM Solution (K508 44-pin)",
+            "oem_refurb": "Best option for ODIS \u2014 must be genuine OEM board"
+          },
+          "sfd_info": {
+            "sfd_required": "2020+ models may require SFD1 unlock",
+            "sfd2_required": "2024+ models require SFD2",
+            "unlock_methods": [
+              "VagLogins credits (~$5-7/job)",
+              "OBDeleven Pro (auto)",
+              "KD-X4 built-in ($5/unlock)",
+              "Xhorse KTP manual + 3rd party token"
+            ]
+          },
+          "tools_for_key_read": [
+            "Xhorse Key Tool Plus (KTP)",
+            "Xhorse Multi Prog",
+            "Xhorse VVDI2 + VVDI Prog",
+            "KeyDIY KD-X4 + KD-MP",
+            "Autel IM508/IM608"
+          ]
         }
       }
     },
-
-    "ID.4": {
-      "2021-2026": {
-        "platform": "MEB (Electric)",
-        "immobilizer": "MEB IMMO / Digital Key",
-        "key_type": "VW ID Smart Key",
-        "key_blade": "HU162T (emergency)",
-        "programming": {
-          "has_key": "OBD (limited)",
-          "one_key": "Specialized tool required",
-          "akl": "Dealer recommended"
-        },
-        "module_removal": {
-          "has_key": false,
-          "one_key": true,
-          "akl": true
-        },
-        "akl_supported": "Very Limited",
-        "risk_level": "Very High",
-        "notes": "Electric vehicle. MEB platform. Digital key option. Very limited aftermarket support.",
-        "eeprom_info": {
-          "backup_required": true,
-          "chip_type": "MEB modules",
-          "backup_method": "Dealer-level tools recommended",
-          "warning": "⚠️ EXTREME RISK: EV platform. Very limited support. Consider dealer referral."
-        },
-        "xhorse_tool_support": {
-          "mlb_tool": false,
-          "mqb_adapter": false,
-          "notes": "MEB platform - not MLB or MQB. Limited aftermarket support."
-        }
-      }
-    },
-
-    "ID.Buzz": {
-      "2024-2026": {
-        "platform": "MEB (Electric)",
-        "immobilizer": "MEB IMMO / Digital Key",
-        "key_type": "VW ID Smart Key",
-        "key_blade": "HU162T (emergency)",
-        "programming": {
-          "has_key": "OBD (very limited)",
-          "one_key": "Dealer recommended",
-          "akl": "Dealer only"
-        },
-        "module_removal": {
-          "has_key": false,
-          "one_key": true,
-          "akl": true
-        },
-        "akl_supported": "No",
-        "risk_level": "Very High",
-        "notes": "Electric van. Brand new model. Extremely limited aftermarket support.",
-        "eeprom_info": {
-          "backup_required": true,
-          "chip_type": "MEB modules",
-          "backup_method": "Dealer tools only",
-          "warning": "⚠️ EXTREME RISK: New EV. Dealer referral recommended for most work."
-        },
-        "xhorse_tool_support": {
-          "mlb_tool": false,
-          "mqb_adapter": false,
-          "notes": "MEB platform - no MLB/MQB tool support"
-        }
-      }
-    },
-
-    "GTI": {
-      "2006-2014": {
-        "platform": "MK5 / MK6 (PQ35)",
-        "immobilizer": "IMMO3 / IMMO4",
-        "key_type": "VW Flip Key",
-        "key_blade": "HU66",
+    "Arteon": {
+      "2019-2026": {
+        "platform": "3H (MQB)",
+        "immobilizer": "MQB IMMO",
+        "key_type": "VW MQB Smart Key",
+        "key_blade": "HU162T",
+        "chip": "MQB48",
+        "remote_type": "VW_5C_Fold2",
         "programming": {
           "has_key": "OBD",
           "one_key": "OBD",
-          "akl": "OBD (PIN required)"
+          "akl": "Cluster removal"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": true
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Medium",
+        "notes": "MQB Arteon - premium sedan. Charge premium!",
+        "eeprom_info": {
+          "backup_required": true,
+          "chip_type": "MQB cluster",
+          "backup_method": "Cluster backup",
+          "warning": "\u26a0\ufe0f MQB - backup cluster!"
+        },
+        "km100_support": {
+          "supported": false,
+          "method": "NOT SUPPORTED",
+          "steps": [
+            "Use MLB Tool + MQB Adapter"
+          ],
+          "chip_needed": "MQB48",
+          "time_estimate": "N/A",
+          "profit_estimate": "Charge $300-400"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": true,
+          "recommended_tool": "MLB Tool + MQB Adapter"
+        },
+        "key_hardware": {
+          "key_style": "MQB B8 5C Smart Key (Proximity)",
+          "oem_key_info": {
+            "part_numbers": [
+              "3V0959752H",
+              "3V0959752"
+            ],
+            "manufacturer": "Continental",
+            "board_number": "A2C16971108",
+            "fcc_id": "Check vehicle specific",
+            "frequency": "434MHz",
+            "chip": "MQB49 5C",
+            "blade": "HU162T (emergency)",
+            "keyless_go": true,
+            "battery": "CR2032",
+            "buttons": 3
+          },
+          "solder_free_adapters": {
+            "xhorse": {
+              "model": "XDNP122",
+              "set": "XDNPVDGL (8pc MQB 5C/5D set)",
+              "fits": "5C&5D B8"
+            },
+            "keydiy": {
+              "model": "AD5D01 / AD5D02",
+              "set": "KD Clamp 12pc Kit",
+              "probe_required": true
+            },
+            "alger_keys": {
+              "bundle": "B8 5C Adapter + OEM B8 5C Key"
+            }
+          },
+          "aftermarket_key_options": {
+            "xhorse": "XSMQB1EN or Xhorse MQB smart key",
+            "keydiy": "KD MQB 5C OEM Solution (K508 44-pin)",
+            "oem_refurb": "Continental board 3V0959752H \u2014 best for reliability"
+          },
+          "sfd_info": {
+            "sfd_required": "2020+ models require SFD1 unlock",
+            "sfd2_required": "2024+ models require SFD2",
+            "unlock_methods": [
+              "VagLogins credits",
+              "OBDeleven Pro",
+              "KD-X4 built-in",
+              "Xhorse KTP manual"
+            ]
+          },
+          "tools_for_key_read": [
+            "Xhorse Key Tool Plus (KTP)",
+            "Xhorse Multi Prog",
+            "KeyDIY KD-X4 + KD-MP",
+            "Autel IM508/IM608"
+          ]
+        }
+      }
+    },
+    "Beetle": {
+      "2000-2011": {
+        "platform": "A4 (MM5)",
+        "immobilizer": "MM5 (Generation 2)",
+        "key_type": "VW Flip Key",
+        "key_blade": "HU66",
+        "chip": "ID48",
+        "programming": {
+          "has_key": "OBD (KM100)",
+          "one_key": "OBD (KM100)",
+          "akl": "OBD - Copy MEGAMOS 48"
         },
         "module_removal": {
           "has_key": false,
@@ -679,144 +1545,230 @@
         },
         "akl_supported": "Yes",
         "risk_level": "Low",
-        "notes": "Performance Golf. Same as regular Golf platform. Easy work.",
+        "notes": "EASY OBD JOB! MM5 system = KM100 works perfectly.",
         "eeprom_info": {
           "backup_required": false,
           "chip_type": "N/A",
           "backup_method": "Standard OBD",
-          "warning": "Low risk - older system. Same as Golf."
+          "warning": "Low risk - simple and reliable"
+        },
+        "km100_support": {
+          "supported": true,
+          "method": "Copy MEGAMOS 48 (SAFEST)",
+          "steps": [
+            "1. KM100 > Immobilizer > Volkswagen",
+            "2. Select Beetle > 2000-2011",
+            "3. Control Unit > Immobilizer",
+            "4. Read IMMO Data",
+            "5. Copy Key MEGAMOS-48",
+            "6. Insert ID48 chip",
+            "7. Write and cut HU66"
+          ],
+          "chip_needed": "ID48 or Super Chip",
+          "time_estimate": "15-20 min",
+          "profit_estimate": "$165-235"
         },
         "xhorse_tool_support": {
           "mlb_tool": false,
           "mqb_adapter": false,
-          "recommended_tool": "VVDI2 VAG standard"
-        }
-      },
-      "2015-2021": {
-        "platform": "MK7 / MK7.5 (MQB)",
-        "immobilizer": "MQB IMMO",
-        "key_type": "VW MQB Smart Key",
-        "key_blade": "HU162T",
-        "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "Cluster removal + IMMO data read"
-        },
-        "module_removal": {
-          "has_key": false,
-          "one_key": false,
-          "akl": true
-        },
-        "akl_supported": "Yes",
-        "risk_level": "Medium",
-        "notes": "MQB GTI. Same as MK7 Golf. Enthusiast car = careful customers.",
-        "eeprom_info": {
-          "backup_required": true,
-          "chip_type": "Cluster EEPROM",
-          "backup_method": "Read cluster for AKL",
-          "warning": "⚠️ MQB - backup cluster data for AKL work!"
-        },
-        "xhorse_tool_support": {
-          "mlb_tool": false,
-          "mqb_adapter": true,
-          "adapter_notes": "MQB48 - MLB Tool + MQB Adapter avoids cluster pull",
-          "recommended_tool": "MLB Tool + MQB Adapter"
-        }
-      },
-      "2022-2026": {
-        "platform": "MK8 (MQB-Evo)",
-        "immobilizer": "MQB-Evo",
-        "key_type": "VW MQB Smart Key",
-        "key_blade": "HU162T",
-        "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "Cluster removal + specialized tools"
-        },
-        "module_removal": {
-          "has_key": false,
-          "one_key": false,
-          "akl": true
-        },
-        "akl_supported": "Limited",
-        "risk_level": "High",
-        "notes": "MK8 GTI. MQB-Evo platform. Verify tool support.",
-        "eeprom_info": {
-          "backup_required": true,
-          "chip_type": "MQB-Evo cluster",
-          "backup_method": "Full backup required",
-          "warning": "⚠️ CRITICAL: MQB-Evo - verify tool compatibility!"
-        },
-        "xhorse_tool_support": {
-          "mlb_tool": false,
-          "mqb_adapter": "Limited",
-          "adapter_notes": "MQB-Evo - verify adapter support",
-          "recommended_tool": "Check Xhorse updates for MQB-Evo"
+          "recommended_tool": "KM100"
         }
       }
     },
-
-    "Golf R": {
-      "2015-2021": {
-        "platform": "MK7 / MK7.5 (MQB)",
-        "immobilizer": "MQB IMMO",
-        "key_type": "VW MQB Smart Key",
-        "key_blade": "HU162T",
+    "Bora": {
+      "2005-2011": {
+        "platform": "A5 (CDC32XX+24C32)",
+        "immobilizer": "CDC32XX+24C32",
+        "key_type": "VW Flip Key",
+        "key_blade": "HU66",
+        "chip": "ID48-TP23",
         "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "Cluster removal + IMMO data read"
+          "has_key": "OBD (KM100)",
+          "one_key": "OBD (KM100)",
+          "akl": "OBD - Copy MEGAMOS 48"
         },
         "module_removal": {
           "has_key": false,
           "one_key": false,
-          "akl": true
+          "akl": false
         },
         "akl_supported": "Yes",
-        "risk_level": "Medium",
-        "notes": "Top performance Golf. MQB platform. Premium pricing for premium car.",
+        "risk_level": "Low",
+        "notes": "EASY OBD JOB! CDC32XX = perfect for KM100.",
         "eeprom_info": {
-          "backup_required": true,
-          "chip_type": "Cluster EEPROM",
-          "backup_method": "Read cluster for AKL",
-          "warning": "⚠️ MQB - backup cluster data. Performance car = careful work."
+          "backup_required": false,
+          "chip_type": "CDC32XX+24C32",
+          "backup_method": "Standard OBD backup",
+          "warning": "Low risk - Copy MEGAMOS is safest"
+        },
+        "km100_support": {
+          "supported": true,
+          "method": "Copy MEGAMOS 48 (SAFEST)",
+          "steps": [
+            "1. KM100 > Immobilizer > Volkswagen",
+            "2. Select Bora > 2005-2011",
+            "3. Control Unit > Immobilizer",
+            "4. Select CDC32XX+24C32",
+            "5. Read IMMO Data",
+            "6. Copy Key MEGAMOS-48",
+            "7. Insert ID48-TP23 chip",
+            "8. Select key ID and write",
+            "9. Cut HU66 blade",
+            "10. Test - DONE!"
+          ],
+          "chip_needed": "ID48-TP23 or Super Chip",
+          "time_estimate": "15-20 min",
+          "profit_estimate": "$165-235"
         },
         "xhorse_tool_support": {
           "mlb_tool": false,
-          "mqb_adapter": true,
-          "adapter_notes": "MQB48 - use MLB Tool + MQB Adapter",
-          "recommended_tool": "MLB Tool + MQB Adapter"
+          "mqb_adapter": false,
+          "recommended_tool": "KM100"
         }
-      },
-      "2022-2026": {
-        "platform": "MK8 (MQB-Evo)",
-        "immobilizer": "MQB-Evo",
-        "key_type": "VW MQB Smart Key",
-        "key_blade": "HU162T",
+      }
+    },
+    "Polo": {
+      "2004-2009": {
+        "platform": "9N (Generation 2)",
+        "immobilizer": "Generation 2",
+        "key_type": "VW Flip Key",
+        "key_blade": "HU66",
+        "chip": "ID48",
         "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "Cluster removal + specialized tools"
+          "has_key": "OBD (KM100)",
+          "one_key": "OBD (KM100)",
+          "akl": "OBD - Copy MEGAMOS 48"
         },
         "module_removal": {
           "has_key": false,
           "one_key": false,
-          "akl": true
+          "akl": false
         },
-        "akl_supported": "Limited",
-        "risk_level": "High",
-        "notes": "MK8 Golf R. MQB-Evo with enhanced security. High-value vehicle.",
+        "akl_supported": "Yes",
+        "risk_level": "Low",
+        "notes": "EASY OBD JOB! Generation 2 = KM100 works perfectly.",
         "eeprom_info": {
-          "backup_required": true,
-          "chip_type": "MQB-Evo cluster",
-          "backup_method": "Full backup required",
-          "warning": "⚠️ CRITICAL: MQB-Evo. $45K+ car - verify tools and charge premium!"
+          "backup_required": false,
+          "chip_type": "N/A",
+          "backup_method": "Standard OBD",
+          "warning": "Low risk"
+        },
+        "km100_support": {
+          "supported": true,
+          "method": "Copy MEGAMOS 48 (SAFEST)",
+          "steps": [
+            "1. KM100 > Immobilizer > Volkswagen",
+            "2. Select Polo > 2004-2009",
+            "3. Read IMMO Data",
+            "4. Copy Key MEGAMOS-48",
+            "5. Insert ID48 chip",
+            "6. Cut HU66 blade"
+          ],
+          "chip_needed": "ID48",
+          "time_estimate": "15-20 min",
+          "profit_estimate": "$165-235"
         },
         "xhorse_tool_support": {
           "mlb_tool": false,
-          "mqb_adapter": "Limited",
-          "adapter_notes": "MQB-Evo - verify support before accepting",
-          "recommended_tool": "Check Xhorse updates"
+          "mqb_adapter": false,
+          "recommended_tool": "KM100"
+        }
+      }
+    },
+    "Eos": {
+      "2009-2016": {
+        "platform": "1F (Motorola 9S12)",
+        "immobilizer": "Motorola 9S12",
+        "key_type": "VW Flip Key",
+        "key_blade": "HU66",
+        "chip": "ID48",
+        "programming": {
+          "has_key": "OBD (KM100)",
+          "one_key": "OBD (KM100)",
+          "akl": "OBD"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": false
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Low",
+        "notes": "EASY OBD JOB! Motorola 9S12 = KM100 supported. Convertible = premium!",
+        "eeprom_info": {
+          "backup_required": false,
+          "chip_type": "9S12",
+          "backup_method": "Standard OBD",
+          "warning": "Low risk - straightforward"
+        },
+        "km100_support": {
+          "supported": true,
+          "method": "Copy MEGAMOS 48 or Add Key",
+          "steps": [
+            "1. KM100 > Immobilizer > Volkswagen",
+            "2. Select Eos > 2009-2016",
+            "3. Control Unit > Immobilizer",
+            "4. Read IMMO Data",
+            "5. Copy Key MEGAMOS-48",
+            "6. Insert ID48 chip",
+            "7. Cut HU66 blade"
+          ],
+          "chip_needed": "ID48",
+          "time_estimate": "15-20 min",
+          "profit_estimate": "$180-250"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": false,
+          "recommended_tool": "KM100"
+        }
+      }
+    },
+    "Eurovan": {
+      "2004-2010": {
+        "platform": "T5 (Generation 2)",
+        "immobilizer": "Generation 2",
+        "key_type": "VW Flip Key",
+        "key_blade": "HU66",
+        "chip": "ID48",
+        "programming": {
+          "has_key": "OBD (KM100)",
+          "one_key": "OBD (KM100)",
+          "akl": "OBD - Copy MEGAMOS 48"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": false
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Low",
+        "notes": "EASY OBD JOB! Generation 2. Commercial vehicle = good rate.",
+        "eeprom_info": {
+          "backup_required": false,
+          "chip_type": "N/A",
+          "backup_method": "Standard OBD",
+          "warning": "Low risk - easy work"
+        },
+        "km100_support": {
+          "supported": true,
+          "method": "Copy MEGAMOS 48 (SAFEST)",
+          "steps": [
+            "1. KM100 > Immobilizer > Volkswagen",
+            "2. Select Eurovan > 2004-2010",
+            "3. Read IMMO Data",
+            "4. Copy Key MEGAMOS-48",
+            "5. Insert ID48 chip",
+            "6. Cut HU66 blade"
+          ],
+          "chip_needed": "ID48",
+          "time_estimate": "15-20 min",
+          "profit_estimate": "$180-260"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": false,
+          "recommended_tool": "KM100"
         }
       }
     }
