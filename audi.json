@@ -1,72 +1,49 @@
 {
   "tool_reference": {
+    "km100": {
+      "model": "KM100",
+      "name": "Autel MaxiIM KM100",
+      "description": "Universal key programmer - Audi pre-2015 PQ35 platform supported",
+      "supported_systems": [
+        "IMMO4",
+        "IMMO5",
+        "Generation 2"
+      ],
+      "best_for": "Pre-2015 Audi with ignition key (PQ35 platform)",
+      "not_supported": [
+        "MQB",
+        "MQB-Evo",
+        "BCM2",
+        "MLB-Evo",
+        "KESSY smart key"
+      ]
+    },
     "xhorse_mlb_tool": {
       "model": "XDMLB0",
       "name": "Xhorse VVDI MLB Tool Key Programmer",
-      "description": "Specialized programmer for MLB platform vehicles (Audi, Porsche, VW, Lamborghini, Bentley)",
-      "supported_brands": ["Audi", "Porsche", "Volkswagen", "Lamborghini", "Bentley"],
-      "supported_platforms": ["MLB", "MLB-Evo"],
-      "features": [
-        "Read/write/calculate key data without removing chip",
-        "Integrated 22k reader for wireless key reading/writing",
-        "No shell removal required for key generation",
-        "Built-in IMMO detection module",
-        "Supports original keys (uninitialized & initialized)",
-        "Supports VVDI MLB specialized keys (unlimited reuse)",
-        "Can rewrite uninitialized original key IDs",
-        "No on-vehicle data collection needed"
+      "description": "Specialized programmer for MLB platform vehicles",
+      "supported_brands": [
+        "Audi",
+        "Porsche",
+        "Volkswagen",
+        "Lamborghini",
+        "Bentley"
       ],
-      "requirements": {
-        "vvdi2": "Requires VV-05 MQB + VV-02 VAG IMMO5 license activated",
-        "key_tool_plus": "Works directly with tablet"
-      },
-      "workflow": {
-        "standalone": "Collect key data → Upload for calculation → Get IMMO data (no vehicle access needed)",
-        "with_vvdi2": "MLB Tool reads key → VVDI2 generates & learns key",
-        "with_key_tool_plus": "Tablet connects to MLB Tool → Read/generate/learn key directly"
-      },
-      "key_types_supported": [
-        "Brand new original keys (uninitialized)",
-        "Original keys (initialized) - can verify status",
-        "VVDI MLB specialized keys (reusable)"
+      "supported_platforms": [
+        "MLB",
+        "MLB-Evo"
       ],
       "no_points_required": true,
-      "notes": "Excel at adding keys without vehicle access. Game changer for MLB platform."
+      "notes": "Best tool for Audi A4/A5/A6/Q5/Q7 MLB platform"
     },
     "xhorse_mqb_adapter": {
       "model": "XDMQBAGL",
       "name": "Xhorse MQB Adapter for MLB Tool",
-      "description": "Adapter that works WITH MLB Tool to add MQB48 keys without cluster disassembly",
-      "supported_platforms": ["MQB", "MQB48"],
-      "features": [
-        "No instrument cluster disassembly required",
-        "Only key shell disassembly needed",
-        "Only 2 wires to solder",
-        "Low risk, simple operation",
-        "Supports most MQB48 keys"
-      ],
-      "requirements": {
-        "hardware": "Must have MLB Tool (XDMLB0)",
-        "vvdi2": "Needs MQB function enabled (NOT MQB48 NEC35XX locking function)",
-        "key_tool_plus": "Needs 4th generation authorization (NOT MQB48 NEC35XX locking function)"
-      },
-      "workflow": {
-        "vvdi2": [
-          "1. Use MLB Tool + MQB Adapter to read IMMO data from MQB48 key",
-          "2. Use VVDI2 to load IMMO data from step 1",
-          "3. Generate key, learn key"
-        ],
-        "key_tool_plus": [
-          "1. Connect tablet to MLB Tool + MQB Adapter",
-          "2. Read IMMO data from MQB48 key",
-          "3. Load IMMO data → generate key → learn key"
-        ]
-      },
-      "wiring": {
-        "instruction": "Remove one capacitor (near IC position) on original key. Solder socket cables to key per wiring diagram colors.",
-        "warning": "⚠️ STRONGLY RECOMMENDED: Use computer instead of tablet for data collection"
-      },
-      "notes": "Works with MLB Tool to bypass cluster removal on MQB48 vehicles."
+      "description": "Adapter for MQB48 keys without cluster disassembly",
+      "supported_platforms": [
+        "MQB",
+        "MQB48"
+      ]
     }
   },
   "Audi": {
@@ -76,10 +53,11 @@
         "immobilizer": "IMMO4 / IMMO5",
         "key_type": "Audi Flip Key",
         "key_blade": "HU66",
+        "chip": "ID48",
         "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "OBD or Cluster removal"
+          "has_key": "OBD (KM100)",
+          "one_key": "OBD (KM100)",
+          "akl": "OBD - Copy MEGAMOS 48"
         },
         "module_removal": {
           "has_key": false,
@@ -88,18 +66,36 @@
         },
         "akl_supported": "Yes",
         "risk_level": "Low",
-        "notes": "Old platform. Straightforward OBD programming. Good profit job.",
+        "notes": "EASY OBD JOB! PQ35 platform. KM100 Copy MEGAMOS 48 works! No cluster pull, no module removal. Straight OBD add key.",
         "eeprom_info": {
           "backup_required": false,
           "chip_type": "N/A",
           "backup_method": "Standard OBD backup",
-          "warning": "Low risk - older IMMO system. Standard procedures."
+          "warning": "Low risk - older IMMO system"
+        },
+        "km100_support": {
+          "supported": true,
+          "method": "Copy MEGAMOS 48 (SAFEST)",
+          "steps": [
+            "1. KM100 > Immobilizer > Audi",
+            "2. Select A3 > 2008-2014",
+            "3. Control Unit > Immobilizer",
+            "4. Auto Detection (finds IMMO4/5)",
+            "5. Read IMMO Data (PIN, CS, Key IDs)",
+            "6. Select 'Copy Key MEGAMOS-48'",
+            "7. Insert ID48 chip in KM100",
+            "8. Select key ID > Write",
+            "9. Cut HU66 blade",
+            "10. Test key - DONE!"
+          ],
+          "chip_needed": "ID48 or Super Chip",
+          "time_estimate": "15-25 min",
+          "profit_estimate": "$180-280"
         },
         "xhorse_tool_support": {
           "mlb_tool": false,
           "mqb_adapter": false,
-          "recommended_tool": "VVDI2 VAG / Key Tool Plus",
-          "notes": "PQ35 platform - use standard VAG IMMO procedures"
+          "recommended_tool": "KM100 or VVDI2 VAG"
         }
       },
       "2015-2020": {
@@ -107,9 +103,10 @@
         "immobilizer": "MQB IMMO (BCM2)",
         "key_type": "Audi MQB Smart Key",
         "key_blade": "HU162T",
+        "chip": "MQB48",
         "programming": {
           "has_key": "OBD",
-          "one_key": "OBD (IMMO data required)",
+          "one_key": "OBD",
           "akl": "Cluster removal + BCM2 read"
         },
         "module_removal": {
@@ -119,19 +116,84 @@
         },
         "akl_supported": "Yes",
         "risk_level": "Medium",
-        "notes": "MQB platform. BCM2 system. Cluster EEPROM read may be required for AKL.",
+        "notes": "MQB platform - KM100 NOT supported. Use Xhorse MLB + MQB Adapter.",
         "eeprom_info": {
           "backup_required": true,
           "chip_type": "BCM2 / Cluster EEPROM",
-          "backup_method": "Read cluster IMMO data with VVDI Prog or Multi-Prog",
-          "warning": "⚠️ BCM2 system - backup cluster data before AKL work!"
+          "backup_method": "Read cluster with VVDI Prog",
+          "warning": "\u26a0\ufe0f BCM2 - backup cluster before AKL!"
+        },
+        "km100_support": {
+          "supported": false,
+          "method": "NOT SUPPORTED",
+          "steps": [
+            "KM100 does NOT support MQB!",
+            "Use MLB Tool + MQB Adapter",
+            "Avoids cluster pull",
+            "Or refer to partner"
+          ],
+          "chip_needed": "MQB48",
+          "time_estimate": "N/A",
+          "profit_estimate": "Refer out"
         },
         "xhorse_tool_support": {
           "mlb_tool": false,
           "mqb_adapter": true,
-          "adapter_notes": "MQB48 keys can use MLB Tool + MQB Adapter to avoid cluster disassembly",
-          "workflow": "MLB Tool + MQB Adapter → Read key IMMO → VVDI2/Key Tool Plus → Generate & learn",
-          "recommended_tool": "MLB Tool + MQB Adapter OR standard cluster read method"
+          "adapter_notes": "MQB48 - MLB Tool + MQB Adapter avoids cluster pull",
+          "recommended_tool": "MLB Tool + MQB Adapter"
+        },
+        "key_hardware": {
+          "key_style": "Audi MQB 5C Smart Key (Proximity)",
+          "oem_key_info": {
+            "part_numbers": [
+              "8V0959754 series",
+              "8S0959754 series"
+            ],
+            "fcc_id": "Check vehicle specific",
+            "frequency": "315MHz (NA) / 434MHz (EU)",
+            "chip": "MQB48 / MQB49 5C",
+            "blade": "HU162T (emergency)",
+            "keyless_go": true,
+            "battery": "CR2032",
+            "buttons": 3
+          },
+          "solder_free_adapters": {
+            "xhorse": {
+              "model": "XDNP121",
+              "set": "XDNPVDGL (8pc MQB 5C/5D set)",
+              "fits": "5C&5D A3"
+            },
+            "keydiy": {
+              "model": "AD5D01 / AD5D02",
+              "set": "KD Clamp 12pc Kit",
+              "probe_required": true
+            },
+            "alger_keys": {
+              "bundle": "5C&5D A3 Adapter + OEM Audi 5C Key"
+            }
+          },
+          "aftermarket_key_options": {
+            "xhorse": "XSMQB1EN (MQB Smart Proximity Key)",
+            "keydiy": "KD MQB 5C OEM Solution (K508 44-pin) \u2014 works with KD-MP and Xhorse MLB Tool",
+            "oem_refurb": "Best for ODIS route \u2014 genuine Audi board required"
+          },
+          "sfd_info": {
+            "sfd_required": "2020+ models may require SFD1 unlock",
+            "sfd2_required": "2024+ models require SFD2",
+            "unlock_methods": [
+              "VagLogins credits (~$5-7/job)",
+              "OBDeleven Pro (auto)",
+              "KD-X4 built-in ($5/unlock)",
+              "Xhorse KTP manual + 3rd party token"
+            ]
+          },
+          "tools_for_key_read": [
+            "Xhorse Key Tool Plus (KTP)",
+            "Xhorse Multi Prog",
+            "Xhorse VVDI2 + VVDI Prog",
+            "KeyDIY KD-X4 + KD-MP",
+            "Autel IM508/IM608"
+          ]
         }
       },
       "2021-2026": {
@@ -139,10 +201,11 @@
         "immobilizer": "MQB-Evo / IMMO6",
         "key_type": "Audi MQB Smart Key",
         "key_blade": "HU162T",
+        "chip": "MQB-Evo",
         "programming": {
           "has_key": "OBD",
           "one_key": "OBD (online may be required)",
-          "akl": "Specialized tool required"
+          "akl": "Specialized tool"
         },
         "module_removal": {
           "has_key": false,
@@ -151,28 +214,145 @@
         },
         "akl_supported": "Limited",
         "risk_level": "High",
-        "notes": "New A3 with enhanced security. Verify tool support before accepting.",
+        "notes": "MQB-Evo - KM100 NOT supported. Verify tools before accepting.",
         "eeprom_info": {
           "backup_required": true,
           "chip_type": "MQB-Evo cluster",
-          "backup_method": "Full backup required - new platform",
-          "warning": "⚠️ CRITICAL: New MQB-Evo - verify tool compatibility first!"
+          "backup_method": "Full backup required",
+          "warning": "\u26a0\ufe0f CRITICAL: MQB-Evo - verify tools first!"
+        },
+        "km100_support": {
+          "supported": false,
+          "method": "NOT SUPPORTED",
+          "steps": [
+            "KM100 does NOT support MQB-Evo!",
+            "Check Xhorse for latest support",
+            "May need dealer referral"
+          ],
+          "chip_needed": "MQB-Evo",
+          "time_estimate": "N/A",
+          "profit_estimate": "Refer out"
         },
         "xhorse_tool_support": {
           "mlb_tool": false,
           "mqb_adapter": "Limited",
-          "adapter_notes": "MQB-Evo may have limited support - verify before accepting job",
-          "recommended_tool": "Check latest Xhorse updates for MQB-Evo support"
+          "recommended_tool": "Check Xhorse updates"
+        },
+        "key_hardware": {
+          "key_style": "Audi MQB-Evo Smart Key (Proximity)",
+          "oem_key_info": {
+            "part_numbers": [
+              "8Y0959754 series"
+            ],
+            "fcc_id": "Check vehicle specific",
+            "frequency": "315MHz (NA) / 434MHz (EU)",
+            "chip": "MQB-Evo 5D",
+            "blade": "HU162T (emergency)",
+            "keyless_go": true,
+            "battery": "CR2032",
+            "buttons": 3
+          },
+          "solder_free_adapters": {
+            "xhorse": {
+              "model": "XDNP121 or XDNP122",
+              "set": "XDNPVDGL",
+              "fits": "5C&5D A3 or B8"
+            },
+            "keydiy": {
+              "model": "AD5D01 / AD5D02",
+              "set": "KD Clamp 12pc Kit",
+              "probe_required": true
+            },
+            "alger_keys": {
+              "bundle": "Check Alger Keys for MQB-Evo Audi adapter bundle"
+            },
+            "warning": "\u26a0\ufe0f MQB-Evo \u2014 verify adapter compatibility before purchase"
+          },
+          "aftermarket_key_options": {
+            "xhorse": "Check Xhorse 5D support \u2014 MQB-Evo limited",
+            "keydiy": "Check KD-X4 latest support for MQB-Evo",
+            "oem_refurb": "BEST option \u2014 genuine Audi board strongly recommended for MQB-Evo"
+          },
+          "sfd_info": {
+            "sfd_required": "YES \u2014 SFD1 unlock required",
+            "sfd2_required": "2024+ models require SFD2",
+            "unlock_methods": [
+              "VagLogins credits",
+              "OBDeleven Pro",
+              "KD-X4 built-in",
+              "Xhorse KTP manual"
+            ]
+          },
+          "tools_for_key_read": [
+            "Xhorse Key Tool Plus (KTP)",
+            "Xhorse Multi Prog",
+            "KeyDIY KD-X4",
+            "Autel IM508/IM608"
+          ],
+          "key_id_change": {
+            "required_from": "2023+ MQB-Evo / MLB",
+            "reason": "Car only accepts known Key IDs \u2014 new random IDs rejected",
+            "how": "Use KD-X4, KD-MP, or Xhorse MLB Tool to change new key ID to match lost key ID from car IMMO table"
+          }
         }
       }
     },
-
     "A4": {
+      "2002-2008": {
+        "platform": "B6/B7 (PQ46)",
+        "immobilizer": "IMMO3 / IMMO4",
+        "key_type": "Audi Flip Key",
+        "key_blade": "HU66",
+        "chip": "ID48",
+        "programming": {
+          "has_key": "OBD (KM100)",
+          "one_key": "OBD (KM100)",
+          "akl": "OBD - Copy MEGAMOS 48"
+        },
+        "module_removal": {
+          "has_key": false,
+          "one_key": false,
+          "akl": false
+        },
+        "akl_supported": "Yes",
+        "risk_level": "Low",
+        "notes": "EASY OBD JOB! Old platform = KM100 Copy MEGAMOS 48 works!",
+        "eeprom_info": {
+          "backup_required": false,
+          "chip_type": "N/A",
+          "backup_method": "Standard OBD backup",
+          "warning": "Low risk - older system"
+        },
+        "km100_support": {
+          "supported": true,
+          "method": "Copy MEGAMOS 48 (SAFEST)",
+          "steps": [
+            "1. KM100 > Immobilizer > Audi",
+            "2. Select A4 > 2002-2008",
+            "3. Control Unit > Immobilizer",
+            "4. Read IMMO Data (PIN, CS)",
+            "5. Copy Key MEGAMOS-48",
+            "6. Insert ID48 chip",
+            "7. Select key ID > Write",
+            "8. Cut HU66 blade",
+            "9. Test key - DONE!"
+          ],
+          "chip_needed": "ID48 or Super Chip",
+          "time_estimate": "15-25 min",
+          "profit_estimate": "$180-280"
+        },
+        "xhorse_tool_support": {
+          "mlb_tool": false,
+          "mqb_adapter": false,
+          "recommended_tool": "KM100"
+        }
+      },
       "2008-2016": {
         "platform": "B8 (MLB)",
         "immobilizer": "BCM1 / KESSY",
         "key_type": "Audi Slot Key / Smart Key",
         "key_blade": "HU66",
+        "chip": "ID48 / MLB Key",
         "programming": {
           "has_key": "OBD",
           "one_key": "OBD",
@@ -185,31 +365,110 @@
         },
         "akl_supported": "Yes",
         "risk_level": "Low",
-        "notes": "Older MLB platform. KESSY system. Straightforward programming.",
+        "notes": "MLB platform. KESSY = smart key. KM100 limited - use MLB Tool!",
         "eeprom_info": {
           "backup_required": false,
           "chip_type": "N/A for most",
-          "backup_method": "OBD backup sufficient",
-          "warning": "Low risk - older system. Standard OBD procedures work."
+          "backup_method": "OBD backup",
+          "warning": "Low risk - MLB Tool is best option"
+        },
+        "km100_support": {
+          "supported": "Partial",
+          "method": "Try OBD - MLB Tool better",
+          "steps": [
+            "KM100 may work for ignition key models",
+            "KESSY (smart key) = KM100 limited",
+            "",
+            "BETTER OPTION: MLB Tool",
+            "1. MLB Tool reads key data",
+            "2. Calculate IMMO offline",
+            "3. Generate key - no car needed!"
+          ],
+          "chip_needed": "ID48 or MLB Key",
+          "time_estimate": "Varies",
+          "profit_estimate": "$200-300"
         },
         "xhorse_tool_support": {
           "mlb_tool": true,
           "mqb_adapter": false,
-          "mlb_notes": "MLB Tool FULLY SUPPORTED - read/write keys without vehicle access",
-          "workflow": "MLB Tool reads key data → Calculate IMMO → Generate key without going to car",
-          "key_types": ["Original keys", "VVDI MLB specialized keys"],
-          "recommended_tool": "MLB Tool (XDMLB0) for maximum efficiency"
+          "mlb_notes": "MLB Tool FULLY SUPPORTED - best option!",
+          "recommended_tool": "MLB Tool (XDMLB0)"
+        },
+        "key_hardware": {
+          "key_style": "Audi MLB Smart Key",
+          "oem_key_info": {
+            "part_numbers": [
+              "Check vehicle specific \u2014 varies by model/year"
+            ],
+            "fcc_id": "Check vehicle specific",
+            "frequency": "315MHz (NA) / 434MHz (EU)",
+            "chip": "MLB Key",
+            "blade": "HU66 or HU162T (emergency)",
+            "keyless_go": true,
+            "battery": "CR2032",
+            "buttons": 3
+          },
+          "solder_free_adapters": {
+            "info": "MLB keys use Xhorse VVDI MLB Tool directly \u2014 key shell disassembly only, no soldering",
+            "xhorse_mlb_tool": {
+              "model": "XDMLB0",
+              "method": "Disassemble key shell, place PCB in MLB Tool, read wirelessly"
+            },
+            "keydiy": {
+              "model": "KD-MP MLB Tool",
+              "method": "Same process \u2014 read key PCB data"
+            },
+            "alger_keys": {
+              "bundle": "Not needed \u2014 MLB Tool reads key directly"
+            }
+          },
+          "aftermarket_key_options": {
+            "xhorse": "Xhorse MLB specialized key \u2014 unlimited reuse, ID changeable",
+            "keydiy": {
+              "oem_solution": "KeyDIY MLB26 OEM (K508 44-pin) C$53.99 \u2014 works with KD-MP AND Xhorse MLB Tool",
+              "non_oem": "KeyDIY MLB26 Non-OEM (K507 40-pin) C$47.79 \u2014 works with KD-MP ONLY",
+              "recommendation": "Get OEM Solution (K508) for tool flexibility \u2014 only $4 more"
+            },
+            "oem_refurb": "Genuine Audi key \u2014 required for ODIS programming"
+          },
+          "sfd_info": {
+            "sfd_required": "2020+ models require SFD1 unlock before key learning",
+            "sfd2_required": "2024+ models require SFD2",
+            "unlock_methods": [
+              "VagLogins credits",
+              "OBDeleven Pro",
+              "KD-X4 built-in ($5/unlock)",
+              "Xhorse KTP manual"
+            ]
+          },
+          "tools_for_key_read": [
+            "Xhorse VVDI MLB Tool (XDMLB0)",
+            "KeyDIY KD-MP MLB Tool",
+            "Xhorse Key Tool Plus (KTP)",
+            "Autel IM508/IM608"
+          ],
+          "key_id_change": {
+            "required_from": "2023+ MLB Audi/Porsche/VW",
+            "reason": "Car only accepts known Key IDs \u2014 cannot add new random IDs anymore",
+            "how": "Read lost key ID from car IMMO table, change new key ID to match using KD-MP or Xhorse MLB Tool",
+            "aftermarket_keys_that_support_id_change": [
+              "KeyDIY MLB26 OEM Solution (K508)",
+              "Xhorse MLB specialized key",
+              "New OEM blank with uninitialized ID (FFFFFFFF)"
+            ]
+          }
         }
       },
-      "2017-2024": {
+      "2017-2026": {
         "platform": "B9 (MLB-Evo)",
         "immobilizer": "BCM2",
         "key_type": "Audi BCM2 Smart Key",
         "key_blade": "HU162T",
+        "chip": "BCM2 Key",
         "programming": {
           "has_key": "OBD",
-          "one_key": "OBD (BCM2 data required)",
-          "akl": "BCM2 removal + dump read"
+          "one_key": "OBD",
+          "akl": "BCM2 removal + dump"
         },
         "module_removal": {
           "has_key": false,
@@ -218,61 +477,108 @@
         },
         "akl_supported": "Yes",
         "risk_level": "Medium",
-        "notes": "BCM2 platform. Component protection may apply. VVDI2 or Autel supported.",
+        "notes": "BCM2 - KM100 NOT supported. Use MLB Tool!",
         "eeprom_info": {
           "backup_required": true,
           "chip_type": "BCM2 EEPROM",
-          "backup_method": "Read BCM2 with VVDI Prog BCM2 adapter",
-          "warning": "⚠️ BCM2 system - backup BCM2 data before AKL or component work!"
+          "backup_method": "BCM2 adapter read",
+          "warning": "\u26a0\ufe0f BCM2 - backup before AKL!"
+        },
+        "km100_support": {
+          "supported": false,
+          "method": "NOT SUPPORTED - Use MLB Tool",
+          "steps": [
+            "KM100 does NOT support BCM2!",
+            "",
+            "USE MLB TOOL:",
+            "1. MLB Tool reads key",
+            "2. No vehicle needed",
+            "3. Generate key offline"
+          ],
+          "chip_needed": "BCM2 Key",
+          "time_estimate": "N/A for KM100",
+          "profit_estimate": "Use MLB Tool"
         },
         "xhorse_tool_support": {
           "mlb_tool": true,
           "mqb_adapter": false,
-          "mlb_notes": "MLB-Evo SUPPORTED with MLB Tool - wireless key generation available",
-          "workflow": "MLB Tool → Read key (no chip removal) → Calculate → Generate via VVDI2 or Key Tool Plus",
-          "key_types": ["Original keys (new/used)", "VVDI MLB specialized keys"],
-          "no_vehicle_needed": true,
-          "recommended_tool": "MLB Tool (XDMLB0) - no on-vehicle data collection needed"
-        }
-      },
-      "2025-2026": {
-        "platform": "B10 (PPC)",
-        "immobilizer": "BCM2+ / New Gen",
-        "key_type": "Audi Smart Key",
-        "key_blade": "HU162T",
-        "programming": {
-          "has_key": "OBD (limited)",
-          "one_key": "Specialized tool",
-          "akl": "Dealer recommended"
+          "mlb_notes": "MLB-Evo SUPPORTED - no vehicle needed",
+          "recommended_tool": "MLB Tool (XDMLB0)"
         },
-        "module_removal": {
-          "has_key": false,
-          "one_key": true,
-          "akl": true
-        },
-        "akl_supported": "Very Limited",
-        "risk_level": "Very High",
-        "notes": "Brand new A4. Limited aftermarket support initially.",
-        "eeprom_info": {
-          "backup_required": true,
-          "chip_type": "New generation",
-          "backup_method": "Dealer-level tools",
-          "warning": "⚠️ EXTREME RISK: New platform - dealer referral recommended."
-        },
-        "xhorse_tool_support": {
-          "mlb_tool": "Verify",
-          "mqb_adapter": false,
-          "notes": "Brand new platform - check Xhorse updates for B10 support before accepting"
+        "key_hardware": {
+          "key_style": "Audi BCM2 / MLB-Evo Smart Key",
+          "oem_key_info": {
+            "part_numbers": [
+              "Check vehicle specific \u2014 varies by model/year"
+            ],
+            "fcc_id": "Check vehicle specific",
+            "frequency": "315MHz (NA) / 434MHz (EU)",
+            "chip": "BCM2 Key",
+            "blade": "HU162T (emergency)",
+            "keyless_go": true,
+            "battery": "CR2032",
+            "buttons": 3
+          },
+          "solder_free_adapters": {
+            "info": "MLB keys use Xhorse VVDI MLB Tool directly \u2014 key shell disassembly only, no soldering",
+            "xhorse_mlb_tool": {
+              "model": "XDMLB0",
+              "method": "Disassemble key shell, place PCB in MLB Tool, read wirelessly"
+            },
+            "keydiy": {
+              "model": "KD-MP MLB Tool",
+              "method": "Same process \u2014 read key PCB data"
+            },
+            "alger_keys": {
+              "bundle": "Not needed \u2014 MLB Tool reads key directly"
+            }
+          },
+          "aftermarket_key_options": {
+            "xhorse": "Xhorse MLB specialized key \u2014 unlimited reuse, ID changeable",
+            "keydiy": {
+              "oem_solution": "KeyDIY MLB26 OEM (K508 44-pin) C$53.99 \u2014 works with KD-MP AND Xhorse MLB Tool",
+              "non_oem": "KeyDIY MLB26 Non-OEM (K507 40-pin) C$47.79 \u2014 works with KD-MP ONLY",
+              "recommendation": "Get OEM Solution (K508) for tool flexibility \u2014 only $4 more"
+            },
+            "oem_refurb": "Genuine Audi key \u2014 required for ODIS programming"
+          },
+          "sfd_info": {
+            "sfd_required": "2020+ models require SFD1 unlock before key learning",
+            "sfd2_required": "2024+ models require SFD2",
+            "unlock_methods": [
+              "VagLogins credits",
+              "OBDeleven Pro",
+              "KD-X4 built-in ($5/unlock)",
+              "Xhorse KTP manual"
+            ]
+          },
+          "tools_for_key_read": [
+            "Xhorse VVDI MLB Tool (XDMLB0)",
+            "KeyDIY KD-MP MLB Tool",
+            "Xhorse Key Tool Plus (KTP)",
+            "Autel IM508/IM608"
+          ],
+          "key_id_change": {
+            "required_from": "2023+ MLB Audi/Porsche/VW",
+            "reason": "Car only accepts known Key IDs \u2014 cannot add new random IDs anymore",
+            "how": "Read lost key ID from car IMMO table, change new key ID to match using KD-MP or Xhorse MLB Tool",
+            "aftermarket_keys_that_support_id_change": [
+              "KeyDIY MLB26 OEM Solution (K508)",
+              "Xhorse MLB specialized key",
+              "New OEM blank with uninitialized ID (FFFFFFFF)"
+            ]
+          },
+          "notes": "\u26a0\ufe0f BCM2 system \u2014 full backup required before AKL. MLB Tool works for key generation."
         }
       }
     },
-
     "A5": {
       "2008-2016": {
         "platform": "8T (MLB)",
         "immobilizer": "BCM1 / KESSY",
         "key_type": "Audi Slot Key / Smart Key",
         "key_blade": "HU66",
+        "chip": "ID48 / MLB Key",
         "programming": {
           "has_key": "OBD",
           "one_key": "OBD",
@@ -285,18 +591,96 @@
         },
         "akl_supported": "Yes",
         "risk_level": "Low",
-        "notes": "Same as B8 A4. Straightforward procedures.",
+        "notes": "MLB platform. KESSY = smart key. KM100 limited - MLB Tool best!",
         "eeprom_info": {
           "backup_required": false,
           "chip_type": "N/A for most",
-          "backup_method": "OBD backup sufficient",
-          "warning": "Low risk - older platform."
+          "backup_method": "OBD backup",
+          "warning": "Low risk - MLB Tool is best"
+        },
+        "km100_support": {
+          "supported": "Partial",
+          "method": "Try OBD - MLB Tool better",
+          "steps": [
+            "KM100 may work for ignition key models",
+            "KESSY (smart key) = KM100 limited",
+            "",
+            "BETTER: Use MLB Tool",
+            "No vehicle access needed!"
+          ],
+          "chip_needed": "ID48 or MLB Key",
+          "time_estimate": "Varies",
+          "profit_estimate": "$200-350"
         },
         "xhorse_tool_support": {
           "mlb_tool": true,
           "mqb_adapter": false,
-          "mlb_notes": "MLB Tool FULLY SUPPORTED - same as B8 A4",
+          "mlb_notes": "MLB Tool FULLY SUPPORTED",
           "recommended_tool": "MLB Tool (XDMLB0)"
+        },
+        "key_hardware": {
+          "key_style": "Audi MLB Smart Key",
+          "oem_key_info": {
+            "part_numbers": [
+              "Check vehicle specific \u2014 varies by model/year"
+            ],
+            "fcc_id": "Check vehicle specific",
+            "frequency": "315MHz (NA) / 434MHz (EU)",
+            "chip": "MLB Key",
+            "blade": "HU66 or HU162T (emergency)",
+            "keyless_go": true,
+            "battery": "CR2032",
+            "buttons": 3
+          },
+          "solder_free_adapters": {
+            "info": "MLB keys use Xhorse VVDI MLB Tool directly \u2014 key shell disassembly only, no soldering",
+            "xhorse_mlb_tool": {
+              "model": "XDMLB0",
+              "method": "Disassemble key shell, place PCB in MLB Tool, read wirelessly"
+            },
+            "keydiy": {
+              "model": "KD-MP MLB Tool",
+              "method": "Same process \u2014 read key PCB data"
+            },
+            "alger_keys": {
+              "bundle": "Not needed \u2014 MLB Tool reads key directly"
+            }
+          },
+          "aftermarket_key_options": {
+            "xhorse": "Xhorse MLB specialized key \u2014 unlimited reuse, ID changeable",
+            "keydiy": {
+              "oem_solution": "KeyDIY MLB26 OEM (K508 44-pin) C$53.99 \u2014 works with KD-MP AND Xhorse MLB Tool",
+              "non_oem": "KeyDIY MLB26 Non-OEM (K507 40-pin) C$47.79 \u2014 works with KD-MP ONLY",
+              "recommendation": "Get OEM Solution (K508) for tool flexibility \u2014 only $4 more"
+            },
+            "oem_refurb": "Genuine Audi key \u2014 required for ODIS programming"
+          },
+          "sfd_info": {
+            "sfd_required": "2020+ models require SFD1 unlock before key learning",
+            "sfd2_required": "2024+ models require SFD2",
+            "unlock_methods": [
+              "VagLogins credits",
+              "OBDeleven Pro",
+              "KD-X4 built-in ($5/unlock)",
+              "Xhorse KTP manual"
+            ]
+          },
+          "tools_for_key_read": [
+            "Xhorse VVDI MLB Tool (XDMLB0)",
+            "KeyDIY KD-MP MLB Tool",
+            "Xhorse Key Tool Plus (KTP)",
+            "Autel IM508/IM608"
+          ],
+          "key_id_change": {
+            "required_from": "2023+ MLB Audi/Porsche/VW",
+            "reason": "Car only accepts known Key IDs \u2014 cannot add new random IDs anymore",
+            "how": "Read lost key ID from car IMMO table, change new key ID to match using KD-MP or Xhorse MLB Tool",
+            "aftermarket_keys_that_support_id_change": [
+              "KeyDIY MLB26 OEM Solution (K508)",
+              "Xhorse MLB specialized key",
+              "New OEM blank with uninitialized ID (FFFFFFFF)"
+            ]
+          }
         }
       },
       "2017-2026": {
@@ -304,10 +688,11 @@
         "immobilizer": "BCM2",
         "key_type": "Audi BCM2 Smart Key",
         "key_blade": "HU162T",
+        "chip": "BCM2 Key",
         "programming": {
           "has_key": "OBD",
           "one_key": "OBD",
-          "akl": "BCM2 removal + dump read"
+          "akl": "BCM2 removal + dump"
         },
         "module_removal": {
           "has_key": false,
@@ -316,125 +701,104 @@
         },
         "akl_supported": "Yes",
         "risk_level": "Medium",
-        "notes": "BCM2 platform. Same procedures as B9 A4.",
+        "notes": "BCM2 - KM100 NOT supported. MLB Tool is the answer!",
         "eeprom_info": {
           "backup_required": true,
           "chip_type": "BCM2 EEPROM",
-          "backup_method": "Read BCM2 with VVDI Prog BCM2 adapter",
-          "warning": "⚠️ BCM2 - backup before AKL work!"
+          "backup_method": "BCM2 dump for AKL",
+          "warning": "\u26a0\ufe0f BCM2 - backup before AKL!"
+        },
+        "km100_support": {
+          "supported": false,
+          "method": "NOT SUPPORTED",
+          "steps": [
+            "KM100 does NOT support BCM2!",
+            "Use MLB Tool - no car needed"
+          ],
+          "chip_needed": "BCM2 Key",
+          "time_estimate": "N/A",
+          "profit_estimate": "Use MLB Tool"
         },
         "xhorse_tool_support": {
           "mlb_tool": true,
           "mqb_adapter": false,
-          "mlb_notes": "MLB-Evo SUPPORTED - wireless key read/write",
-          "no_vehicle_needed": true,
+          "mlb_notes": "MLB-Evo SUPPORTED",
           "recommended_tool": "MLB Tool (XDMLB0)"
+        },
+        "key_hardware": {
+          "key_style": "Audi BCM2 / MLB-Evo Smart Key",
+          "oem_key_info": {
+            "part_numbers": [
+              "Check vehicle specific \u2014 varies by model/year"
+            ],
+            "fcc_id": "Check vehicle specific",
+            "frequency": "315MHz (NA) / 434MHz (EU)",
+            "chip": "BCM2 Key",
+            "blade": "HU162T (emergency)",
+            "keyless_go": true,
+            "battery": "CR2032",
+            "buttons": 3
+          },
+          "solder_free_adapters": {
+            "info": "MLB keys use Xhorse VVDI MLB Tool directly \u2014 key shell disassembly only, no soldering",
+            "xhorse_mlb_tool": {
+              "model": "XDMLB0",
+              "method": "Disassemble key shell, place PCB in MLB Tool, read wirelessly"
+            },
+            "keydiy": {
+              "model": "KD-MP MLB Tool",
+              "method": "Same process \u2014 read key PCB data"
+            },
+            "alger_keys": {
+              "bundle": "Not needed \u2014 MLB Tool reads key directly"
+            }
+          },
+          "aftermarket_key_options": {
+            "xhorse": "Xhorse MLB specialized key \u2014 unlimited reuse, ID changeable",
+            "keydiy": {
+              "oem_solution": "KeyDIY MLB26 OEM (K508 44-pin) C$53.99 \u2014 works with KD-MP AND Xhorse MLB Tool",
+              "non_oem": "KeyDIY MLB26 Non-OEM (K507 40-pin) C$47.79 \u2014 works with KD-MP ONLY",
+              "recommendation": "Get OEM Solution (K508) for tool flexibility \u2014 only $4 more"
+            },
+            "oem_refurb": "Genuine Audi key \u2014 required for ODIS programming"
+          },
+          "sfd_info": {
+            "sfd_required": "2020+ models require SFD1 unlock before key learning",
+            "sfd2_required": "2024+ models require SFD2",
+            "unlock_methods": [
+              "VagLogins credits",
+              "OBDeleven Pro",
+              "KD-X4 built-in ($5/unlock)",
+              "Xhorse KTP manual"
+            ]
+          },
+          "tools_for_key_read": [
+            "Xhorse VVDI MLB Tool (XDMLB0)",
+            "KeyDIY KD-MP MLB Tool",
+            "Xhorse Key Tool Plus (KTP)",
+            "Autel IM508/IM608"
+          ],
+          "key_id_change": {
+            "required_from": "2023+ MLB Audi/Porsche/VW",
+            "reason": "Car only accepts known Key IDs \u2014 cannot add new random IDs anymore",
+            "how": "Read lost key ID from car IMMO table, change new key ID to match using KD-MP or Xhorse MLB Tool",
+            "aftermarket_keys_that_support_id_change": [
+              "KeyDIY MLB26 OEM Solution (K508)",
+              "Xhorse MLB specialized key",
+              "New OEM blank with uninitialized ID (FFFFFFFF)"
+            ]
+          },
+          "notes": "\u26a0\ufe0f BCM2 system \u2014 full backup required before AKL. MLB Tool works for key generation."
         }
       }
     },
-
     "A6": {
-      "2005-2011": {
+      "2004-2011": {
         "platform": "C6",
-        "immobilizer": "IMMO3 / IMMO4",
-        "key_type": "Audi Flip Key",
-        "key_blade": "HU66",
-        "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "OBD"
-        },
-        "module_removal": {
-          "has_key": false,
-          "one_key": false,
-          "akl": false
-        },
-        "akl_supported": "Yes",
-        "risk_level": "Low",
-        "notes": "Old school. Easy OBD programming. Great profit margin.",
-        "eeprom_info": {
-          "backup_required": false,
-          "chip_type": "N/A",
-          "backup_method": "Standard OBD",
-          "warning": "Low risk - old system."
-        },
-        "xhorse_tool_support": {
-          "mlb_tool": false,
-          "mqb_adapter": false,
-          "recommended_tool": "VVDI2 VAG standard"
-        }
-      },
-      "2012-2018": {
-        "platform": "C7 (MLB)",
-        "immobilizer": "BCM1 / KESSY",
+        "immobilizer": "KESSY / BCM1",
         "key_type": "Audi Smart Key",
         "key_blade": "HU66",
-        "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "BCM read may be required"
-        },
-        "module_removal": {
-          "has_key": false,
-          "one_key": false,
-          "akl": true
-        },
-        "akl_supported": "Yes",
-        "risk_level": "Medium",
-        "notes": "MLB platform. BCM1/KESSY. Relatively straightforward.",
-        "eeprom_info": {
-          "backup_required": true,
-          "chip_type": "BCM EEPROM",
-          "backup_method": "Read BCM for AKL work",
-          "warning": "Backup BCM data before AKL."
-        },
-        "xhorse_tool_support": {
-          "mlb_tool": true,
-          "mqb_adapter": false,
-          "mlb_notes": "MLB Tool SUPPORTED - wireless key operations",
-          "recommended_tool": "MLB Tool (XDMLB0)"
-        }
-      },
-      "2019-2026": {
-        "platform": "C8 (MLB-Evo)",
-        "immobilizer": "BCM2",
-        "key_type": "Audi BCM2 Smart Key",
-        "key_blade": "HU162T",
-        "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "BCM2 removal + dump read"
-        },
-        "module_removal": {
-          "has_key": false,
-          "one_key": false,
-          "akl": true
-        },
-        "akl_supported": "Yes",
-        "risk_level": "Medium",
-        "notes": "BCM2 platform. Component protection applies.",
-        "eeprom_info": {
-          "backup_required": true,
-          "chip_type": "BCM2 EEPROM",
-          "backup_method": "Full BCM2 dump",
-          "warning": "⚠️ BCM2 with component protection - full backup mandatory!"
-        },
-        "xhorse_tool_support": {
-          "mlb_tool": true,
-          "mqb_adapter": false,
-          "mlb_notes": "MLB-Evo SUPPORTED - no on-vehicle data collection needed",
-          "no_vehicle_needed": true,
-          "recommended_tool": "MLB Tool (XDMLB0)"
-        }
-      }
-    },
-
-    "A7": {
-      "2012-2018": {
-        "platform": "4G (MLB)",
-        "immobilizer": "BCM1 / KESSY",
-        "key_type": "Audi Smart Key",
-        "key_blade": "HU66",
+        "chip": "ID48 / KESSY",
         "programming": {
           "has_key": "OBD",
           "one_key": "OBD",
@@ -447,12 +811,25 @@
         },
         "akl_supported": "Yes",
         "risk_level": "Medium",
-        "notes": "Sportback. MLB platform. Same as C7 A6.",
+        "notes": "KESSY system. KM100 limited for smart key. Use MLB Tool.",
         "eeprom_info": {
           "backup_required": true,
           "chip_type": "BCM EEPROM",
-          "backup_method": "Read BCM for AKL",
-          "warning": "Backup BCM before AKL."
+          "backup_method": "BCM read for AKL",
+          "warning": "Backup BCM before AKL"
+        },
+        "km100_support": {
+          "supported": "Partial",
+          "method": "Limited - MLB Tool better",
+          "steps": [
+            "KM100 may work for ignition key",
+            "KESSY smart key = limited support",
+            "",
+            "USE MLB Tool for best results"
+          ],
+          "chip_needed": "ID48 / KESSY Key",
+          "time_estimate": "Varies",
+          "profit_estimate": "$250-400"
         },
         "xhorse_tool_support": {
           "mlb_tool": true,
@@ -461,15 +838,16 @@
           "recommended_tool": "MLB Tool (XDMLB0)"
         }
       },
-      "2019-2026": {
-        "platform": "4K (MLB-Evo)",
-        "immobilizer": "BCM2",
-        "key_type": "Audi BCM2 Smart Key",
-        "key_blade": "HU162T",
+      "2012-2018": {
+        "platform": "C7 (MLB)",
+        "immobilizer": "BCM1",
+        "key_type": "Audi Smart Key",
+        "key_blade": "HU66",
+        "chip": "MLB Key",
         "programming": {
           "has_key": "OBD",
           "one_key": "OBD",
-          "akl": "BCM2 removal + dump read"
+          "akl": "BCM read"
         },
         "module_removal": {
           "has_key": false,
@@ -478,33 +856,109 @@
         },
         "akl_supported": "Yes",
         "risk_level": "Medium",
-        "notes": "BCM2 Sportback. Component protection.",
+        "notes": "MLB platform - MLB Tool is best option!",
         "eeprom_info": {
           "backup_required": true,
-          "chip_type": "BCM2 EEPROM",
-          "backup_method": "Full BCM2 dump",
-          "warning": "⚠️ BCM2 - backup before AKL work!"
+          "chip_type": "BCM EEPROM",
+          "backup_method": "BCM dump for AKL",
+          "warning": "Backup BCM before AKL"
+        },
+        "km100_support": {
+          "supported": false,
+          "method": "NOT SUPPORTED - Use MLB Tool",
+          "steps": [
+            "KM100 does NOT support MLB!",
+            "",
+            "USE MLB TOOL:",
+            "1. Read key with MLB Tool",
+            "2. Calculate offline",
+            "3. Generate key - no car!"
+          ],
+          "chip_needed": "MLB Key",
+          "time_estimate": "N/A",
+          "profit_estimate": "Use MLB Tool"
         },
         "xhorse_tool_support": {
           "mlb_tool": true,
           "mqb_adapter": false,
-          "mlb_notes": "MLB-Evo SUPPORTED",
-          "no_vehicle_needed": true,
+          "mlb_notes": "MLB Tool FULLY SUPPORTED - no vehicle needed",
           "recommended_tool": "MLB Tool (XDMLB0)"
+        },
+        "key_hardware": {
+          "key_style": "Audi MLB Smart Key",
+          "oem_key_info": {
+            "part_numbers": [
+              "Check vehicle specific \u2014 varies by model/year"
+            ],
+            "fcc_id": "Check vehicle specific",
+            "frequency": "315MHz (NA) / 434MHz (EU)",
+            "chip": "MLB Key",
+            "blade": "HU66 or HU162T (emergency)",
+            "keyless_go": true,
+            "battery": "CR2032",
+            "buttons": 3
+          },
+          "solder_free_adapters": {
+            "info": "MLB keys use Xhorse VVDI MLB Tool directly \u2014 key shell disassembly only, no soldering",
+            "xhorse_mlb_tool": {
+              "model": "XDMLB0",
+              "method": "Disassemble key shell, place PCB in MLB Tool, read wirelessly"
+            },
+            "keydiy": {
+              "model": "KD-MP MLB Tool",
+              "method": "Same process \u2014 read key PCB data"
+            },
+            "alger_keys": {
+              "bundle": "Not needed \u2014 MLB Tool reads key directly"
+            }
+          },
+          "aftermarket_key_options": {
+            "xhorse": "Xhorse MLB specialized key \u2014 unlimited reuse, ID changeable",
+            "keydiy": {
+              "oem_solution": "KeyDIY MLB26 OEM (K508 44-pin) C$53.99 \u2014 works with KD-MP AND Xhorse MLB Tool",
+              "non_oem": "KeyDIY MLB26 Non-OEM (K507 40-pin) C$47.79 \u2014 works with KD-MP ONLY",
+              "recommendation": "Get OEM Solution (K508) for tool flexibility \u2014 only $4 more"
+            },
+            "oem_refurb": "Genuine Audi key \u2014 required for ODIS programming"
+          },
+          "sfd_info": {
+            "sfd_required": "2020+ models require SFD1 unlock before key learning",
+            "sfd2_required": "2024+ models require SFD2",
+            "unlock_methods": [
+              "VagLogins credits",
+              "OBDeleven Pro",
+              "KD-X4 built-in ($5/unlock)",
+              "Xhorse KTP manual"
+            ]
+          },
+          "tools_for_key_read": [
+            "Xhorse VVDI MLB Tool (XDMLB0)",
+            "KeyDIY KD-MP MLB Tool",
+            "Xhorse Key Tool Plus (KTP)",
+            "Autel IM508/IM608"
+          ],
+          "key_id_change": {
+            "required_from": "2023+ MLB Audi/Porsche/VW",
+            "reason": "Car only accepts known Key IDs \u2014 cannot add new random IDs anymore",
+            "how": "Read lost key ID from car IMMO table, change new key ID to match using KD-MP or Xhorse MLB Tool",
+            "aftermarket_keys_that_support_id_change": [
+              "KeyDIY MLB26 OEM Solution (K508)",
+              "Xhorse MLB specialized key",
+              "New OEM blank with uninitialized ID (FFFFFFFF)"
+            ]
+          }
         }
-      }
-    },
-
-    "A8": {
-      "2010-2017": {
-        "platform": "D4 (MLB)",
-        "immobilizer": "KESSY / BCM1",
-        "key_type": "Audi Smart Key",
-        "key_blade": "HU66",
+      },
+      "2019-2026": {
+        "platform": "C8 (MLB-Evo)",
+        "immobilizer": "BCM2",
+        "key_type": "Audi BCM2 Smart Key",
+        "key_blade": "HU162T",
+        "chip": "BCM2 Key",
         "programming": {
           "has_key": "OBD",
           "one_key": "OBD",
-          "akl": "BCM read + dealer may be required"
+          "akl": "BCM2 removal"
         },
         "module_removal": {
           "has_key": false,
@@ -513,125 +967,104 @@
         },
         "akl_supported": "Limited",
         "risk_level": "High",
-        "notes": "Flagship sedan. KESSY system. Some dealer requirements.",
-        "eeprom_info": {
-          "backup_required": true,
-          "chip_type": "BCM / KESSY EEPROM",
-          "backup_method": "Full backup required",
-          "warning": "⚠️ Flagship car - backup everything. Price premium."
-        },
-        "xhorse_tool_support": {
-          "mlb_tool": true,
-          "mqb_adapter": false,
-          "mlb_notes": "MLB Tool SUPPORTED for key operations",
-          "recommended_tool": "MLB Tool (XDMLB0)"
-        }
-      },
-      "2018-2026": {
-        "platform": "D5 (MLB-Evo)",
-        "immobilizer": "BCM2",
-        "key_type": "Audi BCM2 Smart Key",
-        "key_blade": "HU162T",
-        "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD (limited)",
-          "akl": "BCM2 removal + specialized tools"
-        },
-        "module_removal": {
-          "has_key": false,
-          "one_key": true,
-          "akl": true
-        },
-        "akl_supported": "Very Limited",
-        "risk_level": "Very High",
-        "notes": "Flagship sedan. BCM2 with full component protection. Price very high.",
+        "notes": "BCM2 - KM100 NOT supported. MLB Tool is the way.",
         "eeprom_info": {
           "backup_required": true,
           "chip_type": "BCM2 EEPROM",
-          "backup_method": "Full BCM2 dump mandatory",
-          "warning": "⚠️ CRITICAL: $100K+ car. Full backup. Premium pricing."
+          "backup_method": "Full BCM2 dump",
+          "warning": "\u26a0\ufe0f CRITICAL: BCM2 - full backup required!"
+        },
+        "km100_support": {
+          "supported": false,
+          "method": "NOT SUPPORTED",
+          "steps": [
+            "KM100 does NOT support BCM2!",
+            "Use MLB Tool"
+          ],
+          "chip_needed": "BCM2 Key",
+          "time_estimate": "N/A",
+          "profit_estimate": "Use MLB Tool"
         },
         "xhorse_tool_support": {
           "mlb_tool": true,
           "mqb_adapter": false,
-          "mlb_notes": "MLB-Evo SUPPORTED - no vehicle access needed for key data",
-          "no_vehicle_needed": true,
+          "mlb_notes": "MLB-Evo SUPPORTED",
           "recommended_tool": "MLB Tool (XDMLB0)"
+        },
+        "key_hardware": {
+          "key_style": "Audi BCM2 / MLB-Evo Smart Key",
+          "oem_key_info": {
+            "part_numbers": [
+              "Check vehicle specific \u2014 varies by model/year"
+            ],
+            "fcc_id": "Check vehicle specific",
+            "frequency": "315MHz (NA) / 434MHz (EU)",
+            "chip": "BCM2 Key",
+            "blade": "HU162T (emergency)",
+            "keyless_go": true,
+            "battery": "CR2032",
+            "buttons": 3
+          },
+          "solder_free_adapters": {
+            "info": "MLB keys use Xhorse VVDI MLB Tool directly \u2014 key shell disassembly only, no soldering",
+            "xhorse_mlb_tool": {
+              "model": "XDMLB0",
+              "method": "Disassemble key shell, place PCB in MLB Tool, read wirelessly"
+            },
+            "keydiy": {
+              "model": "KD-MP MLB Tool",
+              "method": "Same process \u2014 read key PCB data"
+            },
+            "alger_keys": {
+              "bundle": "Not needed \u2014 MLB Tool reads key directly"
+            }
+          },
+          "aftermarket_key_options": {
+            "xhorse": "Xhorse MLB specialized key \u2014 unlimited reuse, ID changeable",
+            "keydiy": {
+              "oem_solution": "KeyDIY MLB26 OEM (K508 44-pin) C$53.99 \u2014 works with KD-MP AND Xhorse MLB Tool",
+              "non_oem": "KeyDIY MLB26 Non-OEM (K507 40-pin) C$47.79 \u2014 works with KD-MP ONLY",
+              "recommendation": "Get OEM Solution (K508) for tool flexibility \u2014 only $4 more"
+            },
+            "oem_refurb": "Genuine Audi key \u2014 required for ODIS programming"
+          },
+          "sfd_info": {
+            "sfd_required": "2020+ models require SFD1 unlock before key learning",
+            "sfd2_required": "2024+ models require SFD2",
+            "unlock_methods": [
+              "VagLogins credits",
+              "OBDeleven Pro",
+              "KD-X4 built-in ($5/unlock)",
+              "Xhorse KTP manual"
+            ]
+          },
+          "tools_for_key_read": [
+            "Xhorse VVDI MLB Tool (XDMLB0)",
+            "KeyDIY KD-MP MLB Tool",
+            "Xhorse Key Tool Plus (KTP)",
+            "Autel IM508/IM608"
+          ],
+          "key_id_change": {
+            "required_from": "2023+ MLB Audi/Porsche/VW",
+            "reason": "Car only accepts known Key IDs \u2014 cannot add new random IDs anymore",
+            "how": "Read lost key ID from car IMMO table, change new key ID to match using KD-MP or Xhorse MLB Tool",
+            "aftermarket_keys_that_support_id_change": [
+              "KeyDIY MLB26 OEM Solution (K508)",
+              "Xhorse MLB specialized key",
+              "New OEM blank with uninitialized ID (FFFFFFFF)"
+            ]
+          },
+          "notes": "\u26a0\ufe0f BCM2 system \u2014 full backup required before AKL. MLB Tool works for key generation."
         }
       }
     },
-
-    "Q3": {
-      "2013-2018": {
-        "platform": "8U (PQ35)",
-        "immobilizer": "IMMO5",
-        "key_type": "Audi Flip Key / Smart Key",
-        "key_blade": "HU66",
-        "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "OBD or cluster read"
-        },
-        "module_removal": {
-          "has_key": false,
-          "one_key": false,
-          "akl": false
-        },
-        "akl_supported": "Yes",
-        "risk_level": "Low",
-        "notes": "Older platform. Straightforward OBD work.",
-        "eeprom_info": {
-          "backup_required": false,
-          "chip_type": "N/A",
-          "backup_method": "Standard OBD",
-          "warning": "Low risk - older system."
-        },
-        "xhorse_tool_support": {
-          "mlb_tool": false,
-          "mqb_adapter": false,
-          "recommended_tool": "VVDI2 VAG standard"
-        }
-      },
-      "2019-2026": {
-        "platform": "F3 (MQB)",
-        "immobilizer": "MQB IMMO / BCM2",
-        "key_type": "Audi MQB Smart Key",
-        "key_blade": "HU162T",
-        "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "Cluster removal + IMMO data read"
-        },
-        "module_removal": {
-          "has_key": false,
-          "one_key": false,
-          "akl": true
-        },
-        "akl_supported": "Yes",
-        "risk_level": "Medium",
-        "notes": "MQB platform. Cluster EEPROM may need reading for AKL.",
-        "eeprom_info": {
-          "backup_required": true,
-          "chip_type": "Cluster EEPROM / BCM2",
-          "backup_method": "Read cluster with VVDI Prog or Multi-Prog",
-          "warning": "⚠️ MQB system - backup cluster data for AKL!"
-        },
-        "xhorse_tool_support": {
-          "mlb_tool": false,
-          "mqb_adapter": true,
-          "adapter_notes": "MQB48 keys - use MLB Tool + MQB Adapter to avoid cluster disassembly",
-          "workflow": "MLB Tool + MQB Adapter → Read IMMO from key → Generate & learn",
-          "recommended_tool": "MLB Tool + MQB Adapter"
-        }
-      }
-    },
-
     "Q5": {
       "2009-2017": {
         "platform": "8R (MLB)",
         "immobilizer": "BCM1 / KESSY",
         "key_type": "Audi Smart Key",
         "key_blade": "HU66",
+        "chip": "MLB Key",
         "programming": {
           "has_key": "OBD",
           "one_key": "OBD",
@@ -644,18 +1077,96 @@
         },
         "akl_supported": "Yes",
         "risk_level": "Medium",
-        "notes": "Popular SUV. MLB platform. Standard BCM procedures.",
+        "notes": "MLB platform. Popular SUV. MLB Tool = best option!",
         "eeprom_info": {
           "backup_required": true,
           "chip_type": "BCM EEPROM",
-          "backup_method": "Read BCM for AKL work",
-          "warning": "Backup BCM before AKL."
+          "backup_method": "BCM dump for AKL",
+          "warning": "Backup BCM before AKL"
+        },
+        "km100_support": {
+          "supported": false,
+          "method": "NOT SUPPORTED - Use MLB Tool",
+          "steps": [
+            "KM100 does NOT support MLB!",
+            "",
+            "USE MLB TOOL:",
+            "No vehicle access needed",
+            "Read key > Calculate > Generate"
+          ],
+          "chip_needed": "MLB Key",
+          "time_estimate": "N/A",
+          "profit_estimate": "Use MLB Tool"
         },
         "xhorse_tool_support": {
           "mlb_tool": true,
           "mqb_adapter": false,
-          "mlb_notes": "MLB Tool SUPPORTED - wireless key operations",
+          "mlb_notes": "MLB Tool FULLY SUPPORTED",
           "recommended_tool": "MLB Tool (XDMLB0)"
+        },
+        "key_hardware": {
+          "key_style": "Audi MLB Smart Key",
+          "oem_key_info": {
+            "part_numbers": [
+              "Check vehicle specific \u2014 varies by model/year"
+            ],
+            "fcc_id": "Check vehicle specific",
+            "frequency": "315MHz (NA) / 434MHz (EU)",
+            "chip": "MLB Key",
+            "blade": "HU66 or HU162T (emergency)",
+            "keyless_go": true,
+            "battery": "CR2032",
+            "buttons": 3
+          },
+          "solder_free_adapters": {
+            "info": "MLB keys use Xhorse VVDI MLB Tool directly \u2014 key shell disassembly only, no soldering",
+            "xhorse_mlb_tool": {
+              "model": "XDMLB0",
+              "method": "Disassemble key shell, place PCB in MLB Tool, read wirelessly"
+            },
+            "keydiy": {
+              "model": "KD-MP MLB Tool",
+              "method": "Same process \u2014 read key PCB data"
+            },
+            "alger_keys": {
+              "bundle": "Not needed \u2014 MLB Tool reads key directly"
+            }
+          },
+          "aftermarket_key_options": {
+            "xhorse": "Xhorse MLB specialized key \u2014 unlimited reuse, ID changeable",
+            "keydiy": {
+              "oem_solution": "KeyDIY MLB26 OEM (K508 44-pin) C$53.99 \u2014 works with KD-MP AND Xhorse MLB Tool",
+              "non_oem": "KeyDIY MLB26 Non-OEM (K507 40-pin) C$47.79 \u2014 works with KD-MP ONLY",
+              "recommendation": "Get OEM Solution (K508) for tool flexibility \u2014 only $4 more"
+            },
+            "oem_refurb": "Genuine Audi key \u2014 required for ODIS programming"
+          },
+          "sfd_info": {
+            "sfd_required": "2020+ models require SFD1 unlock before key learning",
+            "sfd2_required": "2024+ models require SFD2",
+            "unlock_methods": [
+              "VagLogins credits",
+              "OBDeleven Pro",
+              "KD-X4 built-in ($5/unlock)",
+              "Xhorse KTP manual"
+            ]
+          },
+          "tools_for_key_read": [
+            "Xhorse VVDI MLB Tool (XDMLB0)",
+            "KeyDIY KD-MP MLB Tool",
+            "Xhorse Key Tool Plus (KTP)",
+            "Autel IM508/IM608"
+          ],
+          "key_id_change": {
+            "required_from": "2023+ MLB Audi/Porsche/VW",
+            "reason": "Car only accepts known Key IDs \u2014 cannot add new random IDs anymore",
+            "how": "Read lost key ID from car IMMO table, change new key ID to match using KD-MP or Xhorse MLB Tool",
+            "aftermarket_keys_that_support_id_change": [
+              "KeyDIY MLB26 OEM Solution (K508)",
+              "Xhorse MLB specialized key",
+              "New OEM blank with uninitialized ID (FFFFFFFF)"
+            ]
+          }
         }
       },
       "2018-2026": {
@@ -663,10 +1174,11 @@
         "immobilizer": "BCM2",
         "key_type": "Audi BCM2 Smart Key",
         "key_blade": "HU162T",
+        "chip": "BCM2 Key",
         "programming": {
           "has_key": "OBD",
           "one_key": "OBD",
-          "akl": "BCM2 removal + dump read"
+          "akl": "BCM2 removal"
         },
         "module_removal": {
           "has_key": false,
@@ -675,29 +1187,104 @@
         },
         "akl_supported": "Yes",
         "risk_level": "Medium",
-        "notes": "BCM2 platform. Component protection may apply.",
+        "notes": "BCM2 - KM100 NOT supported. MLB Tool works!",
         "eeprom_info": {
           "backup_required": true,
           "chip_type": "BCM2 EEPROM",
-          "backup_method": "Full BCM2 dump for AKL",
-          "warning": "⚠️ BCM2 - backup before AKL work!"
+          "backup_method": "BCM2 dump for AKL",
+          "warning": "\u26a0\ufe0f BCM2 - backup before AKL!"
+        },
+        "km100_support": {
+          "supported": false,
+          "method": "NOT SUPPORTED",
+          "steps": [
+            "KM100 does NOT support BCM2!",
+            "Use MLB Tool"
+          ],
+          "chip_needed": "BCM2 Key",
+          "time_estimate": "N/A",
+          "profit_estimate": "Use MLB Tool"
         },
         "xhorse_tool_support": {
           "mlb_tool": true,
           "mqb_adapter": false,
-          "mlb_notes": "MLB-Evo SUPPORTED - no on-vehicle data collection needed",
-          "no_vehicle_needed": true,
+          "mlb_notes": "MLB-Evo SUPPORTED - no vehicle needed",
           "recommended_tool": "MLB Tool (XDMLB0)"
+        },
+        "key_hardware": {
+          "key_style": "Audi BCM2 / MLB-Evo Smart Key",
+          "oem_key_info": {
+            "part_numbers": [
+              "Check vehicle specific \u2014 varies by model/year"
+            ],
+            "fcc_id": "Check vehicle specific",
+            "frequency": "315MHz (NA) / 434MHz (EU)",
+            "chip": "BCM2 Key",
+            "blade": "HU162T (emergency)",
+            "keyless_go": true,
+            "battery": "CR2032",
+            "buttons": 3
+          },
+          "solder_free_adapters": {
+            "info": "MLB keys use Xhorse VVDI MLB Tool directly \u2014 key shell disassembly only, no soldering",
+            "xhorse_mlb_tool": {
+              "model": "XDMLB0",
+              "method": "Disassemble key shell, place PCB in MLB Tool, read wirelessly"
+            },
+            "keydiy": {
+              "model": "KD-MP MLB Tool",
+              "method": "Same process \u2014 read key PCB data"
+            },
+            "alger_keys": {
+              "bundle": "Not needed \u2014 MLB Tool reads key directly"
+            }
+          },
+          "aftermarket_key_options": {
+            "xhorse": "Xhorse MLB specialized key \u2014 unlimited reuse, ID changeable",
+            "keydiy": {
+              "oem_solution": "KeyDIY MLB26 OEM (K508 44-pin) C$53.99 \u2014 works with KD-MP AND Xhorse MLB Tool",
+              "non_oem": "KeyDIY MLB26 Non-OEM (K507 40-pin) C$47.79 \u2014 works with KD-MP ONLY",
+              "recommendation": "Get OEM Solution (K508) for tool flexibility \u2014 only $4 more"
+            },
+            "oem_refurb": "Genuine Audi key \u2014 required for ODIS programming"
+          },
+          "sfd_info": {
+            "sfd_required": "2020+ models require SFD1 unlock before key learning",
+            "sfd2_required": "2024+ models require SFD2",
+            "unlock_methods": [
+              "VagLogins credits",
+              "OBDeleven Pro",
+              "KD-X4 built-in ($5/unlock)",
+              "Xhorse KTP manual"
+            ]
+          },
+          "tools_for_key_read": [
+            "Xhorse VVDI MLB Tool (XDMLB0)",
+            "KeyDIY KD-MP MLB Tool",
+            "Xhorse Key Tool Plus (KTP)",
+            "Autel IM508/IM608"
+          ],
+          "key_id_change": {
+            "required_from": "2023+ MLB Audi/Porsche/VW",
+            "reason": "Car only accepts known Key IDs \u2014 cannot add new random IDs anymore",
+            "how": "Read lost key ID from car IMMO table, change new key ID to match using KD-MP or Xhorse MLB Tool",
+            "aftermarket_keys_that_support_id_change": [
+              "KeyDIY MLB26 OEM Solution (K508)",
+              "Xhorse MLB specialized key",
+              "New OEM blank with uninitialized ID (FFFFFFFF)"
+            ]
+          },
+          "notes": "\u26a0\ufe0f BCM2 system \u2014 full backup required before AKL. MLB Tool works for key generation."
         }
       }
     },
-
     "Q7": {
       "2007-2015": {
         "platform": "4L",
         "immobilizer": "KESSY / BCM1",
         "key_type": "Audi Smart Key",
         "key_blade": "HU66",
+        "chip": "MLB Key",
         "programming": {
           "has_key": "OBD",
           "one_key": "OBD",
@@ -710,12 +1297,23 @@
         },
         "akl_supported": "Yes",
         "risk_level": "Medium",
-        "notes": "Large SUV. KESSY system. Standard procedures.",
+        "notes": "Large SUV. KESSY system. MLB Tool = best!",
         "eeprom_info": {
           "backup_required": true,
           "chip_type": "BCM EEPROM",
-          "backup_method": "Read BCM for AKL",
-          "warning": "Backup BCM before AKL work."
+          "backup_method": "BCM read for AKL",
+          "warning": "Backup BCM before AKL"
+        },
+        "km100_support": {
+          "supported": false,
+          "method": "NOT SUPPORTED - Use MLB Tool",
+          "steps": [
+            "KM100 does NOT support KESSY!",
+            "Use MLB Tool for Q7"
+          ],
+          "chip_needed": "MLB Key",
+          "time_estimate": "N/A",
+          "profit_estimate": "Use MLB Tool"
         },
         "xhorse_tool_support": {
           "mlb_tool": true,
@@ -729,10 +1327,11 @@
         "immobilizer": "BCM2",
         "key_type": "Audi BCM2 Smart Key",
         "key_blade": "HU162T",
+        "chip": "BCM2 Key",
         "programming": {
           "has_key": "OBD",
           "one_key": "OBD",
-          "akl": "BCM2 removal + specialized tools"
+          "akl": "BCM2 removal"
         },
         "module_removal": {
           "has_key": false,
@@ -741,101 +1340,108 @@
         },
         "akl_supported": "Limited",
         "risk_level": "High",
-        "notes": "BCM2 with component protection. Large SUV = premium pricing.",
+        "notes": "BCM2 + component protection. Large SUV = premium price!",
         "eeprom_info": {
           "backup_required": true,
           "chip_type": "BCM2 EEPROM",
           "backup_method": "Full BCM2 dump mandatory",
-          "warning": "⚠️ CRITICAL: BCM2 with component protection - full backup required!"
+          "warning": "\u26a0\ufe0f CRITICAL: BCM2 - full backup required!"
+        },
+        "km100_support": {
+          "supported": false,
+          "method": "NOT SUPPORTED",
+          "steps": [
+            "KM100 does NOT support BCM2!",
+            "Use MLB Tool"
+          ],
+          "chip_needed": "BCM2 Key",
+          "time_estimate": "N/A",
+          "profit_estimate": "Charge premium"
         },
         "xhorse_tool_support": {
           "mlb_tool": true,
           "mqb_adapter": false,
           "mlb_notes": "MLB-Evo SUPPORTED - wireless key generation",
-          "no_vehicle_needed": true,
           "recommended_tool": "MLB Tool (XDMLB0)"
+        },
+        "key_hardware": {
+          "key_style": "Audi BCM2 / MLB-Evo Smart Key",
+          "oem_key_info": {
+            "part_numbers": [
+              "Check vehicle specific \u2014 varies by model/year"
+            ],
+            "fcc_id": "Check vehicle specific",
+            "frequency": "315MHz (NA) / 434MHz (EU)",
+            "chip": "BCM2 Key",
+            "blade": "HU162T (emergency)",
+            "keyless_go": true,
+            "battery": "CR2032",
+            "buttons": 3
+          },
+          "solder_free_adapters": {
+            "info": "MLB keys use Xhorse VVDI MLB Tool directly \u2014 key shell disassembly only, no soldering",
+            "xhorse_mlb_tool": {
+              "model": "XDMLB0",
+              "method": "Disassemble key shell, place PCB in MLB Tool, read wirelessly"
+            },
+            "keydiy": {
+              "model": "KD-MP MLB Tool",
+              "method": "Same process \u2014 read key PCB data"
+            },
+            "alger_keys": {
+              "bundle": "Not needed \u2014 MLB Tool reads key directly"
+            }
+          },
+          "aftermarket_key_options": {
+            "xhorse": "Xhorse MLB specialized key \u2014 unlimited reuse, ID changeable",
+            "keydiy": {
+              "oem_solution": "KeyDIY MLB26 OEM (K508 44-pin) C$53.99 \u2014 works with KD-MP AND Xhorse MLB Tool",
+              "non_oem": "KeyDIY MLB26 Non-OEM (K507 40-pin) C$47.79 \u2014 works with KD-MP ONLY",
+              "recommendation": "Get OEM Solution (K508) for tool flexibility \u2014 only $4 more"
+            },
+            "oem_refurb": "Genuine Audi key \u2014 required for ODIS programming"
+          },
+          "sfd_info": {
+            "sfd_required": "2020+ models require SFD1 unlock before key learning",
+            "sfd2_required": "2024+ models require SFD2",
+            "unlock_methods": [
+              "VagLogins credits",
+              "OBDeleven Pro",
+              "KD-X4 built-in ($5/unlock)",
+              "Xhorse KTP manual"
+            ]
+          },
+          "tools_for_key_read": [
+            "Xhorse VVDI MLB Tool (XDMLB0)",
+            "KeyDIY KD-MP MLB Tool",
+            "Xhorse Key Tool Plus (KTP)",
+            "Autel IM508/IM608"
+          ],
+          "key_id_change": {
+            "required_from": "2023+ MLB Audi/Porsche/VW",
+            "reason": "Car only accepts known Key IDs \u2014 cannot add new random IDs anymore",
+            "how": "Read lost key ID from car IMMO table, change new key ID to match using KD-MP or Xhorse MLB Tool",
+            "aftermarket_keys_that_support_id_change": [
+              "KeyDIY MLB26 OEM Solution (K508)",
+              "Xhorse MLB specialized key",
+              "New OEM blank with uninitialized ID (FFFFFFFF)"
+            ]
+          },
+          "notes": "\u26a0\ufe0f BCM2 system \u2014 full backup required before AKL. MLB Tool works for key generation."
         }
       }
     },
-
-    "Q8": {
-      "2019-2026": {
-        "platform": "4M (MLB-Evo)",
-        "immobilizer": "BCM2",
-        "key_type": "Audi BCM2 Smart Key",
-        "key_blade": "HU162T",
-        "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "BCM2 removal + specialized tools"
-        },
-        "module_removal": {
-          "has_key": false,
-          "one_key": false,
-          "akl": true
-        },
-        "akl_supported": "Limited",
-        "risk_level": "High",
-        "notes": "Flagship SUV coupe. BCM2 with full component protection. Premium pricing.",
-        "eeprom_info": {
-          "backup_required": true,
-          "chip_type": "BCM2 EEPROM",
-          "backup_method": "Full BCM2 dump mandatory",
-          "warning": "⚠️ CRITICAL: Flagship SUV - full BCM2 backup mandatory. Price high."
-        },
-        "xhorse_tool_support": {
-          "mlb_tool": true,
-          "mqb_adapter": false,
-          "mlb_notes": "MLB-Evo SUPPORTED - no vehicle access needed",
-          "no_vehicle_needed": true,
-          "recommended_tool": "MLB Tool (XDMLB0)"
-        }
-      }
-    },
-
-    "e-tron": {
-      "2019-2026": {
-        "platform": "GE (MLB-Evo)",
-        "immobilizer": "BCM2 / EV System",
-        "key_type": "Audi BCM2 Smart Key",
-        "key_blade": "HU162T (emergency)",
-        "programming": {
-          "has_key": "OBD (limited)",
-          "one_key": "Specialized tool",
-          "akl": "Dealer recommended"
-        },
-        "module_removal": {
-          "has_key": false,
-          "one_key": true,
-          "akl": true
-        },
-        "akl_supported": "Very Limited",
-        "risk_level": "Very High",
-        "notes": "Electric vehicle. Additional EV complexity. Limited aftermarket support.",
-        "eeprom_info": {
-          "backup_required": true,
-          "chip_type": "BCM2 + EV modules",
-          "backup_method": "Full backup - EV adds complexity",
-          "warning": "⚠️ EXTREME RISK: EV with BCM2. Very limited support. Consider dealer referral."
-        },
-        "xhorse_tool_support": {
-          "mlb_tool": "Limited",
-          "mqb_adapter": false,
-          "notes": "EV adds complexity - verify MLB Tool support for e-tron before accepting"
-        }
-      }
-    },
-
     "TT": {
       "2007-2014": {
         "platform": "8J (PQ35)",
         "immobilizer": "IMMO4 / IMMO5",
         "key_type": "Audi Flip Key",
         "key_blade": "HU66",
+        "chip": "ID48",
         "programming": {
-          "has_key": "OBD",
-          "one_key": "OBD",
-          "akl": "OBD"
+          "has_key": "OBD (KM100)",
+          "one_key": "OBD (KM100)",
+          "akl": "OBD - Copy MEGAMOS 48"
         },
         "module_removal": {
           "has_key": false,
@@ -844,17 +1450,35 @@
         },
         "akl_supported": "Yes",
         "risk_level": "Low",
-        "notes": "Sports car. Older platform. Easy OBD work.",
+        "notes": "EASY OBD JOB! PQ35 = KM100 works! Sports car premium.",
         "eeprom_info": {
           "backup_required": false,
           "chip_type": "N/A",
           "backup_method": "Standard OBD",
-          "warning": "Low risk - older system."
+          "warning": "Low risk - older system"
+        },
+        "km100_support": {
+          "supported": true,
+          "method": "Copy MEGAMOS 48 (SAFEST)",
+          "steps": [
+            "1. KM100 > Immobilizer > Audi",
+            "2. Select TT > 2007-2014",
+            "3. Control Unit > Immobilizer",
+            "4. Read IMMO Data (PIN, CS)",
+            "5. Copy Key MEGAMOS-48",
+            "6. Insert ID48 chip",
+            "7. Select key ID > Write",
+            "8. Cut HU66 blade",
+            "9. Test key - DONE!"
+          ],
+          "chip_needed": "ID48 or Super Chip",
+          "time_estimate": "15-25 min",
+          "profit_estimate": "$200-300"
         },
         "xhorse_tool_support": {
           "mlb_tool": false,
           "mqb_adapter": false,
-          "recommended_tool": "VVDI2 VAG standard"
+          "recommended_tool": "KM100"
         }
       },
       "2015-2026": {
@@ -862,10 +1486,11 @@
         "immobilizer": "MQB IMMO",
         "key_type": "Audi MQB Smart Key",
         "key_blade": "HU162T",
+        "chip": "MQB48",
         "programming": {
           "has_key": "OBD",
           "one_key": "OBD",
-          "akl": "Cluster removal + IMMO data read"
+          "akl": "Cluster removal"
         },
         "module_removal": {
           "has_key": false,
@@ -874,18 +1499,83 @@
         },
         "akl_supported": "Yes",
         "risk_level": "Medium",
-        "notes": "MQB platform. Sports car premium pricing.",
+        "notes": "MQB - KM100 NOT supported. Use MLB + MQB Adapter.",
         "eeprom_info": {
           "backup_required": true,
           "chip_type": "Cluster EEPROM",
           "backup_method": "Read cluster for AKL",
-          "warning": "⚠️ MQB - backup cluster data for AKL!"
+          "warning": "\u26a0\ufe0f MQB - backup cluster for AKL!"
+        },
+        "km100_support": {
+          "supported": false,
+          "method": "NOT SUPPORTED",
+          "steps": [
+            "KM100 does NOT support MQB!",
+            "Use MLB Tool + MQB Adapter",
+            "Avoids cluster pull"
+          ],
+          "chip_needed": "MQB48",
+          "time_estimate": "N/A",
+          "profit_estimate": "Use Xhorse tools"
         },
         "xhorse_tool_support": {
           "mlb_tool": false,
           "mqb_adapter": true,
-          "adapter_notes": "MQB48 - use MLB Tool + MQB Adapter to avoid cluster pull",
+          "adapter_notes": "MQB48 - MLB Tool + MQB Adapter avoids cluster pull",
           "recommended_tool": "MLB Tool + MQB Adapter"
+        },
+        "key_hardware": {
+          "key_style": "Audi MQB 5C Smart Key (Proximity)",
+          "oem_key_info": {
+            "part_numbers": [
+              "8V0959754 series",
+              "8S0959754 series"
+            ],
+            "fcc_id": "Check vehicle specific",
+            "frequency": "315MHz (NA) / 434MHz (EU)",
+            "chip": "MQB48 / MQB49 5C",
+            "blade": "HU162T (emergency)",
+            "keyless_go": true,
+            "battery": "CR2032",
+            "buttons": 3
+          },
+          "solder_free_adapters": {
+            "xhorse": {
+              "model": "XDNP121",
+              "set": "XDNPVDGL (8pc MQB 5C/5D set)",
+              "fits": "5C&5D A3"
+            },
+            "keydiy": {
+              "model": "AD5D01 / AD5D02",
+              "set": "KD Clamp 12pc Kit",
+              "probe_required": true
+            },
+            "alger_keys": {
+              "bundle": "5C&5D A3 Adapter + OEM Audi 5C Key"
+            }
+          },
+          "aftermarket_key_options": {
+            "xhorse": "XSMQB1EN (MQB Smart Proximity Key)",
+            "keydiy": "KD MQB 5C OEM Solution (K508 44-pin) \u2014 works with KD-MP and Xhorse MLB Tool",
+            "oem_refurb": "Best for ODIS route \u2014 genuine Audi board required"
+          },
+          "sfd_info": {
+            "sfd_required": "2020+ models may require SFD1 unlock",
+            "sfd2_required": "2024+ models require SFD2",
+            "unlock_methods": [
+              "VagLogins credits (~$5-7/job)",
+              "OBDeleven Pro (auto)",
+              "KD-X4 built-in ($5/unlock)",
+              "Xhorse KTP manual + 3rd party token"
+            ]
+          },
+          "tools_for_key_read": [
+            "Xhorse Key Tool Plus (KTP)",
+            "Xhorse Multi Prog",
+            "Xhorse VVDI2 + VVDI Prog",
+            "KeyDIY KD-X4 + KD-MP",
+            "Autel IM508/IM608"
+          ]
         }
       }
     }
